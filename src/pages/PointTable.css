@@ -1,0 +1,53 @@
+.table-wrapper {
+    padding: 60px 5%;
+    background-color: #0d1117;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+.table-header { text-align: center; margin-bottom: 40px; }
+.table-header h1 { font-family: 'Oswald', sans-serif; font-size: 3rem; color: white; margin: 0; }
+.table-header span { color: #007bff; }
+.table-header p { color: #8b949e; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+.table-container {
+    background: #1a1a2e;
+    border-radius: 12px;
+    overflow-x: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.pro-table { width: 100%; border-collapse: collapse; color: white; min-width: 600px; }
+
+.pro-table th {
+    background: #161b22;
+    padding: 20px;
+    font-size: 0.75rem;
+    color: #8b949e;
+    text-transform: uppercase;
+}
+
+.pro-table td {
+    padding: 15px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.02);
+}
+
+.text-left { text-align: left !important; }
+
+.team-cell { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+.team-cell img { width: 30px; height: 30px; object-fit: contain; }
+
+.pts-cell { font-weight: 900; color: #007bff; background: rgba(0, 123, 255, 0.05); }
+
+.top-three { border-left: 4px solid #007bff; background: linear-gradient(90deg, rgba(0,123,255,0.05), transparent); }
+
+.gd-plus { color: #2ecc71; }
+.gd-minus { color: #e74c3c; }
+
+@media (max-width: 768px) {
+    /* Hide detailed stats on small mobile to avoid horizontal scrolling */
+    .pro-table th:nth-child(4), .pro-table th:nth-child(5), .pro-table th:nth-child(6) { display: none; }
+    .pro-table td:nth-child(4), .pro-table td:nth-child(5), .pro-table td:nth-child(6) { display: none; }
+}

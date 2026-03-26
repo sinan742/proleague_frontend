@@ -1,0 +1,125 @@
+.teams-page {
+    padding: 40px 5%;
+    background-color: #0d1117;
+    min-height: 100vh;
+    color: white;
+}
+
+.teams-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.teams-header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+.teams-header h1 span {
+    color: #58a6ff;
+}
+
+.teams-header p {
+    color: #8b949e;
+    margin-top: 10px;
+}
+
+/* Grid Layout */
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* Card Styling */
+.team-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    position: relative;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    border-color: #58a6ff;
+}
+
+.team-color-strip {
+    height: 6px;
+    width: 100%;
+}
+
+.team-card-content {
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.team-logo-main {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+.team-name {
+    font-size: 1.4rem;
+    margin-bottom: 5px;
+}
+
+.team-location {
+    font-size: 0.85rem;
+    color: #8b949e;
+    margin-bottom: 20px;
+}
+
+/* Mini Info Section */
+.team-info-mini {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-top: 1px solid #30363d;
+    border-bottom: 1px solid #30363d;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+}
+
+.info-item .label {
+    font-size: 0.65rem;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-item .value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Button */
+.view-squad-btn {
+    display: block;
+    background-color: transparent;
+    border: 1px solid #58a6ff;
+    color: #58a6ff;
+    padding: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.view-squad-btn:hover {
+    background-color: #58a6ff;
+    color: white;
+}

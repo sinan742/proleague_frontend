@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Poppins:wght@400;600;800&display=swap');
+
+.match-detail-page {
+    background-color: #0d1117;
+    min-height: 100vh;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* HERO SCOREBOARD */
+.match-hero-bg {
+    background: linear-gradient(180deg, #181733 0%, #0d1117 100%);
+    padding: 100px 10%;
+    border-bottom: 5px solid #a50044;
+    text-align: center;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+}
+
+.hero-team {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-team img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
+}
+
+.hero-team h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.hero-score-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.big-score {
+    font-family: 'Oswald', sans-serif;
+    font-size: 8rem;
+    line-height: 1;
+    color: #ffffff;
+}
+
+.big-score span {
+    color: #edbb00;
+    padding: 0 15px;
+}
+
+.match-meta {
+    margin-top: 10px;
+    font-weight: 800;
+    letter-spacing: 5px;
+    color: #8b949e;
+    text-transform: uppercase;
+}
+
+/* CONTENT GRID */
+.match-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 50px;
+    padding: 60px 10%;
+}
+
+.section-head h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+.section-head span { color: #edbb00; }
+
+/* PERFORMANCE CARDS */
+.performance-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.perf-card {
+    background: #161b22;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    border-left: 4px solid #edbb00;
+}
+
+.mini-p-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    background: #181733;
+}
+
+.p-info {
+    flex-grow: 1;
+}
+
+.p-name {
+    display: block;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+}
+
+.p-stats {
+    font-size: 0.9rem;
+    color: #8b949e;
+}
+
+/* CARDS */
+.p-cards {
+    display: flex;
+    gap: 8px;
+}
+
+.card-y { width: 14px; height: 20px; background: #edbb00; border-radius: 2px; }
+.card-r { width: 14px; height: 20px; background: #ff3333; border-radius: 2px; }
+
+/* SIDEBAR */
+.venue-card {
+    background: #161b22;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.venue-card h4 {
+    color: #edbb00;
+    text-transform: uppercase;
+    margin-top: 0;
+}
+
+.venue-card p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 5px 0 0;
+}
+
+@media (max-width: 1100px) {
+    .match-content-grid { grid-template-columns: 1fr; }
+    .hero-content { gap: 20px; }
+    .hero-team img { width: 100px; height: 100px; }
+    .big-score { font-size: 5rem; }
+}

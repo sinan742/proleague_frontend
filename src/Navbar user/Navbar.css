@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap');
+
+:root {
+    --navy: #1a1a2e;
+    --blue: #007bff;
+    --text-gray: #e2e8f0;
+    --danger: #ff4d4d;
+    --admin-gold: linear-gradient(45deg, #f6ad55, #ed8936);
+    --nav-height: 80px;
+}
+
+/* Navbar Container */
+.navbar {
+    display: flex;
+    align-items: center;
+    height: var(--nav-height);
+    background-color: var(--navy);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    font-family: 'Poppins', sans-serif;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Logo Styling */
+.nav-logo a {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: white;
+    text-decoration: none;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.nav-logo span {
+    color: var(--blue);
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    display: flex;
+    align-items: center;
+    height: var(--nav-height);
+}
+
+.nav-links li a {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Hover Underline Effect */
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--blue);
+    transition: width 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: var(--blue);
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
+}
+
+/* TEAMS RIBBON (The Hover Feature) */
+.teams-nav-item {
+    position: relative;
+}
+
+.teams-ribbon {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(15px);
+    background: #242444; /* Slightly lighter navy for depth */
+    display: flex;
+    gap: 15px;
+    padding: 15px 25px;
+    border-radius: 0 0 12px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+}
+
+.teams-nav-item:hover .teams-ribbon {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.ribbon-logo img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    transition: transform 0.3s;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+.ribbon-logo:hover img {
+    transform: scale(1.2);
+}
+
+/* Right Side (Auth/User) */
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.points-badge {
+    background: rgba(0, 123, 255, 0.1);
+    border: 1px solid var(--blue);
+    color: var(--blue);
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.welcome-msg {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.welcome-msg span {
+    font-weight: 700;
+    color: var(--blue);
+}
+
+/* Buttons */
+.login-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.register-btn {
+    background-color: var(--blue);
+    color: white;
+    padding: 10px 22px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.3s;
+    border: 2px solid transparent;
+}
+
+.register-btn:hover {
+    background-color: transparent;
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+.logout-btn {
+    background-color: transparent;
+    color: var(--danger);
+    border: 2px solid var(--danger);
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: var(--danger);
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
+}
+
+/* Hamburger Menu Icon */
+.menu-icon {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background: white;
+    transition: 0.3s;
+}
+
+/* Mobile Responsive Logic */
+@media (max-width: 1024px) {
+    .menu-icon {
+        display: flex;
+        z-index: 2001;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        flex-direction: column;
+        justify-content: center;
+        background: var(--navy);
+        width: 100%;
+        height: 100vh;
+        padding: 40px;
+        transition: 0.4s ease;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .nav-links.active {
+        left: 0;
+    }
+
+    .nav-links li {
+        height: auto;
+        justify-content: center;
+    }
+
+    .nav-links li a {
+        font-size: 1.5rem;
+    }
+
+    .teams-ribbon {
+        display: none; /* Usually better to hide complex hover ribbons on mobile */
+    }
+
+    .nav-auth {
+        display: none; /* Hide standard auth info on tablet, typically you add it to the mobile menu */
+    }
+
+    /* Hamburger Animation */
+    .bar.open:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+    .bar.open:nth-child(2) { opacity: 0; }
+    .bar.open:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+}

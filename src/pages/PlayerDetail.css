@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Poppins:wght@400;600&display=swap');
+
+.barca-player-page {
+    background-color: #ffffff;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* HERO SECTION */
+.player-hero {
+    position: relative;
+    height: 70vh;
+    background: #004d98; /* Default Blue */
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 10%;
+}
+
+.hero-background-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Oswald', sans-serif;
+    font-size: 25vw;
+    color: rgba(255, 255, 255, 0.05);
+    text-transform: uppercase;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+.hero-content {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    z-index: 2;
+    gap: 40px;
+}
+
+.player-image-wrap {
+    flex: 1;
+}
+
+.main-cutout {
+    max-height: 65vh;
+    display: block;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+}
+
+.player-identity {
+    flex: 1;
+    padding-bottom: 60px;
+    color: white;
+}
+
+.big-number {
+    font-family: 'Oswald', sans-serif;
+    font-size: 8rem;
+    line-height: 1;
+    display: block;
+    color: #edbb00; /* Gold */
+}
+
+.name-box h2 {
+    font-size: 2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.name-box h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 0.9;
+}
+
+.position-pill {
+    margin-top: 20px;
+    display: inline-block;
+    padding: 8px 25px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50px;
+    font-weight: 600;
+}
+
+/* STATS GRID */
+.stats-container {
+    padding: 80px 10%;
+    background: #f4f4f4;
+}
+
+.stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #004d98;
+}
+
+.stats-header h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+
+.stats-technical-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2px; /* Creates the border effect */
+    background: #ddd; 
+    border: 1px solid #ddd;
+}
+
+.tech-stat {
+    background: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.tech-stat.highlight {
+    background: #004d98;
+    color: white;
+}
+
+.tech-stat label {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.tech-stat.highlight label { color: #ccc; }
+
+.tech-stat strong {
+    font-size: 2.5rem;
+    font-family: 'Oswald', sans-serif;
+}
+
+/* CARDS */
+.cards-flex {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.y-card, .r-card {
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-weight: bold;
+    color: black;
+}
+
+.y-card { background: #ffcc00; }
+.r-card { background: #ff3b30; color: white; }
