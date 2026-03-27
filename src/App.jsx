@@ -15,6 +15,9 @@ import AllPlayers from './pages/AllPlayers';
 import Match from './pages/Match';
 import MatchDetails from './pages/MatchDetails';
 import PointTable from './pages/PointTable';
+import PublicRoute from './PublicRoute';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // Assume you'll create these next:
 // import Login from './Login';
 // import Dashboard from './Dashboard';
@@ -35,19 +38,30 @@ const NavigationWrapper = () => {
 function App() {
   return (
     <Router>
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        theme="dark" // Matches your ProLeague dark theme
+      />
       <NavigationWrapper/>
       <div className="App">
         {/* You can add a Navbar here that stays visible on all pages */}
 
         <Routes>
           {/* Default page is Register */}
-          <Route path="/" element={<Navigate to="/register" />} />
           
-          <Route path="/register" element={<Register/>} />
+          
+          <Route path="/register" element={
+            <PublicRoute>
+            <Register/>
+            </PublicRoute>} />
+
           <Route path="/verify-otp" element={<VerifyOTP/>} />
-          <Route path="/login" element={<Login/>} />
+
+          <Route path="/login" element={<PublicRoute><Login/></PublicRoute>} />
+
           <Route path="/admin-dashboard" element={<AdminDashboard/>} />
-          <Route path="/home" element={<Home/>} />
+          <Route path="/" element={<Home/>} />
           <Route path='/forgot-password' element={<ForgotPassword/>}/>
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/teams' element={<Team/>}/>
@@ -61,6 +75,7 @@ function App() {
 
           
           <Route path="*" element={<h2>404: Page Not Found</h2>} />
+          
         </Routes>
       </div>
     </Router>

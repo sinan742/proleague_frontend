@@ -63,7 +63,7 @@ const Navbar = () => {
                 </div>
 
                 <ul className={menuOpen ? "nav-links active" : "nav-links"}>
-                    <li><Link to="/home">Home</Link></li>
+                    <li><Link to="/">Home</Link></li>
                     
                     {/* Teams Link with Hover Ribbon */}
                     <li className="teams-nav-item">

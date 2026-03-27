@@ -8,10 +8,15 @@ const MatchDetails = () => {
     const [match, setMatch] = useState(null);
 
     useEffect(() => {
-        api.get(`matches/${id}/`).then(res => setMatch(res.data));
+        // Fetching from your new APIView endpoint that includes statistics
+        api.get(`matches/${id}/stats/`).then(res => setMatch(res.data));
     }, [id]);
 
     if (!match) return <div className="barca-loader">Fetching Match Data...</div>;
+
+    // Helper to find stats for home/away
+    const homeStats = match.statistics?.find(s => s.team_name === match.home_team_name) || {};
+    const awayStats = match.statistics?.find(s => s.team_name === match.away_team_name) || {};
 
     return (
         <div className="match-detail-page">
@@ -71,6 +76,19 @@ const MatchDetails = () => {
                     </div>
                 </div>
 
+                {/* MIDDLE: MATCH STATISTICS (NEW) */}
+                <div className="match-stats-center">
+                    <div className="section-head text-center">
+                        <h3>Match <span>Stats</span></h3>
+                    </div>
+                    <div className="stats-container">
+                        <StatComparison label="Possession" home={homeStats.possession} away={awayStats.possession} unit="%" />
+                        <StatComparison label="Shots" home={homeStats.shots} away={awayStats.shots} />
+                        <StatComparison label="On Target" home={homeStats.shots_on_target} away={awayStats.shots_on_target} />
+                        <StatComparison label="Passes" home={homeStats.passes} away={awayStats.passes} />
+                    </div>
+                </div>
+
                 {/* RIGHT: VENUE INFO */}
                 <aside className="match-sidebar">
                     <div className="venue-card">
@@ -83,6 +101,26 @@ const MatchDetails = () => {
                         <p>{new Date(match.match_date).toLocaleString()}</p>
                     </div>
                 </aside>
+            </div>
+        </div>
+    );
+};
+
+// Reusable Stat Row Component
+const StatComparison = ({ label, home = 0, away = 0, unit = "" }) => {
+    const total = (home + away) || 1;
+    const homePercent = (home / total) * 100;
+
+    return (
+        <div className="stat-row">
+            <div className="stat-labels">
+                <span>{home}{unit}</span>
+                <span className="stat-name">{label}</span>
+                <span>{away}{unit}</span>
+            </div>
+            <div className="stat-bar-bg">
+                <div className="stat-bar-home" style={{ width: `${homePercent}%` }}></div>
+                <div className="stat-bar-away" style={{ width: `${100 - homePercent}%` }}></div>
             </div>
         </div>
     );

@@ -1,166 +1,193 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Poppins:wght@400;600;800&display=swap');
 
+:root {
+    --bg-dark: #0d1117;
+    --card-navy: #181733;
+    --gold: #edbb00;
+    --garnet: #a50044;
+    --text-gray: #8b949e;
+}
+
 .match-detail-page {
-    background-color: #0d1117;
+    background-color: var(--bg-dark);
     min-height: 100vh;
     color: #ffffff;
     font-family: 'Poppins', sans-serif;
+    padding-bottom: 50px;
 }
 
-/* HERO SCOREBOARD */
+/* --- THE SCOREBOARD HERO --- */
 .match-hero-bg {
-    background: linear-gradient(180deg, #181733 0%, #0d1117 100%);
-    padding: 100px 10%;
-    border-bottom: 5px solid #a50044;
+    background: var(--card-navy);
+    padding: 60px 20px;
+    border-bottom: 4px solid var(--garnet);
     text-align: center;
 }
 
 .hero-content {
     display: flex;
+    justify-content: space-around;
     align-items: center;
-    justify-content: center;
-    gap: 60px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .hero-team {
-    width: 250px;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .hero-team img {
-    width: 150px;
-    height: 150px;
-    margin-bottom: 20px;
-    filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 15px;
 }
 
 .hero-team h2 {
     font-family: 'Oswald', sans-serif;
-    font-size: 2.5rem;
     text-transform: uppercase;
-    margin: 0;
-}
-
-.hero-score-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
 }
 
 .big-score {
     font-family: 'Oswald', sans-serif;
-    font-size: 8rem;
+    font-size: 5rem;
+    color: var(--gold);
     line-height: 1;
-    color: #ffffff;
-}
-
-.big-score span {
-    color: #edbb00;
-    padding: 0 15px;
 }
 
 .match-meta {
-    margin-top: 10px;
+    font-family: 'Poppins', sans-serif;
     font-weight: 800;
-    letter-spacing: 5px;
-    color: #8b949e;
-    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: var(--text-gray);
+    letter-spacing: 2px;
+    margin-top: 10px;
 }
 
-/* CONTENT GRID */
+/* --- CONTENT GRID --- */
 .match-content-grid {
     display: grid;
-    grid-template-columns: 1fr 350px;
-    gap: 50px;
-    padding: 60px 10%;
+    grid-template-columns: 1fr 1.2fr 0.8fr;
+    gap: 25px;
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 0 5%;
+}
+
+.match-report, .match-stats-center, .venue-card {
+    background: var(--card-navy);
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .section-head h3 {
     font-family: 'Oswald', sans-serif;
-    font-size: 2rem;
     text-transform: uppercase;
-    margin-bottom: 30px;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    color: var(--gold);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 10px;
 }
 
-.section-head span { color: #edbb00; }
-
-/* PERFORMANCE CARDS */
-.performance-list {
+/* --- STATISTICS BARS --- */
+.stats-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 25px;
 }
 
-.perf-card {
-    background: #161b22;
-    padding: 20px;
-    border-radius: 8px;
+.stat-row {
+    width: 100%;
+}
+
+.stat-labels {
     display: flex;
-    align-items: center;
-    border-left: 4px solid #edbb00;
+    justify-content: space-between;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: #000000;
+
+
 }
 
-.mini-p-img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 20px;
-    background: #181733;
+.stat-name {
+    font-family: 'Oswald', sans-serif;
+    color: #000000;
+    letter-spacing: 1px;
 }
 
-.p-info {
-    flex-grow: 1;
-}
-
-.p-name {
-    display: block;
-    font-weight: 800;
-    text-transform: uppercase;
-    font-size: 1.1rem;
-}
-
-.p-stats {
-    font-size: 0.9rem;
-    color: #8b949e;
-}
-
-/* CARDS */
-.p-cards {
+.stat-bar-bg {
+    height: 8px;
+    background: var(--bg-dark);
+    border-radius: 10px;
     display: flex;
-    gap: 8px;
-}
-
-.card-y { width: 14px; height: 20px; background: #edbb00; border-radius: 2px; }
-.card-r { width: 14px; height: 20px; background: #ff3333; border-radius: 2px; }
-
-/* SIDEBAR */
-.venue-card {
-    background: #161b22;
-    padding: 25px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    position: relative;
     overflow: hidden;
 }
 
+.stat-bar-home {
+    background: var(--garnet); /* Garnet for Home */
+    transition: width 1s ease-in-out;
+}
+
+.stat-bar-away {
+    background: var(--gold); /* Gold for Away */
+    transition: width 1s ease-in-out;
+}
+
+/* --- PERFORMANCE LIST --- */
+.perf-card {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.mini-p-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 4px;
+    margin-right: 15px;
+    background: var(--bg-dark);
+}
+
+.p-name { font-weight: 600; font-size: 1rem; }
+.p-stats { color: var(--gold); font-size: 0.85rem; }
+
+.p-cards {
+    margin-left: auto;
+    display: flex;
+    gap: 5px;
+}
+
+.card-y { width: 10px; height: 14px; background: #ffcc00; border-radius: 2px; }
+.card-r { width: 10px; height: 14px; background: #cc0000; border-radius: 2px; }
+
+/* --- SIDEBAR --- */
+.match-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .venue-card h4 {
-    color: #edbb00;
+    font-family: 'Oswald', sans-serif;
+    color: var(--text-gray);
+    font-size: 0.9rem;
     text-transform: uppercase;
-    margin-top: 0;
+    margin-bottom: 5px;
 }
 
-.venue-card p {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 5px 0 0;
-}
-
-@media (max-width: 1100px) {
+/* --- RESPONSIVE --- */
+@media (max-width: 1000px) {
     .match-content-grid { grid-template-columns: 1fr; }
-    .hero-content { gap: 20px; }
-    .hero-team img { width: 100px; height: 100px; }
-    .big-score { font-size: 5rem; }
+    .hero-content { flex-direction: column; gap: 30px; }
+    .big-score { font-size: 4rem; }
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'; // Import toast
 import './Auth.css';
 
 const Register = () => {
@@ -14,14 +15,19 @@ const Register = () => {
         try {
             await api.post('register/', formData);
             
-            // 1. SAVE the email to localStorage (VerifyOTP needs this)
+            // 1. Save the email for the verification step
             localStorage.setItem('email_to_verify', formData.email);
             
-            // 2. Redirect immediately
+            // 2. Success Toast
+            toast.success("OTP sent to your email!");
+            
+            // 3. Redirect
             navigate('/verify-otp');
         } catch (err) {
+            // Check for specific backend errors (e.g., user already exists)
+            const errorMsg = err.response?.data?.error || err.response?.data?.message || "Registration Failed";
+            toast.error(errorMsg);
             console.error(err.response?.data);
-            alert("Registration Failed: " + JSON.stringify(err.response?.data || "Server Error"));
         } finally {
             setLoading(false);
         }
@@ -30,31 +36,40 @@ const Register = () => {
     return (
         <div className="auth-body">
             <div className="auth-container">
-                <h2>Join ProLeague</h2>
+                <h2>Join <span>ProLeague</span></h2>
                 <form onSubmit={handleSubmit}>
-                    <input 
-                        type="text" 
-                        placeholder="Username" 
-                        onChange={e => setFormData({...formData, username: e.target.value})} 
-                        required 
-                    />
-                    <input 
-                        type="email" 
-                        placeholder="Email" 
-                        onChange={e => setFormData({...formData, email: e.target.value})} 
-                        required 
-                    />
-                    <input 
-                        type="password" 
-                        placeholder="Password" 
-                        onChange={e => setFormData({...formData, password: e.target.value})} 
-                        required 
-                    />
-                    <button type="submit" disabled={loading}>
+                    <div className="input-group">
+                        <input 
+                            type="text" 
+                            placeholder="Username" 
+                            onChange={e => setFormData({...formData, username: e.target.value})} 
+                            required 
+                        />
+                    </div>
+                    <div className="input-group">
+                        <input 
+                            type="email" 
+                            placeholder="Email" 
+                            onChange={e => setFormData({...formData, email: e.target.value})} 
+                            required 
+                        />
+                    </div>
+                    <div className="input-group">
+                        <input 
+                            type="password" 
+                            placeholder="Password" 
+                            onChange={e => setFormData({...formData, password: e.target.value})} 
+                            required 
+                        />
+                    </div>
+                    <button type="submit" className="auth-btn" disabled={loading}>
                         {loading ? "Sending OTP..." : "Create Account"}
                     </button>
                 </form>
-                <p>Already have an account? <span onClick={() => navigate('/login')} style={{cursor:'pointer', color:'#007bff'}}>Login here</span></p>
+                <p className="auth-switch">
+                    Already have an account? 
+                    <span onClick={() => navigate('/login')}> Login here</span>
+                </p>
             </div>
         </div>
     );

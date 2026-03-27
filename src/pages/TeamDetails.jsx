@@ -5,14 +5,18 @@ import './TeamDetails.css';
 
 const TeamDetails = () => {
     const { id } = useParams();
-    const [team, setTeam] = useState(null);
+    const [data, setData] = useState({ team: null, upcoming: [], finished: [] });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchTeamData = async () => {
             try {
                 const res = await api.get(`teams/${id}/`);
-                setTeam(res.data);
+                setData({
+                    team: res.data.team_details,
+                    upcoming: res.data.upcoming,
+                    finished: res.data.finished
+                });
             } catch (err) {
                 console.error("Error fetching team details:", err);
             } finally {
@@ -22,10 +26,11 @@ const TeamDetails = () => {
         fetchTeamData();
     }, [id]);
 
+    const { team, upcoming, finished } = data;
+
     if (loading) return <div className="barca-loader">Loading Club Profile...</div>;
     if (!team) return <div className="barca-error">Team not found.</div>;
 
-    // Filter Logic for Positions
     const getPlayersByPos = (posCode) => {
         return team.players ? team.players.filter(p => p.position === posCode) : [];
     };
@@ -39,7 +44,7 @@ const TeamDetails = () => {
 
     return (
         <div className="barca-team-container">
-            {/* HERO BANNER SECTION */}
+            {/* HERO BANNER */}
             <header className="barca-hero" style={{ '--accent': team.primary_color || '#a50044' }}>
                 <div className="hero-overlay"></div>
                 <div className="hero-content">
@@ -57,42 +62,89 @@ const TeamDetails = () => {
 
             <div className="barca-main-content">
                 <div className="squad-wrapper">
+                    
+                    {/* UPCOMING MATCHES */}
+                    <section className="match-section">
+                        <div className="position-title-bar">
+                            <h2>Upcoming <span>Fixtures</span></h2>
+                            <div className="title-line"></div>
+                        </div>
+                        <div className="team-matches-list">
+                            {upcoming.length > 0 ? (
+                                upcoming.map(m => (
+                                    <div key={m.id} className="match-row-compact fixture">
+                                        <div className="compact-team home">
+                                            <span>{m.home_team_name}</span>
+                                            <img src={m.home_team_logo} alt="" />
+                                        </div>
+                                        <div className="compact-time-box">
+                                            <span className="match-time-tag">VS</span>
+                                            <small>{new Date(m.match_date).toLocaleDateString()}</small>
+                                        </div>
+                                        <div className="compact-team away">
+                                            <img src={m.away_team_logo} alt="" />
+                                            <span>{m.away_team_name}</span>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : <p className="no-data">No upcoming matches scheduled.</p>}
+                        </div>
+                    </section>
+
+                    {/* RECENT RESULTS */}
+                    <section className="match-section">
+                        <div className="position-title-bar">
+                            <h2>Recent <span>Results</span></h2>
+                            <div className="title-line"></div>
+                        </div>
+                        <div className="team-matches-list">
+                            {finished.length > 0 ? (
+                                finished.map(m => (
+                                    <Link to={`/matches/${m.id}`} key={m.id} className="match-row-compact result">
+                                        <div className="compact-team home">
+                                            <span>{m.home_team_name}</span>
+                                            <img src={m.home_team_logo} alt="" />
+                                        </div>
+                                        <div className="compact-score-box">
+                                            <span className="compact-score">{m.home_score} - {m.away_score}</span>
+                                        </div>
+                                        <div className="compact-team away">
+                                            <img src={m.away_team_logo} alt="" />
+                                            <span>{m.away_team_name}</span>
+                                        </div>
+                                    </Link>
+                                ))
+                            ) : <p className="no-data">No recent results found.</p>}
+                        </div>
+                    </section>
+
+                    {/* SQUAD SECTIONS */}
                     {positionGroups.map((pos) => {
                         const players = getPlayersByPos(pos.code);
                         if (players.length === 0) return null;
-
                         return (
                             <section key={pos.code} className="position-section">
                                 <div className="position-title-bar">
                                     <h2>{pos.title}</h2>
                                     <div className="title-line"></div>
                                 </div>
-                                
                                 <div className="barca-player-grid">
                                     {players.map(player => (
                                         <Link to={`/players/${player.id}`} key={player.id} className="barca-player-card">
-                                            {/* Visual Area */}
                                             <div className="card-top">
                                                 <span className="jersey-bg-num">{player.number}</span>
                                                 <img src={player.photo} alt={player.name} className="player-img-cutout" />
                                             </div>
-
-                                            {/* Identity Area (Pops up on Hover) */}
                                             <div className="card-bottom">
                                                 <div className="p-identity-wrap">
                                                     <span className="p-num-accent">#{player.number}</span>
                                                     <h3 className="p-name-main">{player.name}</h3>
                                                     <span className="p-pos-sub">{player.position}</span>
                                                 </div>
-                                                
                                                 <div className="p-stats-hover">
                                                     <div className="stat-line">
                                                         <span>{player.position === 'GK' ? 'Saves' : 'Goals'}</span>
                                                         <span>{player.position === 'GK' ? player.saves : player.goals}</span>
-                                                    </div>
-                                                    <div className="stat-line">
-                                                        <span>Matches</span>
-                                                        <span>{player.matches_played}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -114,7 +166,7 @@ const TeamDetails = () => {
                     <div className="sidebar-card stadium-highlight">
                         <h3>Home Stadium</h3>
                         <h4>{team.stadium}</h4>
-                        <p>Join the atmosphere on matchday.</p>
+                        <div className="stadium-mini-tag">Home Ground</div>
                     </div>
                 </aside>
             </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'; // Import toast
 import './Auth.css';
 
 const VerifyOTP = () => {
@@ -10,7 +11,9 @@ const VerifyOTP = () => {
     const email = localStorage.getItem('email_to_verify');
 
     useEffect(() => {
-        if (!email) navigate('/login');
+        if (!email) {
+            navigate('/login');
+        }
     }, [email, navigate]);
 
     const handleVerify = async (e) => {
@@ -18,10 +21,17 @@ const VerifyOTP = () => {
         setLoading(true);
         try {
             await api.post('verify-otp/', { email, otp });
+            
+            // 1. Success Toast
+            toast.success("Email verified successfully! You can now login.");
+            
+            // 2. Cleanup and Redirect
             localStorage.removeItem('email_to_verify');
-            navigate('/login'); // Success Redirect
+            navigate('/login'); 
         } catch (err) {
-            alert("Invalid OTP");
+            // 3. Error Toast
+            const errorMsg = err.response?.data?.error || "Invalid or expired OTP. Please try again.";
+            toast.error(errorMsg);
         } finally {
             setLoading(false);
         }
@@ -30,23 +40,40 @@ const VerifyOTP = () => {
     return (
         <div className="auth-body">
             <div className="auth-container">
-                <h2>Verify Email</h2>
-                <p>Code sent to: <strong>{email}</strong></p>
+                <div className="auth-header">
+                    <h2>Verify <span>Email</span></h2>
+                    <p>Enter the 6-digit code sent to:<br/><strong>{email}</strong></p>
+                </div>
+
                 <form onSubmit={handleVerify}>
-                    <input 
-                        type="text" 
-                        maxLength="6"
-                        placeholder="000000"
-                        onChange={e => setOtp(e.target.value)}
-                        style={{ textAlign: 'center', letterSpacing: '8px', fontSize: '1.5rem' }}
-                        required 
-                    />
-                    <button type="submit" disabled={loading}>
-                        {loading ? "Verifying..." : "Verify & Login"}
+                    <div className="input-group">
+                        <input 
+                            type="text" 
+                            maxLength="6"
+                            placeholder="000000"
+                            value={otp}
+                            onChange={e => setOtp(e.target.value)}
+                            className="otp-input-field"
+                            style={{ 
+                                textAlign: 'center', 
+                                letterSpacing: '8px', 
+                                fontSize: '1.8rem',
+                                fontWeight: 'bold'
+                            }}
+                            required 
+                        />
+                    </div>
+                    <button type="submit" className="auth-btn" disabled={loading}>
+                        {loading ? "Verifying..." : "Verify & Activate Account"}
                     </button>
                 </form>
+
+                <div className="auth-footer">
+                    <p>Didn't get a code? <span onClick={() => navigate('/register')} style={{color: '#007bff', cursor: 'pointer'}}>Try registering again</span></p>
+                </div>
             </div>
         </div>
     );
 };
+
 export default VerifyOTP;

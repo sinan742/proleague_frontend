@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '../api';
 import './Auth.css'; 
+import { toast } from 'react-toastify'; // 1. Import toast
 
 const ForgotPassword = () => {
+    const navigate = useNavigate()
+    
     const [step, setStep] = useState(1); // 1: Request OTP, 2: Reset Password
     const [email, setEmail] = useState('');
     const [otp, setOtp] = useState('');
@@ -27,18 +30,36 @@ const ForgotPassword = () => {
     };
 
     const handleResetPassword = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            await api.post('reset-password-confirm/', { email, otp, password: newPassword });
-            setMessage({ type: 'success', text: 'Password reset successful! Redirecting...' });
-            setTimeout(() => window.location.href = '/login', 2000);
-        } catch (err) {
-            setMessage({ type: 'error', text: 'Invalid OTP or request failed.' });
-        } finally {
-            setLoading(false);
-        }
-    };
+    e.preventDefault();
+    setLoading(true);
+    
+    try {
+        // Sending the reset data to your Django backend
+        await api.post('reset-password-confirm/', { 
+            email, 
+            otp, 
+            password: newPassword 
+        });
+
+        // 1. Success Notification
+        toast.success('Password reset successful! Redirecting to login...');
+        navigate()
+
+        // 2. Smooth Redirect after 2 seconds
+        setTimeout(() => {
+            navigate('/login');
+        }, 2000);
+
+    } catch (err) {
+        // 3. Error Notification
+        // Pulls the specific error message from Django if it exists
+        const errorMsg = err.response?.data?.error || 'Invalid OTP or request failed.';
+        toast.error(errorMsg);
+        
+    } finally {
+        setLoading(false);
+    }
+};
 
     return (
         <div className="auth-body">

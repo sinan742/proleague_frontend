@@ -1,40 +1,51 @@
 import React, { useState } from 'react';
 import api from '../api'; 
 import { useNavigate } from 'react-router-dom';
-import './Auth.css'; // Using the same CSS as Register
+import Cookies from 'js-cookie'; 
+import { toast } from 'react-toastify'; // 1. Import toast
+import './Auth.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
     
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError('');
 
         try {
-            // 1. Send login request
             const response = await api.post('login/', { email, password });
             
-            // 2. Extract admin status
-            const isAdmin = response.data.is_admin; 
+            const { access, is_admin } = response.data; 
 
-            // 3. Save for UI persistence (Navbar etc)
-            localStorage.setItem('is_admin', isAdmin.toString());
+            // Save Token to Cookies
+            Cookies.set('access_token', access, { 
+                expires: 1, 
+                secure: true, 
+                sameSite: 'strict' 
+            });
 
-            // 4. Redirect Logic based on role
-            if (isAdmin === true) {
-                navigate('/admin-dashboard'); 
+            // Save Admin Status
+            localStorage.setItem('is_admin', is_admin.toString());
+
+            // 2. Success Toast
+            toast.success(`Welcome back! ${is_admin ? 'Admin Access Granted.' : ''}`);
+
+            // 3. Redirect using navigate for a better UX (or replace if you must refresh state)
+            if (is_admin === true) {
+                navigate('/admin-dashboard');
             } else {
-                navigate('/home'); 
+                navigate('/'); 
             }
 
         } catch (err) {
-            setError(err.response?.data?.error || "Login failed. Check credentials.");
+            // 4. Error Toast
+            const errorMsg = err.response?.data?.error || "Login failed. Check your credentials.";
+            toast.error(errorMsg);
+            console.error(err.response?.data);
         } finally {
             setLoading(false);
         }
@@ -43,34 +54,36 @@ const Login = () => {
     return (
         <div className="auth-body">
             <div className="auth-container">
-                <h2>ProLeague Login</h2>
-                
-                {error && <p className="error-message" style={{ color: '#d9534f', backgroundColor: '#f9dfde', padding: '10px', borderRadius: '4px', fontSize: '13px' }}>{error}</p>}
+                <h2>ProLeague <span>Login</span></h2>
                 
                 <form onSubmit={handleLogin}>
-                    <input 
-                        type="email" 
-                        placeholder="Email" 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)} 
-                        required 
-                    />
-                    <input 
-                        type="password" 
-                        placeholder="Password" 
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)} 
-                        required 
-                    />
-                    <button type="submit" disabled={loading}>
+                    <div className="input-group">
+                        <input 
+                            type="email" 
+                            placeholder="Email" 
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)} 
+                            required 
+                        />
+                    </div>
+                    <div className="input-group">
+                        <input 
+                            type="password" 
+                            placeholder="Password" 
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)} 
+                            required 
+                        />
+                    </div>
+                    <button type="submit" className="auth-btn" disabled={loading}>
                         {loading ? "Checking..." : "Sign In"}
                     </button>
                 </form>
                 
-                <p>New to ProLeague? <span onClick={() => navigate('/register')} style={{color: '#007bff', cursor: 'pointer', fontWeight: 'bold'}}>Create an account</span></p>
-                <p>Forgotpassword? <span onClick={() => navigate('/forgot-password')} style={{color: '#007bff', cursor: 'pointer', fontWeight: 'bold'}}>ForgotPassword</span></p>
-                
-                
+                <div className="auth-links">
+                    <p>New to ProLeague? <span onClick={() => navigate('/register')} className="link-text">Create an account</span></p>
+                    <p>Forgot password? <span onClick={() => navigate('/forgot-password')} className="link-text">Reset here</span></p>
+                </div>
             </div>
         </div>
     );
