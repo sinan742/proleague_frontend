@@ -1,97 +1,138 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
+import { toast } from 'react-toastify';
 import './Profile.css';
 
 const Profile = () => {
+    const [userData, setUserData] = useState(null);
     const [formData, setFormData] = useState({
         username: '',
         email: '',
-        points: 0,
-        role: ''
+        password: '',
     });
-    const [message, setMessage] = useState({ type: '', text: '' });
-    const [loading, setLoading] = useState(true);
+    const [imageFile, setImageFile] = useState(null);
+    const [preview, setPreview] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [fetching, setFetching] = useState(true);
 
     useEffect(() => {
-        const loadProfile = async () => {
-            try {
-                const res = await api.get('profile/');
-                setFormData({
-                    username: res.data.username,
-                    email: res.data.email,
-                    points: res.data.points,
-                    role: res.data.role
+        api.get('profile/')
+            .then(res => {
+                setUserData(res.data);
+                setFormData({ 
+                    username: res.data.username, 
+                    email: res.data.email, 
+                    password: '' 
                 });
-            } catch (err) {
-                setMessage({ type: 'error', text: 'Failed to load profile.' });
-            } finally {
-                setLoading(false);
-            }
-        };
-        loadProfile();
+                setPreview(res.data.profile_image);
+                setFetching(false);
+            })
+            .catch(() => {
+                toast.error("Access Denied. Please log in.");
+                setFetching(false);
+            });
     }, []);
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        setMessage({ type: '', text: '' });
+        setLoading(true);
+
+        const data = new FormData();
+        data.append('username', formData.username);
+        data.append('email', formData.email);
+        if (formData.password) data.append('password', formData.password);
+        if (imageFile) data.append('profile_image', imageFile);
+
         try {
-            await api.put('profile/', {
-                username: formData.username,
-                email: formData.email
+            const res = await api.put('profile/', data, {
+                headers: { 'Content-Type': 'multipart/form-data' }
             });
-            setMessage({ type: 'success', text: 'Profile updated successfully!' });
+            toast.success("Profile Synced with League!");
+            setPreview(res.data.profile_image);
+            setFormData(prev => ({ ...prev, password: '' }));
         } catch (err) {
-            setMessage({ type: 'error', text: 'Update failed. Username might be taken.' });
+            toast.error("Failed to update profile.");
+        } finally {
+            setLoading(false);
         }
     };
 
-    if (loading) return <div className="loader">Loading...</div>;
+    if (fetching) return <div className="lp-loading-screen">SYNCING LEAGUE DATA...</div>;
 
     return (
-        <div className="auth-body">
-            <div className="auth-container profile-card">
-                <h2>Account Settings</h2>
-                
-                {/* Points Summary Section */}
-                <div className="profile-stats">
-                    <div className="stat-item">
-                        <label>Total Rewards</label>
-                        <p className="points-text">🪙 {formData.points} Points</p>
+        <div className="lp-body-wrapper">
+            <div className="lp-profile-card">
+                <h2 className="lp-title"> <span>Profile</span></h2>
+
+                <div className="lp-stats-container">
+                    <div className="lp-stat-box">
+                        <span className="lp-stat-label">League Role</span>
+                        <p className="lp-role-val">{userData?.role || 'Player'}</p>
                     </div>
-                    <div className="stat-item">
-                        <label>Account Type</label>
-                        <p className="role-text">{formData.role}</p>
+                    <div className="lp-stat-box">
+                        <span className="lp-stat-label">Current Points</span>
+                        <p className="lp-points-val">{userData?.points || 0} PTS</p>
                     </div>
                 </div>
 
-                {message.text && (
-                    <p className={message.type === 'success' ? 'status-success' : 'status-error'}>
-                        {message.text}
-                    </p>
-                )}
-
                 <form onSubmit={handleUpdate}>
-                    <div className="input-group">
+                    <div className="lp-image-group">
+                        <label htmlFor="lp-avatar-upload">
+                            <img 
+                                src={preview || '/default-avatar.png'} 
+                                alt="Athlete" 
+                                className="lp-avatar-preview" 
+                            />
+                        </label>
+                        <input 
+                            id="lp-avatar-upload"
+                            type="file" 
+                            accept="image/*" 
+                            style={{ display: 'none' }}
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    setImageFile(file);
+                                    setPreview(URL.createObjectURL(file));
+                                }
+                            }} 
+                        />
+                        <p style={{ color: '#94a3b8', fontSize: '0.7rem', marginTop: '10px' }}>
+                            Tap image to change avatar
+                        </p>
+                    </div>
+
+                    <div className="lp-input-field-group">
                         <label>Username</label>
                         <input 
                             type="text" 
                             value={formData.username} 
-                            onChange={(e) => setFormData({...formData, username: e.target.value})}
-                            required
+                            onChange={e => setFormData({...formData, username: e.target.value})} 
                         />
                     </div>
 
-                    <div className="input-group">
-                        <label>Email Address</label>
+                    <div className="lp-input-field-group">
+                        <label>Registered Email</label>
                         <input 
                             type="email" 
                             value={formData.email} 
-                            onChange={(e) => setFormData({...formData, email: e.target.value})}
-                            required
+                            onChange={e => setFormData({...formData, email: e.target.value})} 
                         />
                     </div>
 
-                    <button type="submit" className="auth-btn">Save Changes</button>
+                    <div className="lp-input-field-group">
+                        <label>Security (New Password)</label>
+                        <input 
+                            type="password" 
+                            placeholder="Keep empty to leave unchanged"
+                            value={formData.password} 
+                            onChange={e => setFormData({...formData, password: e.target.value})} 
+                        />
+                    </div>
+
+                    <button type="submit" className="lp-submit-btn" disabled={loading}>
+                        {loading ? "Updating..." : "Update Profile"}
+                    </button>
                 </form>
             </div>
         </div>

@@ -91,7 +91,7 @@ const Home = () => {
                 {/* SLIDER: Match Center */}
                 <section className="match-slider-section">
                     <div className="section-header-flex">
-                        <h2 className="section-title">Match <span>Center</span> 🏟️</h2>
+                        <h2 className="section-title">Match <span>Center</span> </h2>
                         <Link to="/matches" className="view-all-link">See All Matches</Link>
                     </div>
                     <div className="horizontal-slider">
@@ -119,7 +119,7 @@ const Home = () => {
 
                 {/* SUPERSTARS */}
                 <section className="spotlight-section">
-                    <h2 className="section-title">Season <span>Superstars</span> 🏆</h2>
+                    <h2 className="section-title">Season <span>Superstars</span> </h2><br />
                     <div className="spotlight-grid">
                         <PlayerCard player={stats.scorer} label="Golden Boot" stat="goals" unit="Goals" icon="⚽" color="#edbb00" />
                         <PlayerCard player={stats.asister} label="Playmaker" stat="assists" unit="Assists" icon="👟" color="#58a6ff" />
@@ -129,7 +129,7 @@ const Home = () => {
 
                 {/* POINTS TABLE */}
                 <section className="full-table-section">
-                    <h2 className="section-title">League <span>Standings</span> 📊</h2>
+                    <h2 className="section-title">League <span>Standings</span> </h2>
                     <div className="mini-table-card">
                         <table className="m-points-table">
                             <thead>

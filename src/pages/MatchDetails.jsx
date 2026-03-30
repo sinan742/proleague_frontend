@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../api';
 import './MatchDetails.css';
+import FootballLoader from '../FootballLoader';
 
 const MatchDetails = () => {
     const { id } = useParams();
@@ -12,7 +13,7 @@ const MatchDetails = () => {
         api.get(`matches/${id}/stats/`).then(res => setMatch(res.data));
     }, [id]);
 
-    if (!match) return <div className="barca-loader">Fetching Match Data...</div>;
+    if (!match) return <div className="barca-loader"><FootballLoader/></div>;
 
     // Helper to find stats for home/away
     const homeStats = match.statistics?.find(s => s.team_name === match.home_team_name) || {};

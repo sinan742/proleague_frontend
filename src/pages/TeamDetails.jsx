@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../api';
 import './TeamDetails.css';
+import FootballLoader from '../FootballLoader';
 
 const TeamDetails = () => {
     const { id } = useParams();
@@ -28,8 +29,8 @@ const TeamDetails = () => {
 
     const { team, upcoming, finished } = data;
 
-    if (loading) return <div className="barca-loader">Loading Club Profile...</div>;
-    if (!team) return <div className="barca-error">Team not found.</div>;
+    if (loading) return <div className="barca-loader"><FootballLoader/></div>;
+    if (!team) return <div className="barca-error"><FootballLoader/></div>;
 
     const getPlayersByPos = (posCode) => {
         return team.players ? team.players.filter(p => p.position === posCode) : [];

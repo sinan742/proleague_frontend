@@ -1,35 +1,40 @@
-/* Container and Layout */
-.auth-body {
-    min-height: 90vh;
+/* Unique Scoped Styles for ProLeague Profile */
+.lp-body-wrapper {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #0f0f1e; /* Dark sports theme */
-    padding: 20px;
+    padding: 40px 20px;
+    font-family: 'Inter', sans-serif;
 }
 
-.profile-card {
+.lp-profile-card {
     max-width: 500px !important;
     width: 100%;
     background: #1a1a2e;
     border: 1px solid #2d3748;
     padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
-.profile-card h2 {
+.lp-title {
     color: white;
     text-align: center;
     margin-bottom: 30px;
     font-size: 1.8rem;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+}
+
+.lp-title span {
+    color: #007bff; /* Action Blue */
 }
 
 /* Stats Summary Box */
-.profile-stats {
+.lp-stats-container {
     display: flex;
     justify-content: space-between;
     background: #16213e;
@@ -39,51 +44,78 @@
     border: 1px solid #0f3460;
 }
 
-.stat-item {
+.lp-stat-box {
     text-align: center;
+    flex: 1;
 }
 
-.stat-item label {
-    font-size: 0.75rem;
+.lp-stat-label {
+    font-size: 0.7rem;
     color: #94a3b8;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
-.points-text {
+.lp-points-val {
     color: #ffd700; /* Gold */
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 900;
     margin: 0;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
 }
 
-.role-text {
-    color: #007bff; /* Blue */
-    font-size: 1.1rem;
+.lp-role-val {
+    color: #007bff;
+    font-size: 1.2rem;
     font-weight: 700;
     margin: 0;
     text-transform: capitalize;
 }
 
-/* Form Styling */
-.input-group {
-    margin-bottom: 20px;
+/* Profile Image Section */
+.lp-image-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
 }
 
-.input-group label {
+.lp-avatar-preview {
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #007bff;
+    background: #0f172a;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.lp-avatar-preview:hover {
+    transform: scale(1.05) rotate(2deg);
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.4);
+}
+
+/* Form Styling */
+.lp-input-field-group {
+    margin-bottom: 22px;
+}
+
+.lp-input-field-group label {
     display: block;
     color: #cbd5e0;
     margin-bottom: 8px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
 }
 
-.input-group input {
+.lp-input-field-group input {
     width: 100%;
-    padding: 12px 15px;
+    padding: 14px 15px;
     background: #0f172a;
     border: 1px solid #334155;
     border-radius: 8px;
@@ -92,39 +124,17 @@
     transition: 0.3s;
 }
 
-.input-group input:focus {
+.lp-input-field-group input:focus {
     outline: none;
     border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
-}
-
-/* Status Messages */
-.status-success {
-    background: rgba(72, 187, 120, 0.15);
-    color: #48bb78;
-    padding: 12px;
-    border-radius: 8px;
-    text-align: center;
-    font-weight: 600;
-    margin-bottom: 20px;
-    border: 1px solid rgba(72, 187, 120, 0.3);
-}
-
-.status-error {
-    background: rgba(245, 101, 101, 0.15);
-    color: #f56565;
-    padding: 12px;
-    border-radius: 8px;
-    text-align: center;
-    font-weight: 600;
-    margin-bottom: 20px;
-    border: 1px solid rgba(245, 101, 101, 0.3);
+    background: #1e293b;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
 }
 
 /* Action Button */
-.auth-btn {
+.lp-submit-btn {
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     background: #007bff;
     color: white;
     border: none;
@@ -132,23 +142,37 @@
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     margin-top: 10px;
 }
 
-.auth-btn:hover {
+.lp-submit-btn:hover {
     background: #0056b3;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
 }
 
-/* Loader */
-.loader {
+.lp-submit-btn:disabled {
+    background: #1e293b;
+    color: #4a5568;
+    cursor: not-allowed;
+    animation: lp-pulse 2s infinite;
+}
+
+@keyframes lp-pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+.lp-loading-screen {
     color: #007bff;
     text-align: center;
-    padding: 100px;
-    font-size: 1.2rem;
-    font-weight: 600;
+    padding-top: 20vh;
+    font-size: 1.5rem;
+    font-weight: 800;
+    background-color: #0f0f1e;
+    min-height: 100vh;
 }

@@ -1,51 +1,65 @@
 import React, { useState } from 'react';
 import api from '../api'; 
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie'; 
-import { toast } from 'react-toastify'; // 1. Import toast
+import { toast } from 'react-toastify';
 import './Auth.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errors, setErrors] = useState({}); 
     const [loading, setLoading] = useState(false);
     
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
-        e.preventDefault();
+        if (e) e.preventDefault();
+        
+        setErrors({}); 
+        
+        // Frontend Validation
+        let tempErrors = {};
+        if (!email.trim()) tempErrors.email = "Email is required";
+        if (!password) tempErrors.password = "Password is required";
+
+        if (Object.keys(tempErrors).length > 0) {
+            setErrors(tempErrors);
+            return;
+        }
+
         setLoading(true);
 
         try {
-            const response = await api.post('login/', { email, password });
-            
-            const { access, is_admin } = response.data; 
-
-            // Save Token to Cookies
-            Cookies.set('access_token', access, { 
-                expires: 1, 
-                secure: true, 
-                sameSite: 'strict' 
+            const response = await api.post('login/', { 
+                email: email.trim(), 
+                password: password 
             });
-
-            // Save Admin Status
+            
+            const { is_admin } = response.data; 
             localStorage.setItem('is_admin', is_admin.toString());
 
-            // 2. Success Toast
-            toast.success(`Welcome back! ${is_admin ? 'Admin Access Granted.' : ''}`);
+            toast.success("Login successful!");
 
-            // 3. Redirect using navigate for a better UX (or replace if you must refresh state)
-            if (is_admin === true) {
-                navigate('/admin-dashboard');
-            } else {
-                navigate('/'); 
-            }
+            if (is_admin) navigate('/admin-dashboard');
+            else navigate('/'); 
 
         } catch (err) {
-            // 4. Error Toast
-            const errorMsg = err.response?.data?.error || "Login failed. Check your credentials.";
-            toast.error(errorMsg);
-            console.error(err.response?.data);
+            if (err.response) {
+                const status = err.response.status;
+                const serverError = err.response.data.error || "Login failed";
+
+                if (status === 404) {
+                    setErrors({ email: serverError });
+                    toast.error(serverError); // Toast for Email not found
+                } else if (status === 401) {
+                    setErrors({ password: serverError });
+                    toast.error(serverError); // Toast for Incorrect Password
+                } else {
+                    toast.error(serverError);
+                }
+            } else {
+                toast.error("Server connection failed.");
+            }
         } finally {
             setLoading(false);
         }
@@ -55,35 +69,57 @@ const Login = () => {
         <div className="auth-body">
             <div className="auth-container">
                 <h2>ProLeague <span>Login</span></h2>
+                <span className="auth-subtitle">Athlete Authentication</span>
                 
-                <form onSubmit={handleLogin}>
+                <form noValidate>
+                    {/* Email Field */}
                     <div className="input-group">
                         <input 
+                            className={errors.email ? 'input-error' : ''}
                             type="email" 
-                            placeholder="Email" 
+                            placeholder="Email Address" 
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)} 
-                            required 
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                                if (errors.email) setErrors(prev => ({ ...prev, email: "" }));
+                            }} 
                         />
+                        {errors.email && <span className="error-text">{errors.email}</span>}
                     </div>
+
+                    {/* Password Field */}
                     <div className="input-group">
                         <input 
+                            className={errors.password ? 'input-error' : ''}
                             type="password" 
                             placeholder="Password" 
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)} 
-                            required 
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                                if (errors.password) setErrors(prev => ({ ...prev, password: "" }));
+                            }} 
                         />
+                        {errors.password && <span className="error-text">{errors.password}</span>}
+                        
+                        
                     </div>
-                    <button type="submit" className="auth-btn" disabled={loading}>
+
+                    <button 
+                        type="button" 
+                        className="auth-btn" 
+                        disabled={loading}
+                        onClick={handleLogin}
+                    >
                         {loading ? "Checking..." : "Sign In"}
                     </button>
                 </form>
                 
-                <div className="auth-links">
-                    <p>New to ProLeague? <span onClick={() => navigate('/register')} className="link-text">Create an account</span></p>
-                    <p>Forgot password? <span onClick={() => navigate('/forgot-password')} className="link-text">Reset here</span></p>
+                <div className="auth-footer">
+                    <p>New to ProLeague? <span onClick={() => navigate('/register')}>Join Now</span></p>
+                    <p>forgot password? <span onClick={() => navigate('/forgot-password')}>reset</span></p>
+
                 </div>
+                
             </div>
         </div>
     );

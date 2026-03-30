@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api';
 import './Team.css';
+import FootballLoader from '../FootballLoader';
 
 const Team = () => {
     const [teams, setTeams] = useState([]);
@@ -21,7 +22,7 @@ const Team = () => {
         fetchTeams();
     }, []);
 
-    if (loading) return <div className="loader">Loading League Teams...</div>;
+    if (loading) return <div className="loader"><FootballLoader/></div>;
 
     return (
         <div className="teams-page">

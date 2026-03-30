@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../api';
 import './PlayerDetail.css';
+import FootballLoader from '../FootballLoader';
 
 const PlayerDetail = () => {
     const { id } = useParams();
@@ -22,8 +23,8 @@ const PlayerDetail = () => {
         fetchPlayer();
     }, [id]);
 
-    if (loading) return <div className="loading-state">Loading Profile...</div>;
-    if (!player) return <div className="error-state">Player Not Found</div>;
+    if (loading) return <div className="loading-state"><FootballLoader/></div>;
+    if (!player) return <div className="error-state"><FootballLoader/></div>;
 
     return (
         <div className="barca-player-page">

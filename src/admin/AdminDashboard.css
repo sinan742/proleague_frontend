@@ -1,0 +1,142 @@
+.ad-dashboard-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: #0f0f1e;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar Styling */
+.ad-sidebar {
+    width: 260px;
+    background: #1a1a2e;
+    border-right: 1px solid #2d3748;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ad-logo {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.ad-logo span {
+    color: #007bff;
+}
+
+.ad-nav-links {
+    list-style: none;
+    padding: 0;
+}
+
+.ad-nav-links li {
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.ad-nav-links li:hover, .ad-nav-links li.active {
+    background: rgba(0, 123, 255, 0.1);
+    color: #007bff;
+}
+
+/* Main Content Area */
+.ad-main-content {
+    flex: 1;
+    padding: 40px;
+}
+
+.ad-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.ad-header h1 {
+    font-size: 1.8rem;
+    text-transform: uppercase;
+}
+
+.ad-header h1 span {
+    color: #007bff;
+}
+
+.ad-user-pill {
+    background: #238636;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* Stats Cards Grid */
+.ad-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.ad-stat-card {
+    background: #16213e;
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid #2d3748;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.ad-stat-icon {
+    font-size: 2.5rem;
+    background: #1a1a2e;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    border: 1px solid #007bff;
+}
+
+.ad-stat-info h3 {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    margin-bottom: 5px;
+}
+
+.ad-stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffd700; /* Gold numbers */
+}
+
+/* Quick Actions */
+.ad-action-btns {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.ad-btn-primary, .ad-btn-secondary {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.ad-btn-primary { background: #007bff; color: white; }
+.ad-btn-secondary { background: #1a1a2e; color: white; border: 1px solid #334155; }
+
+.ad-btn-primary:hover { background: #0056b3; }

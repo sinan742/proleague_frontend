@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api';
 import './Match.css';
+import FootballLoader from '../FootballLoader';
 
 const Match = () => {
     const [matches, setMatches] = useState([]);
@@ -14,7 +15,7 @@ const Match = () => {
         });
     }, []);
 
-    if (loading) return <div className="barca-loader">Loading Fixtures...</div>;
+    if (loading) return <div className="barca-loader"><FootballLoader/></div>;
 
     return (
         <div className="match-page-container">

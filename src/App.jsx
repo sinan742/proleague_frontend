@@ -18,6 +18,7 @@ import PointTable from './pages/PointTable';
 import PublicRoute from './PublicRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AdminManageTeams from './admin/AdminManageTeams';
 // Assume you'll create these next:
 // import Login from './Login';
 // import Dashboard from './Dashboard';
@@ -25,7 +26,7 @@ const NavigationWrapper = () => {
   const location = useLocation();
   
   // List of paths where you DON'T want the Navbar to appear
-  const hideNavbarPaths = ['/login', '/register', '/verify-otp'];
+  const hideNavbarPaths = ['/login', '/register', '/verify-otp','/forgot-password','/admin-dashboard','/admin-teams-management'];
 
   // Only show Navbar if the current path is NOT in the list
   if (hideNavbarPaths.includes(location.pathname)) {
@@ -71,6 +72,11 @@ function App() {
           <Route path="/matches" element={<Match/>} />
           <Route path="/matches/:id" element={<MatchDetails/>} />
           <Route path="/point-table" element={<PointTable/>} />
+
+          <Route path="/admin-teams-management" element={<AdminManageTeams/>} />
+
+
+
 
 
           

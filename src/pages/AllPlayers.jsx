@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api';
 import './AllPlayers.css';
+import FootballLoader from '../FootballLoader';
 
 const AllPlayers = () => {
     const [players, setPlayers] = useState([]);
@@ -42,7 +43,7 @@ const AllPlayers = () => {
         setFilteredPlayers(results);
     }, [searchTerm, activeFilter, players]);
 
-    if (loading) return <div className="league-loader">Loading League Stars...</div>;
+    if (loading) return <div className="league-loader"><FootballLoader/></div>;
 
     return (
         <div className="league-players-container">
