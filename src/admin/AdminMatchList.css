@@ -1,0 +1,109 @@
+/* --- MAIN LAYOUT --- */
+.ml-layout {
+    display: flex;
+    background-color: #0d1117; /* Dark background to match Pro-League theme */
+    min-height: 100vh;
+}
+
+.ml-content {
+    flex: 1;
+    margin-left: 260px; /* Adjust this to match your AdminNavbar width */
+    padding: 40px;
+    color: #f0f6fc;
+}
+
+/* --- HEADER --- */
+.ml-content h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 15px;
+}
+
+.ml-content h2 span {
+    color: #58a6ff; /* Primary blue accent */
+}
+
+/* --- MATCH GRID --- */
+.ml-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.ml-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.ml-card:hover {
+    transform: translateY(-5px);
+    border-color: #58a6ff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* --- TEAMS DISPLAY --- */
+.ml-teams {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.ml-teams span {
+    flex: 1;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ml-teams small {
+    color: #8b949e;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.9rem;
+}
+
+/* --- CONTROL BUTTON --- */
+.ml-control-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #238636; /* Green for "Go" actions */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.ml-control-btn:hover {
+    background-color: #2ea043;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 992px) {
+    .ml-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+    
+    .ml-grid {
+        grid-template-columns: 1fr; /* Single column on small screens */
+    }
+}

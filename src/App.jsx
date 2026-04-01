@@ -19,6 +19,8 @@ import PublicRoute from './PublicRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminManageTeams from './admin/AdminManageTeams';
+import AdminMatchControl from './admin/AdminMatchControl';
+import AdminMatchList from './admin/AdminMatchList';
 // Assume you'll create these next:
 // import Login from './Login';
 // import Dashboard from './Dashboard';
@@ -74,6 +76,9 @@ function App() {
           <Route path="/point-table" element={<PointTable/>} />
 
           <Route path="/admin-teams-management" element={<AdminManageTeams/>} />
+          <Route path="/admin-matches-management" element={<AdminMatchList/>} />
+          <Route path="/admin/match/:id" element={<AdminMatchControl />} />
+
 
 
 
