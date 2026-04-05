@@ -36,14 +36,21 @@ const AdminNavbar = () => {
                         <span className="an-icon">🛡️</span> Manage Teams
                     </NavLink>
                 </li>
-                {/* <li>
-                    <NavLink to="/admin/players" className={({ isActive }) => isActive ? "an-link active" : "an-link"}>
+                <li>
+                    <NavLink to="/admin-players-management" className={({ isActive }) => isActive ? "an-link active" : "an-link"}>
                         <span className="an-icon">👤</span> Manage Players
                     </NavLink>
-                </li> */}
+                </li>
+
+                <li>
+                    <NavLink to="/admin-match-shedule" className={({ isActive }) => isActive ? "an-link active" : "an-link"}>
+                        <span className="an-icon">⚽</span> Match Shedule
+                    </NavLink>
+                </li>
+                
                 <li>
                     <NavLink to="/admin-matches-management" className={({ isActive }) => isActive ? "an-link active" : "an-link"}>
-                        <span className="an-icon">⚽</span> Match Fixtures
+                        <span className="an-icon">⚽</span> Match Management
                     </NavLink>
                 </li>
             </ul>

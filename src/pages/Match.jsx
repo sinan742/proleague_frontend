@@ -13,6 +13,7 @@ const Match = () => {
             setMatches(res.data);
             setLoading(false);
         });
+
     }, []);
 
     if (loading) return <div className="barca-loader"><FootballLoader/></div>;
@@ -39,7 +40,7 @@ const Match = () => {
                             </div>
 
                             <div className="score-box">
-                                {m.is_completed ? (
+                                {m.status=='finished' || 'half_time' ? (
                                     <span className="final-score">{m.home_score} - {m.away_score}</span>
                                 ) : (
                                     <span className="match-time">VS</span>
@@ -54,7 +55,7 @@ const Match = () => {
 
                         <div className="match-footer">
                             <span className="status-tag">
-                                {m.is_completed ? 'Full Time' : 'Match Scheduled'}
+                                {m.status}
                             </span>
                             <span className="view-details">View Match Center →</span>
                         </div>

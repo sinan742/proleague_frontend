@@ -21,21 +21,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminManageTeams from './admin/AdminManageTeams';
 import AdminMatchControl from './admin/AdminMatchControl';
 import AdminMatchList from './admin/AdminMatchList';
+import AdminPlayerManagement from './admin/AdminPlayerManagement';
+import AdminMatchSchedule from './admin/AdminMatchSchedule';
 // Assume you'll create these next:
 // import Login from './Login';
 // import Dashboard from './Dashboard';
 const NavigationWrapper = () => {
   const location = useLocation();
   
-  // List of paths where you DON'T want the Navbar to appear
-  const hideNavbarPaths = ['/login', '/register', '/verify-otp','/forgot-password','/admin-dashboard','/admin-teams-management'];
+  const hideNavbarPaths = ['/login', '/register', '/verify-otp', '/forgot-password'];
+  
+  const shouldHide = 
+    hideNavbarPaths.includes(location.pathname) || 
+    location.pathname.startsWith('/admin'); // This hides for ALL admin pages
 
-  // Only show Navbar if the current path is NOT in the list
-  if (hideNavbarPaths.includes(location.pathname)) {
-    return null;
-  }
-
-  return <Navbar />;
+  return shouldHide ? null : <Navbar />;
 };
 
 function App() {
@@ -78,6 +78,9 @@ function App() {
           <Route path="/admin-teams-management" element={<AdminManageTeams/>} />
           <Route path="/admin-matches-management" element={<AdminMatchList/>} />
           <Route path="/admin/match/:id" element={<AdminMatchControl />} />
+          <Route path="/admin-players-management" element={<AdminPlayerManagement />} />
+          <Route path="/admin-match-shedule" element={<AdminMatchSchedule />} />
+
 
 
 

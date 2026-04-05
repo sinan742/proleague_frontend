@@ -1,36 +1,39 @@
-/* --- LAYOUT WRAPPER --- */
+/* --- LAYOUT STRUCTURE --- */
 .mc-layout {
     display: flex;
-    background-color: #0b0e14; /* Deep dark theme */
+    background-color: #0d1117;
     min-height: 100vh;
     color: #f0f6fc;
+    font-family: 'Inter', -apple-system, sans-serif;
 }
 
 .mc-main {
     flex: 1;
-    margin-left: 260px; /* Width of your AdminNavbar */
-    padding: 40px;
-    transition: all 0.3s ease;
+    margin-left: 260px; /* Aligns with Sidebar width */
+    padding: 30px;
+    box-sizing: border-box;
 }
 
 .mc-container {
-    max-width: 1100px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
 /* --- HEADER --- */
 .mc-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 15px;
 }
 
 .mc-header h2 {
-    font-size: 1.8rem;
-    font-weight: 700;
+    font-size: 1.6rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    margin: 0;
 }
 
 .mc-header h2 span {
@@ -40,197 +43,242 @@
 .mc-back-btn {
     background: #21262d;
     border: 1px solid #30363d;
-    color: #c9d1d9;
-    padding: 10px 20px;
-    border-radius: 8px;
+    color: #8b949e;
+    padding: 8px 16px;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: 600;
+    transition: 0.2s;
 }
 
 .mc-back-btn:hover {
-    background: #30363d;
-    color: white;
-}
-
-/* --- SCOREBOARD --- */
-.mc-scoreboard {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: linear-gradient(145deg, #161b22, #0d1117);
-    padding: 60px 30px;
-    border-radius: 24px;
-    border: 1px solid #30363d;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    margin-bottom: 40px;
-}
-
-.mc-team-block {
-    flex: 1;
-    text-align: center;
-}
-
-.mc-team-block img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    margin-bottom: 20px;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.05));
-}
-
-.mc-team-block h3 {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    color: #8b949e;
-}
-
-.mc-score-display {
-    font-size: 6rem;
-    font-weight: 900;
     color: #f0f6fc;
-    line-height: 1;
-    text-shadow: 0 0 20px rgba(88, 166, 255, 0.2);
+    border-color: #f0f6fc;
+    background: #30363d;
 }
 
-/* --- TIMER & STATUS --- */
-.mc-timer-block {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.mc-clock {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-size: 4.5rem;
-    color: #39ff14; /* Neon digital green */
-    background: #000;
-    padding: 10px 30px;
-    border-radius: 12px;
-    border: 2px solid #30363d;
-    box-shadow: inset 0 0 15px rgba(57, 255, 20, 0.1), 0 0 15px rgba(57, 255, 20, 0.1);
-}
-
-.mc-status-badge {
-    padding: 6px 16px;
+.mc-live-indicator {
+    background: rgba(248, 81, 73, 0.1);
+    color: #f85149;
+    padding: 6px 15px;
     border-radius: 20px;
-    font-size: 0.8rem;
     font-weight: 800;
+    font-size: 0.75rem;
+    border: 1px solid rgba(248, 81, 73, 0.2);
     text-transform: uppercase;
-    letter-spacing: 1px;
-    background: #21262d;
-    color: #8b949e;
-    border: 1px solid #30363d;
 }
 
-.mc-status-badge.live {
-    background: #f85149;
-    color: white;
-    border-color: #ff7b72;
-    animation: mc-pulse 1.5s infinite;
+.mc-live-indicator.active {
+    background: rgba(46, 160, 67, 0.1);
+    color: #3fb950;
+    border-color: rgba(46, 160, 67, 0.2);
+    animation: mc-pulse 2s infinite;
 }
 
 @keyframes mc-pulse {
     0% { opacity: 1; }
-    50% { opacity: 0.6; }
+    50% { opacity: 0.5; }
     100% { opacity: 1; }
 }
 
-/* --- CONTROLS --- */
-.mc-timer-controls {
+/* --- SCOREBOARD LANDSCAPE HERO --- */
+.mc-scoreboard {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1.2fr;
+    background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 40px;
+    align-items: center;
+    margin-bottom: 30px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+
+.mc-team-block {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 25px;
+    padding: 0 20px;
 }
 
-.mc-timer-controls button {
-    padding: 12px 20px;
-    border-radius: 8px;
-    border: none;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
+/* Flip the away team block order for symmetry */
+.mc-team-block:last-child {
+    flex-direction: row-reverse;
+    text-align: right;
 }
 
-.mc-btn-start { background: #238636; color: white; }
-.mc-btn-start:hover { background: #2ea043; }
+.mc-team-block img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+}
 
-.mc-btn-pause { background: #da3633; color: white; }
-.mc-btn-pause:hover { background: #f85149; }
-
-.mc-timer-controls button:not(.mc-btn-start):not(.mc-btn-pause) {
-    background: #30363d;
+.mc-team-block h3 {
+    font-size: 1.5rem;
+    margin: 0 0 5px 0;
     color: #f0f6fc;
 }
 
-.mc-timer-controls button:not(.mc-btn-start):not(.mc-btn-pause):hover {
-    background: #484f58;
+.mc-score-display {
+    font-size: 5rem;
+    font-weight: 900;
+    color: #58a6ff;
+    font-family: 'Roboto Mono', monospace;
+    letter-spacing: -2px;
 }
 
-/* --- EVENT LOGGER CARD --- */
-.mc-event-card {
-    background: #161b22;
-    padding: 40px;
-    border-radius: 20px;
+/* --- CENTER TIMER --- */
+.mc-timer-block {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-left: 1px solid #21262d;
+    border-right: 1px solid #21262d;
+}
+
+.mc-clock {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #f0f6fc;
+    margin-bottom: 10px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.mc-timer-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.mc-timer-controls button {
+    background: #21262d;
     border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.7rem;
+    transition: 0.2s;
 }
 
-.mc-event-card h3 {
-    margin-bottom: 25px;
-    font-size: 1.3rem;
+.mc-timer-controls button:hover {
+    background: #30363d;
+    border-color: #8b949e;
 }
 
-.mc-event-card h3 span {
-    color: #ffd700; /* Gold accent */
+.mc-timer-controls .btn-start {
+    background: #238636;
+    border-color: #2ea043;
+    color: white;
 }
+
+.mc-timer-controls .btn-pause {
+    background: #d29922;
+    border-color: #e3b341;
+    color: #0d1117;
+}
+
+/* --- QUICK EVENT LOGGER (HORIZONTAL ROW MODEL) --- */
+.mc-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.mc-card h3 {
+    font-size: 1rem;
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+    color: #8b949e;
+    letter-spacing: 1px;
+}
+
+.mc-card h3 span { color: #f0f6fc; }
 
 .mc-event-form {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
     gap: 20px;
 }
 
-.mc-event-form input, 
-.mc-event-form select {
-    padding: 14px;
+.mc-input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mc-input-group label {
+    font-size: 0.7rem;
+    color: #8b949e;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.mc-input-group select {
     background: #0d1117;
     border: 1px solid #30363d;
-    color: white;
-    border-radius: 10px;
-    font-size: 1rem;
-}
-
-.mc-event-form input:focus {
-    border-color: #58a6ff;
+    color: #f0f6fc;
+    padding: 12px;
+    border-radius: 8px;
     outline: none;
-}
-
-.ad-btn-primary {
-    background: #58a6ff;
-    color: #ffffff;
-    border: none;
-    padding: 0 30px;
-    border-radius: 10px;
-    font-weight: 700;
+    font-size: 0.95rem;
+    width: 100%;
     cursor: pointer;
     transition: 0.2s;
 }
 
-.ad-btn-primary:hover {
-    background: #1f6feb;
+.mc-input-group select:focus {
+    border-color: #58a6ff;
+    box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.1);
+}
+
+.mc-log-btn {
+    background: #238636;
+    color: white;
+    border: none;
+    padding: 0 30px;
+    height: 46px; /* Matches select height + padding */
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    transition: 0.2s;
+}
+
+.mc-log-btn:hover {
+    background: #2ea043;
     transform: translateY(-2px);
 }
 
-/* --- RESPONSIVE FIXES --- */
+/* --- RESPONSIVE ADJUSTMENTS --- */
 @media (max-width: 1200px) {
-    .mc-main { margin-left: 0; } /* If navbar is hidden on smaller screens */
-    .mc-scoreboard { padding: 40px 20px; }
-    .mc-score-display { font-size: 4rem; }
-    .mc-clock { font-size: 3rem; }
-}
+    .mc-main { margin-left: 0; }
+    
+    .mc-scoreboard {
+        grid-template-columns: 1fr;
+        padding: 30px 20px;
+        gap: 30px;
+    }
 
-@media (max-width: 768px) {
-    .mc-scoreboard { flex-direction: column; gap: 40px; }
-    .mc-event-form { grid-template-columns: 1fr; }
-    .mc-team-block img { width: 80px; height: 80px; }
+    .mc-timer-block {
+        border: none;
+        padding: 20px 0;
+        border-top: 1px solid #30363d;
+        border-bottom: 1px solid #30363d;
+    }
+
+    .mc-event-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .mc-log-btn {
+        width: 100%;
+    }
 }

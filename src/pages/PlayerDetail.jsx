@@ -49,7 +49,7 @@ const PlayerDetail = () => {
             </section>
 
             {/* STATS SECTION */}
-            <section className="stats-container">
+            <section className="stats-container-player">
                 <div className="stats-header">
                     <h2>Technical <span>Profile</span></h2>
                     <Link to={`/teams/${player.team}`} className="back-to-team">

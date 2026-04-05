@@ -144,7 +144,7 @@ const AdminManageTeams = () => {
                                 </div>
                                 <table className="mt-table">
                                     <thead>
-                                        <tr><th>Avatar</th><th>#</th><th>Name</th><th>Position</th><th>Actions</th></tr>
+                                        <tr><th>Players</th><th>#</th><th>Name</th><th>Position</th><th>Actions</th></tr>
                                     </thead>
                                     <tbody>
                                         {selectedTeam.players?.map(p => (

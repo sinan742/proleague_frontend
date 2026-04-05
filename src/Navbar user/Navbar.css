@@ -204,6 +204,11 @@
     transition: 0.3s;
 }
 
+.pro-img {
+    width: 20px;
+    border-radius: 50%;
+}
+
 .logout-btn:hover {
     background-color: var(--danger);
     color: white;

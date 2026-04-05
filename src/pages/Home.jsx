@@ -73,7 +73,7 @@ const Home = () => {
                                     <span>{m.home_team_name?.substring(0, 3).toUpperCase()}</span>
                                 </div>
                                 <div className="m-score-vs">
-                                    {m.is_completed ? `${m.home_score}-${m.away_score}` : 'VS'}
+                                    {m.status=='finished' || 'half_time' ? `${m.home_score}-${m.away_score}` : 'VS'}
                                 </div>
                                 <div className="m-team">
                                     <img src={m.away_team_logo} alt="" />

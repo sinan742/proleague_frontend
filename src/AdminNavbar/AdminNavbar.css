@@ -1,70 +1,66 @@
+/* --- BASE SIDEBAR STYLES (Desktop) --- */
 .an-sidebar {
     width: 260px;
     height: 100vh;
-    background: #1a1a2e;
-    border-right: 1px solid #2d3748;
+    background-color: #161b22;
+    border-right: 1px solid #30363d;
     display: flex;
     flex-direction: column;
-    padding: 30px 15px;
-    position: fixed; /* Keeps it on the left while scrolling */
-    left: 0;
+    position: fixed;
     top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: transform 0.3s ease;
 }
 
 .an-logo-section {
+    padding: 30px 20px;
     text-align: center;
-    margin-bottom: 40px;
+    border-bottom: 1px solid #21262d;
 }
 
 .an-logo {
-    color: white;
-    font-size: 1.4rem;
-    font-weight: 900;
+    color: #f0f6fc;
+    font-size: 1.5rem;
     letter-spacing: 2px;
-    margin-bottom: 5px;
+    margin: 0;
 }
 
 .an-logo span {
-    color: #007bff;
+    color: #58a6ff;
 }
 
 .an-badge {
-    background: rgba(0, 123, 255, 0.1);
-    color: #007bff;
+    background: rgba(88, 166, 255, 0.1);
+    color: #58a6ff;
     font-size: 0.7rem;
-    padding: 4px 12px;
-    border-radius: 20px;
+    padding: 3px 10px;
+    border-radius: 12px;
     text-transform: uppercase;
-    font-weight: 800;
+    font-weight: 700;
 }
 
+/* --- NAV LIST --- */
 .an-nav-list {
     list-style: none;
-    padding: 0;
-    flex-grow: 1;
+    padding: 20px 10px;
+    margin: 0;
+    flex: 1;
+}
+
+.an-nav-list li {
+    margin-bottom: 8px;
 }
 
 .an-link {
     display: flex;
     align-items: center;
-    padding: 14px 18px;
-    color: #94a3b8;
+    padding: 12px 15px;
+    color: #8b949e;
     text-decoration: none;
-    border-radius: 10px;
-    margin-bottom: 8px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.an-link:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
-}
-
-.an-link.active {
-    background: #007bff;
-    color: white;
-    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
 .an-icon {
@@ -72,28 +68,132 @@
     font-size: 1.1rem;
 }
 
+.an-link:hover {
+    background-color: #21262d;
+    color: #f0f6fc;
+}
+
+.an-link.active {
+    background-color: #238636;
+    color: white;
+}
+
+/* --- BOTTOM SECTION --- */
 .an-bottom-section {
-    border-top: 1px solid #2d3748;
-    padding-top: 20px;
+    padding: 20px;
+    border-top: 1px solid #21262d;
 }
 
 .an-logout-btn {
     width: 100%;
-    padding: 14px;
-    background: transparent;
-    border: 1px solid #f56565;
-    color: #f56565;
-    border-radius: 10px;
-    font-weight: 700;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid #f85149;
+    color: #f85149;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
 }
 
 .an-logout-btn:hover {
-    background: #f56565;
+    background: #f85149;
     color: white;
-    box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
+}
+
+/* --- RESPONSIVE DESIGN (Mobile & Tablet) --- */
+
+@media (max-width: 1024px) {
+    /* Change Sidebar to a Top Navbar on mobile */
+    .an-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative; /* Unfix it so content flows below */
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        border-right: none;
+        border-bottom: 1px solid #30363d;
+    }
+
+    .an-logo-section {
+        padding: 0;
+        border-bottom: none;
+        text-align: left;
+    }
+
+    .an-nav-list {
+        display: flex;
+        padding: 0;
+        flex-direction: row;
+        gap: 5px;
+        overflow-x: auto; /* Allow scrolling menu on small screens */
+        scrollbar-width: none; /* Hide scrollbar for Firefox */
+    }
+
+    .an-nav-list::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for Chrome/Safari */
+    }
+
+    .an-link {
+        padding: 8px 12px;
+        white-space: nowrap;
+        font-size: 0.85rem;
+    }
+
+    .an-icon {
+        margin-right: 5px;
+    }
+
+    .an-bottom-section {
+        padding: 0;
+        border-top: none;
+    }
+
+    .an-logout-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        border: 1px solid #f85149;
+    }
+}
+
+@media (max-width: 600px) {
+    .an-logo-section h2 {
+        font-size: 1.1rem;
+    }
+    
+    .an-badge {
+        display: none; /* Hide admin badge to save space */
+    }
+
+    .an-nav-list {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #161b22;
+        justify-content: space-around;
+        padding: 10px 0;
+        border-top: 1px solid #30363d;
+        z-index: 1100;
+    }
+
+    .an-link {
+        flex-direction: column;
+        gap: 4px;
+        font-size: 0.7rem;
+    }
+
+    .an-icon {
+        margin-right: 0;
+    }
+
+    /* Add padding to the bottom of the main content so the fixed menu doesn't cover it */
+    body {
+        padding-bottom: 70px;
+    }
 }
