@@ -11,7 +11,54 @@
     padding: 40px;
     color: #f0f6fc;
 }
+.mc-possession-control {
+    margin-bottom: 25px;
+    padding: 10px;
+    background: #0d1117;
+    border-radius: 8px;
+    text-align: center;
+}
 
+.mc-possession-control label {
+    display: block;
+    margin-bottom: 10px;
+    font-family: 'Roboto Mono', monospace;
+    color: #58a6ff;
+    font-weight: bold;
+}
+
+.mc-possession-slider {
+    width: 100%;
+    accent-color: #58a6ff;
+    cursor: pointer;
+}
+
+.mc-timer-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.status-btn {
+    background: #21262d !important;
+    border: 1px solid #30363d !important;
+    color: #8b949e !important;
+    padding: 5px 10px !important;
+    font-size: 0.7rem !important;
+}
+
+.status-btn:hover {
+    color: white !important;
+    border-color: #58a6ff !important;
+}
+
+.mc-current-status {
+    font-size: 0.7rem;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 /* --- HEADER --- */
 .ml-content h2 {
     font-size: 2rem;
