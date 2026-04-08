@@ -23,6 +23,7 @@ import AdminMatchControl from './admin/AdminMatchControl';
 import AdminMatchList from './admin/AdminMatchList';
 import AdminPlayerManagement from './admin/AdminPlayerManagement';
 import AdminMatchSchedule from './admin/AdminMatchSchedule';
+import WeekTeam from './pages/WeekTeam';
 // Assume you'll create these next:
 // import Login from './Login';
 // import Dashboard from './Dashboard';
@@ -74,6 +75,9 @@ function App() {
           <Route path="/matches" element={<Match/>} />
           <Route path="/matches/:id" element={<MatchDetails/>} />
           <Route path="/point-table" element={<PointTable/>} />
+          <Route path="/team-of-the-week" element={<WeekTeam/>} />
+
+
 
           <Route path="/admin-teams-management" element={<AdminManageTeams/>} />
           <Route path="/admin-matches-management" element={<AdminMatchList/>} />

@@ -80,6 +80,8 @@ const Navbar = () => {
                     <li><Link to="/playersall">Players</Link></li>
                     <li><Link to="/point-table">Table</Link></li>
                     <li><Link to="/matches">Fixtures</Link></li>
+                    <li><Link to="/team-of-the-week">Week Team</Link></li>
+
                     
                     {/* Mobile Only Auth Links */}
                     {menuOpen && !isLogged && (

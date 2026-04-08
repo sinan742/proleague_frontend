@@ -1,0 +1,145 @@
+.totw-wrapper {
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle, #111 0%, #000 100%);
+    overflow: hidden;
+    position: relative;
+}
+
+/* UI HEADER */
+.totw-overlay-ui {
+    position: absolute;
+    top: 50px;
+    width: 100%;
+    text-align: center;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.totw-overlay-ui h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #fff;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.gold-text {
+    color: #f1e05a;
+    text-shadow: 0 0 20px rgba(241, 224, 90, 0.4);
+}
+
+/* INCREASED CARD SIZE & STYLE */
+.large-card {
+    width: 160px; /* Increased width */
+    height: 230px; /* Increased height */
+}
+
+.fut-card {
+    background: linear-gradient(135deg, #f1e05a 0%, #b8860b 100%);
+    padding: 3px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.card-inner {
+    background: #0d1117;
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-top {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    color: #f1e05a;
+}
+
+.card-rating {
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.card-pos {
+    font-size: 0.8rem;
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+.card-image-wrap img {
+    width: 130px; /* Increased image size */
+    height: 130px;
+    margin-top: 25px;
+    object-fit: cover;
+    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+.card-bottom {
+    background: linear-gradient(to right, #f1e05a, #b8860b);
+    width: 100%;
+    margin-top: auto;
+    padding: 15px 0;
+    text-align: center;
+    color: #000;
+}
+
+.card-name {
+    font-weight: 900;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.card-stats-mini {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.card-glow {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    box-shadow: 0 0 20px rgba(241, 224, 90, 0.2);
+    pointer-events: none;
+    border-radius: 10px;
+}
+
+.canvas-holder {
+    width: 100%;
+    height: 100%;
+}
+
+.totw-loader {
+    height: 100vh;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #f1e05a;
+    font-family: sans-serif;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(241, 224, 90, 0.2);
+    border-top: 5px solid #f1e05a;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
