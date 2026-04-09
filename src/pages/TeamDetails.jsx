@@ -125,18 +125,18 @@ const TeamDetails = () => {
                         if (players.length === 0) return null;
                         return (
                             <section key={pos.code} className="position-section">
-                                <div className="position-title-bar">
+                                <div className="position-title">
                                     <h2>{pos.title}</h2>
                                     <div className="title-line"></div>
                                 </div>
                                 <div className="barca-player-grid">
                                     {players.map(player => (
                                         <Link to={`/players/${player.id}`} key={player.id} className="barca-player-card">
-                                            <div className="card-top">
+                                            <div className="card-tp">
                                                 <span className="jersey-bg-num">{player.number}</span>
-                                                <img src={player.photo} alt={player.name} className="player-img-cutout" />
+                                                <img src={player.photo} alt={player.name} className="player-img" />
                                             </div>
-                                            <div className="card-bottom">
+                                            <div className="card-bt">
                                                 <div className="p-identity-wrap">
                                                     <span className="p-num-accent">#{player.number}</span>
                                                     <h3 className="p-name-main">{player.name}</h3>

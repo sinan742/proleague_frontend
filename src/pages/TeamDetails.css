@@ -61,14 +61,14 @@
 }
 
 /* --- SECTION TITLES --- */
-.position-title-bar {
+.position-title {
     display: flex;
     align-items: center;
     gap: 25px;
     margin-bottom: 40px;
 }
 
-.position-title-bar h2 {
+.position-title h2 {
     font-family: 'Oswald', sans-serif;
     font-size: 3rem;
     text-transform: uppercase;
@@ -195,7 +195,7 @@
     box-shadow: 0 30px 60px rgba(0,0,0,0.5);
 }
 
-.card-top {
+.card-tp {
     height: 65%;
     position: relative;
     display: flex;
@@ -224,7 +224,7 @@
     z-index: 1;
 }
 
-.card-bottom {
+.card-bt {
     flex-grow: 1;
     padding: 30px 25px;
     background: var(--card-navy);
