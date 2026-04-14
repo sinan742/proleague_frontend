@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import './WeekTeam.css';
+import FootballLoader from '../FootballLoader';
 
 const OriginalPitch = () => {
     // We create a CanvasTexture that mimics a professional pitch perfectly
@@ -116,7 +117,7 @@ const WeekTeam = () => {
         fetchTOTW();
     }, []);
 
-    if (loading) return <div className="totw-loader"><h1>ENTERING STADIUM...</h1></div>;
+    if (loading) return <div className="totw-loader"><FootballLoader message='generate team of the week'/></div>;
 
     return (
         <div className="totw-wrapper">

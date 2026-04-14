@@ -1,0 +1,153 @@
+/* Container & Main Layout */
+.reward-history-container {
+    padding: 30px;
+    max-width: 800px; /* Increased slightly for better layout */
+    margin: 0 auto;
+    background-color: #0b0e11; /* Ensure dark background */
+    min-height: 100vh;
+}
+
+/* Flex Header for Navigation */
+.history-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.history-header {
+    font-family: 'Oswald', sans-serif;
+    color: white;
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.history-header span, .sub-header span { color: #edbb00; }
+
+/* Redeem Button Styling */
+.navigate-redeem-btn {
+    background: #edbb00;
+    color: #181733;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-family: 'Oswald', sans-serif;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.navigate-redeem-btn:hover {
+    background: #fff;
+    transform: translateY(-3px);
+}
+
+/* Sections */
+.history-section { margin-bottom: 50px; }
+
+.sub-header {
+    font-family: 'Oswald', sans-serif;
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 10px;
+}
+
+/* Prediction Cards (Your original styles fixed) */
+.history-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.history-card {
+    background: #181733;
+    border-radius: 12px;
+    padding: 20px;
+    border-left: 5px solid #edbb00;
+    transition: transform 0.2s;
+}
+
+.history-card:hover { transform: scale(1.02); }
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.points-badge {
+    background: #00ff88;
+    color: #000;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-family: 'Oswald', sans-serif;
+}
+
+.match-date { color: #8b949e; font-size: 0.9rem; }
+
+.card-footer {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #8b949e;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 10px;
+}
+
+/* VOUCHER COLLECTION STYLES (The Missing Part) */
+.voucher-history-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.voucher-history-card {
+    background: #1c1f26;
+    padding: 15px 20px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(237, 187, 0, 0.2);
+}
+
+.v-info strong {
+    display: block;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-family: 'Oswald', sans-serif;
+}
+
+.v-info span { font-size: 0.75rem; color: #8b949e; }
+
+.v-code-area { text-align: right; }
+
+.v-code-area small {
+    display: block;
+    color: #8b949e;
+    font-size: 0.65rem;
+    margin-bottom: 3px;
+}
+
+.v-code-area code {
+    background: rgba(0,0,0,0.3);
+    color: #edbb00;
+    padding: 4px 8px;
+    border: 1px dashed #edbb00;
+    border-radius: 4px;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+.empty-msg {
+    color: #8b949e;
+    font-style: italic;
+    font-size: 0.9rem;
+    text-align: left;
+}

@@ -24,6 +24,10 @@ import AdminMatchList from './admin/AdminMatchList';
 import AdminPlayerManagement from './admin/AdminPlayerManagement';
 import AdminMatchSchedule from './admin/AdminMatchSchedule';
 import WeekTeam from './pages/WeekTeam';
+import PredictGame from './pages/PredictGame';
+import RewardHistory from './pages/RewardHistory';
+import ScratchReward from './pages/ScratchReward';
+import MatchBooking from './pages/MatchBooking';
 // Assume you'll create these next:
 // import Login from './Login';
 // import Dashboard from './Dashboard';
@@ -76,6 +80,13 @@ function App() {
           <Route path="/matches/:id" element={<MatchDetails/>} />
           <Route path="/point-table" element={<PointTable/>} />
           <Route path="/team-of-the-week" element={<WeekTeam/>} />
+          <Route path="/predictions/:matchId" element={<PredictGame />} />
+          <Route path='/reward-history' element={<RewardHistory/>}/>
+          <Route path='/reward-scratch' element={<ScratchReward/>}/>
+          <Route path="/book-ticket/:matchId" element={<MatchBooking />} />
+
+
+
 
 
 
@@ -84,6 +95,11 @@ function App() {
           <Route path="/admin/match/:id" element={<AdminMatchControl />} />
           <Route path="/admin-players-management" element={<AdminPlayerManagement />} />
           <Route path="/admin-match-shedule" element={<AdminMatchSchedule />} />
+
+
+
+
+
 
 
 

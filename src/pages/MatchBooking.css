@@ -1,0 +1,89 @@
+.stadium-booking-container {
+    background: #0d1117;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+}
+
+.booking-title span { color: #edbb00; }
+
+/* STADIUM MAP UI */
+.stadium-map {
+    display: grid;
+    grid-template-areas: 
+        ". north ."
+        "west pitch east"
+        ". south .";
+    gap: 15px;
+    max-width: 500px;
+    margin: 40px auto;
+}
+
+.pitch {
+    grid-area: pitch;
+    background: #238636;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.stand-box {
+    padding: 15px;
+    background: #1c1f26;
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 8px;
+    font-size: 0.8rem;
+}
+
+.stand-box.north { grid-area: north; }
+.stand-box.south { grid-area: south; }
+.stand-box.west { grid-area: west; border-left: 4px solid #edbb00; } /* VIP */
+.stand-box.east { grid-area: east; }
+
+.stand-box:hover, .stand-box.active {
+    background: #edbb00;
+    color: #000;
+    transform: scale(1.05);
+}
+
+/* BOOKING PANEL */
+.booking-panel {
+    background: #181733;
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 30px;
+    border: 1px solid rgba(237, 187, 0, 0.2);
+}
+
+.voucher-input-group {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.voucher-input-group input {
+    width: 100%;
+    padding: 12px;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    color: white;
+    margin-top: 8px;
+}
+
+.confirm-booking-btn {
+    width: 100%;
+    padding: 15px;
+    background: #edbb00;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+}

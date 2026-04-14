@@ -1,0 +1,160 @@
+.gpay-rewards-container {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    color: #3c4043;
+}
+
+.rewards-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto 30px;
+}
+
+.points-pill {
+    background: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-weight: bold;
+    color: #1a73e8;
+}
+
+.rewards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* --- THE CARD --- */
+.gpay-card {
+    height: 200px;
+    background: #fff;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+.gpay-card.is-ready:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.gpay-card.is-locked {
+    filter: grayscale(1);
+    background: #e8eaed;
+    cursor: default;
+}
+
+.gpay-card.is-locked .card-visual {
+    filter: blur(4px);
+}
+
+/* --- LOCK ICON --- */
+.lock-tag {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255,255,255,0.9);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.card-front {
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    height: 100%;
+}
+
+.card-visual {
+    font-size: 4rem;
+    margin-right: 20px;
+}
+
+.card-details h3 { font-size: 1.1rem; margin: 0; color: #202124; }
+.card-details p { margin: 5px 0 0; color: #1a73e8; font-weight: bold; }
+
+/* --- SCRATCH MODULE --- */
+.is-popped {
+    grid-column: span 1;
+    z-index: 10;
+    transform: scale(1.05);
+}
+
+.scratch-module {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.gpay-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.win-content {
+    background: linear-gradient(135deg, #1a73e8, #4285f4);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    z-index: 1;
+}
+
+.win-code {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin: 10px 0;
+    background: rgba(255,255,255,0.2);
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.close-btn {
+    background: white;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 4px;
+    color: #1a73e8;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* --- HISTORY --- */
+.history-section { max-width: 900px; margin: 50px auto; text-align: left; }
+.history-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+
+.history-pill {
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 12px;
+    border: 1px solid #dadce0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pill-type { font-size: 0.8rem; font-weight: bold; color: #5f6368; }
+.pill-code { font-family: monospace; color: #1a73e8; background: #e8f0fe; padding: 2px 6px; border-radius: 4px; }
