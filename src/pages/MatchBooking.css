@@ -1,89 +1,190 @@
-.stadium-booking-container {
-    background: #0d1117;
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    color: white;
-}
-
-.booking-title span { color: #edbb00; }
-
-/* STADIUM MAP UI */
-.stadium-map {
-    display: grid;
-    grid-template-areas: 
-        ". north ."
-        "west pitch east"
-        ". south .";
-    gap: 15px;
-    max-width: 500px;
-    margin: 40px auto;
-}
-
-.pitch {
-    grid-area: pitch;
-    background: #238636;
-    height: 120px;
+.booking-wrapper {
+    background-color: #0b0e11;
+    min-height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
-    border: 2px solid white;
-    font-weight: bold;
-    border-radius: 5px;
+    align-items: center;
+    padding: 20px;
 }
 
-.stand-box {
-    padding: 15px;
+.booking-card {
     background: #1c1f26;
-    border: 1px solid rgba(255,255,255,0.1);
-    cursor: pointer;
-    transition: 0.3s;
-    border-radius: 8px;
-    font-size: 0.8rem;
-}
-
-.stand-box.north { grid-area: north; }
-.stand-box.south { grid-area: south; }
-.stand-box.west { grid-area: west; border-left: 4px solid #edbb00; } /* VIP */
-.stand-box.east { grid-area: east; }
-
-.stand-box:hover, .stand-box.active {
-    background: #edbb00;
-    color: #000;
-    transform: scale(1.05);
-}
-
-/* BOOKING PANEL */
-.booking-panel {
-    background: #181733;
-    padding: 25px;
-    border-radius: 15px;
-    margin-top: 30px;
-    border: 1px solid rgba(237, 187, 0, 0.2);
-}
-
-.voucher-input-group {
-    margin: 20px 0;
-    text-align: left;
-}
-
-.voucher-input-group input {
     width: 100%;
+    max-width: 500px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Header Area */
+.booking-header {
+    background: linear-gradient(135deg, #a50044 0%, #181733 100%);
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.teams-display {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.team img {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+}
+
+.team p {
+    margin-top: 10px;
+    font-family: 'Oswald', sans-serif;
+    color: white;
+    font-size: 1.1rem;
+}
+
+.vs-circle {
+    background: #edbb00;
+    color: #181733;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    font-size: 0.9rem;
+    box-shadow: 0 0 15px rgba(237, 187, 0, 0.4);
+}
+
+/* Body Area */
+.booking-body {
+    padding: 30px;
+}
+
+/* Toggle Buttons */
+.method-selector {
+    display: flex;
+    background: #0d1117;
+    padding: 5px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.method-selector button {
+    flex: 1;
     padding: 12px;
+    border: none;
+    background: transparent;
+    color: #8b949e;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.method-selector button.active {
+    background: #1c1f26;
+    color: #edbb00;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Stand Grid */
+.stand-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 15px 0 30px;
+}
+
+.stand-option {
+    background: #0d1117;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.2s;
+}
+
+.stand-option.selected {
+    border-color: #edbb00;
+    background: rgba(237, 187, 0, 0.05);
+}
+
+.stand-name { display: block; color: white; font-weight: bold; font-size: 0.9rem; }
+.stand-price { color: #8b949e; font-size: 0.8rem; }
+.stand-option.selected .stand-name { color: #edbb00; }
+
+/* Form Elements */
+label { display: block; color: #8b949e; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 10px; }
+
+input {
+    width: 100%;
+    padding: 15px;
     background: #0d1117;
     border: 1px solid #30363d;
-    border-radius: 8px;
-    color: white;
-    margin-top: 8px;
+    border-radius: 10px;
+    color: #edbb00;
+    font-family: monospace;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
 }
 
-.confirm-booking-btn {
-    width: 100%;
-    padding: 15px;
-    background: #edbb00;
-    border: none;
-    border-radius: 10px;
+.payment-summary {
+    background: #0d1117;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    color: #8b949e;
+    margin-bottom: 10px;
+}
+
+.summary-row.total {
+    border-top: 1px solid #30363d;
+    padding-top: 10px;
+    color: white;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.2rem;
+}
+
+.confirm-btn {
+    width: 100%;
+    padding: 18px;
+    background: #edbb00;
+    color: #181733;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.confirm-btn:hover:not(:disabled) {
+    background: #fff;
+    transform: translateY(-2px);
+}
+
+.confirm-btn:disabled { opacity: 0.5; }
+
+/* Animations */
+.animate-pop { animation: pop 0.4s ease-out; }
+.animate-fade { animation: fadeIn 0.3s ease-in; }
+
+@keyframes pop {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

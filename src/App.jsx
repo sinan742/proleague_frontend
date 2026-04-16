@@ -28,6 +28,8 @@ import PredictGame from './pages/PredictGame';
 import RewardHistory from './pages/RewardHistory';
 import ScratchReward from './pages/ScratchReward';
 import MatchBooking from './pages/MatchBooking';
+import BookingHistory from './pages/BookingHistory';
+import ChatAssistant from './pages/ChatAssistant';
 // Assume you'll create these next:
 // import Login from './Login';
 // import Dashboard from './Dashboard';
@@ -84,6 +86,10 @@ function App() {
           <Route path='/reward-history' element={<RewardHistory/>}/>
           <Route path='/reward-scratch' element={<ScratchReward/>}/>
           <Route path="/book-ticket/:matchId" element={<MatchBooking />} />
+          <Route path='/booking-history' element={<BookingHistory/>}/>
+          <Route path='ask-ai/' element={<ChatAssistant/>}/>
+
+
 
 
 

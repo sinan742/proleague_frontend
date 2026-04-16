@@ -161,6 +161,8 @@ const Navbar = () => {
                 <Link to="/point-table" className={isActive('/point-table') ? 'active' : ''}>Table</Link>
                 <Link to="/matches" className={isActive('/matches') ? 'active' : ''}>Fixtures</Link>
                 <Link to="/team-of-the-week" className={isActive('/team-of-the-week') ? 'active' : ''}>Week team</Link>
+                <Link to="/booking-history" className={isActive('/booking-history') ? 'active' : ''}>Booking History</Link>
+
             </nav>
 
             {/* ── Teams strip ───────────────────────────────────── */}
