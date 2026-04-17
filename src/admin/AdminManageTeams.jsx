@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../api';
 import { toast } from 'react-toastify';
 import FootballLoader from '../FootballLoader';
-import AdminNavbar from '../AdminNavbar/AdminNavbar'; // Imported as requested
+import AdminNavbar from '../AdminNavbar/AdminNavbar';
 import './AdminManageTeams.css';
 
 const AdminManageTeams = () => {
@@ -17,8 +17,17 @@ const AdminManageTeams = () => {
     const [editingTeam, setEditingTeam] = useState(null);
     const [editingPlayer, setEditingPlayer] = useState(null);
 
-    // Form States
-    const [teamForm, setTeamForm] = useState({ name: '', coach_name: '', logo: '' });
+    // Form States - UPDATED with About and Colors
+    const [teamForm, setTeamForm] = useState({ 
+        name: '', 
+        coach_name: '', 
+        logo: '', 
+        about: '', 
+        color_1: '#ffffff', 
+        color_2: '#000000', 
+        color_3: '#cccccc' 
+    });
+    
     const [playerForm, setPlayerForm] = useState({ name: '', position: '', number: '', photo: '' });
 
     useEffect(() => { fetchTeams(); }, []);
@@ -59,7 +68,8 @@ const AdminManageTeams = () => {
             }
             setShowTeamModal(false);
             setEditingTeam(null);
-            setTeamForm({ name: '', coach_name: '', logo: '' });
+            // Reset form
+            setTeamForm({ name: '', coach_name: '', logo: '', about: '', color_1: '#ffffff', color_2: '#000000', color_3: '#cccccc' });
             fetchTeams();
         } catch (err) {
             toast.error("Error saving team");
@@ -100,10 +110,8 @@ const AdminManageTeams = () => {
 
     return (
         <div className="mt-layout-wrapper">
-            {/* Sidebar Component */}
             <AdminNavbar />
 
-            {/* Main Content Area */}
             <div className="mt-main-content">
                 <div className="mt-container">
                     {view === 'list' ? (
@@ -115,6 +123,7 @@ const AdminManageTeams = () => {
                             <div className="mt-grid">
                                 {teams.map(team => (
                                     <div key={team.id} className="mt-card" onClick={() => handleTeamClick(team.id)}>
+                                        <div className="card-color-strip" style={{backgroundColor: team.color_1}}></div>
                                         <img src={team.logo || '/default-logo.png'} alt="logo" />
                                         <h3>{team.name}</h3>
                                         <p>Coach: {team.coach_name || 'N/A'}</p>
@@ -125,13 +134,29 @@ const AdminManageTeams = () => {
                     ) : (
                         <section className="mt-detail-view">
                             <button className="mt-back-btn" onClick={() => setView('list')}>← Back to Teams</button>
-                            <div className="mt-team-banner">
+                            
+                            {/* Banner with Team Colors */}
+                            <div className="mt-team-banner" style={{ borderBottom: `5px solid ${selectedTeam.color_1}` }}>
                                 <img src={selectedTeam.logo || '/default-logo.png'} alt="logo" />
                                 <div className="banner-text">
                                     <h1>{selectedTeam.name}</h1>
+                                    <p className="team-about-short">{selectedTeam.about}</p>
+                                    <div className="color-preview-row">
+                                        <span style={{backgroundColor: selectedTeam.color_1}}></span>
+                                        <span style={{backgroundColor: selectedTeam.color_2}}></span>
+                                        <span style={{backgroundColor: selectedTeam.color_3}}></span>
+                                    </div>
                                     <button className="edit-team-small" onClick={() => {
                                         setEditingTeam(selectedTeam);
-                                        setTeamForm({ name: selectedTeam.name, coach_name: selectedTeam.coach_name, logo: selectedTeam.logo });
+                                        setTeamForm({ 
+                                            name: selectedTeam.name, 
+                                            coach_name: selectedTeam.coach_name, 
+                                            logo: selectedTeam.logo,
+                                            about: selectedTeam.about || '',
+                                            color_1: selectedTeam.color_1 || '#ffffff',
+                                            color_2: selectedTeam.color_2 || '#000000',
+                                            color_3: selectedTeam.color_3 || '#cccccc'
+                                        });
                                         setShowTeamModal(true);
                                     }}>Edit Team Info</button>
                                 </div>
@@ -169,7 +194,7 @@ const AdminManageTeams = () => {
                         </section>
                     )}
 
-                    {/* MODALS */}
+                    {/* TEAM MODAL UPDATED */}
                     {showTeamModal && (
                         <div className="mt-modal-overlay">
                             <div className="mt-modal">
@@ -178,6 +203,23 @@ const AdminManageTeams = () => {
                                     <input type="text" placeholder="Team Name" required value={teamForm.name} onChange={e => setTeamForm({...teamForm, name: e.target.value})} />
                                     <input type="text" placeholder="Coach Name" value={teamForm.coach_name} onChange={e => setTeamForm({...teamForm, coach_name: e.target.value})} />
                                     <input type="text" placeholder="Team Logo URL" value={teamForm.logo} onChange={e => setTeamForm({...teamForm, logo: e.target.value})} />
+                                    
+                                    <textarea 
+                                        placeholder="About the Team (History, Motto, etc.)" 
+                                        value={teamForm.about} 
+                                        onChange={e => setTeamForm({...teamForm, about: e.target.value})}
+                                        rows="3"
+                                    />
+
+                                    <div className="color-picker-group">
+                                        <label>Team Colors:</label>
+                                        <div className="pickers">
+                                            <input type="color" title="Primary Color" value={teamForm.color_1} onChange={e => setTeamForm({...teamForm, color_1: e.target.value})} />
+                                            <input type="color" title="Secondary Color" value={teamForm.color_2} onChange={e => setTeamForm({...teamForm, color_2: e.target.value})} />
+                                            <input type="color" title="Accent Color" value={teamForm.color_3} onChange={e => setTeamForm({...teamForm, color_3: e.target.value})} />
+                                        </div>
+                                    </div>
+
                                     <div className="modal-btns">
                                         <button type="submit" className="ad-btn-primary">Save Team</button>
                                         <button type="button" className="mt-cancel-btn" onClick={() => {setShowTeamModal(false); setEditingTeam(null);}}>Cancel</button>
@@ -187,6 +229,7 @@ const AdminManageTeams = () => {
                         </div>
                     )}
 
+                    {/* PLAYER MODAL remains same */}
                     {showPlayerModal && (
                         <div className="mt-modal-overlay">
                             <div className="mt-modal">

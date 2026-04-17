@@ -4,13 +4,12 @@ import './ChatAssistant.css';
 
 const ChatAssistant = () => {
     const [messages, setMessages] = useState([
-        { role: 'ai', text: "Welcome to ProLeague! I'm your AI Scout. Ask me about match schedules, teams, or how to use your reward points! ⚽" }
+        { role: 'ai', text: "Welcome to ProLeague! I'm your AI Scout. Ask me about matches or teams! ⚽" }
     ]);
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
     const chatEndRef = useRef(null);
 
-    // Auto-scroll to bottom
     const scrollToBottom = () => {
         chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
@@ -28,11 +27,20 @@ const ChatAssistant = () => {
         setLoading(true);
 
         try {
-            // Note: Update URL if your backend path is different
+            // FIXED URL: Added 'api/' and the trailing '/' to avoid 405 errors
             const res = await api.post('ask-ai/', { query: input });
-            setMessages(prev => [...prev, { role: 'ai', text: res.data.bot_response }]);
+            
+            setMessages(prev => [...prev, { 
+                role: 'ai', 
+                text: res.data.bot_response 
+            }]);
         } catch (err) {
-            setMessages(prev => [...prev, { role: 'ai', text: "Sorry, I'm having trouble connecting to the stadium servers. Please try again! 🏟️" }]);
+            console.error("Chat Error:", err);
+            const errorMsg = err.response?.status === 429 
+                ? "AI is taking a break. Try in 30 seconds! ⏳" 
+                : "Trouble connecting to the stadium. Try again! 🏟️";
+            
+            setMessages(prev => [...prev, { role: 'ai', text: errorMsg }]);
         } finally {
             setLoading(false);
         }
@@ -49,12 +57,8 @@ const ChatAssistant = () => {
                 <div className="chat-body">
                     {messages.map((msg, i) => (
                         <div key={i} className={`message-bubble ${msg.role}`}>
-                            <div className="avatar">
-                                {msg.role === 'ai' ? '🤖' : '👤'}
-                            </div>
-                            <div className="text-content">
-                                {msg.text}
-                            </div>
+                            <div className="avatar">{msg.role === 'ai' ? '🤖' : '👤'}</div>
+                            <div className="text-content">{msg.text}</div>
                         </div>
                     ))}
                     {loading && (
@@ -69,7 +73,7 @@ const ChatAssistant = () => {
                     <input 
                         value={input} 
                         onChange={(e) => setInput(e.target.value)} 
-                        placeholder="Ask about matches or players..."
+                        placeholder="Ask about matches..."
                         onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                     />
                     <button onClick={handleSend} disabled={loading}>

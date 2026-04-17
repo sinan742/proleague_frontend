@@ -26,6 +26,15 @@ const NAV_ITEMS = [
         ),
     },
     {
+        label: 'Tickets', // Mobile focus on History/Booking
+        to: '/booking-history',
+        icon: (
+            <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.5" stroke="currentColor">
+                <path d="M2 9V5a2 2 0 012-2h16a2 2 0 012 2v4M2 15v4a2 2 0 002 2h16a2 2 0 002-2v-4M2 9a3 3 0 013 3 3 3 0 01-3 3M22 9a3 3 0 00-3 3 3 3 0 003 3M12 5v14" strokeDasharray="2 2" />
+            </svg>
+        ),
+    },
+    {
         label: 'Players',
         to: '/playersall',
         icon: (
@@ -36,7 +45,7 @@ const NAV_ITEMS = [
         ),
     },
     {
-        label: 'Week team',
+        label: 'Week 11', // Team of the Week
         to: '/team-of-the-week',
         icon: (
             <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.5" stroke="currentColor">
@@ -44,19 +53,22 @@ const NAV_ITEMS = [
             </svg>
         ),
     },
+    {
+        label: 'AI Chat', // Updated Label and Icon
+        to: '/ask-ai',
+        icon: (
+            <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.5" stroke="currentColor">
+                <path d="M12 3V5M12 19V21M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22M12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" />
+                <path d="M12 7C9.23858 7 7 9.23858 7 12C7 14.7614 9.23858 17 12 17C14.7614 17 17 14.7614 17 12C17 9.23858 14.7614 7 12 7Z" strokeDasharray="2 2" />
+            </svg>
+        ),
+    },
 ];
 
 const RewardIcon = () => (
-    <svg viewBox="0 0 16 16" fill="#f0c040" width="13" height="13">
+    <svg viewBox="0 0 16 16" fill="#FFD700" width="13" height="13">
         <circle cx="8" cy="8" r="7" />
-        <text x="8" y="11.5" textAnchor="middle" fontSize="8" fill="#0f1923" fontWeight="bold">₿</text>
-    </svg>
-);
-
-const ProfileIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.5" stroke="currentColor" width="16" height="16">
-        <circle cx="12" cy="8" r="4" />
-        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+        <text x="8" y="11.5" textAnchor="middle" fontSize="8" fill="#1B5E20" fontWeight="bold">₿</text>
     </svg>
 );
 
@@ -106,7 +118,6 @@ const Navbar = () => {
 
     return (
         <>
-            {/* ── Top bar ───────────────────────────────────────── */}
             <header className="nb-topbar">
                 <Link to="/" className="nb-logo">
                     PRO<span>LEAGUE</span>
@@ -115,32 +126,23 @@ const Navbar = () => {
                 <div className="nb-actions">
                     {isLogged ? (
                         <>
-                            <Link to="/reward-history" className="nb-pts-pill" aria-label="View reward points">
+                            <Link to="/reward-history" className="nb-pts-pill">
                                 <RewardIcon />
                                 <span>{(user?.points ?? 0).toLocaleString()} pts</span>
                             </Link>
 
-                            <Link to="/profile" className="nb-avatar" aria-label="View profile">
+                            <Link to="/profile" className="nb-avatar">
                                 {user?.profile_image ? (
-                                    <img
-                                        src={user.profile_image}
-                                        alt={user.username || 'Profile'}
-                                        className="nb-avatar-img"
-                                    />
+                                    <img src={user.profile_image} alt={user.username} className="nb-avatar-img" />
                                 ) : (
-                                    userInitials
+                                    <span className="nb-initials">{userInitials}</span>
                                 )}
                                 <span className="nb-avatar-dot" />
                             </Link>
 
-                            <button
-                                className="nb-logout-btn"
-                                onClick={handleLogout}
-                                aria-label="Log out"
-                            >
-                                <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.5" stroke="currentColor" width="16" height="16">
-                                    <path d="M17 16l4-4m0 0l-4-4m4 4H7" />
-                                    <path d="M3 12a9 9 0 0 0 9 9m0-18a9 9 0 0 0-9 9" />
+                            <button className="nb-logout-btn" onClick={handleLogout}>
+                                <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" width="18" height="18">
+                                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
                                 </svg>
                             </button>
                         </>
@@ -153,8 +155,7 @@ const Navbar = () => {
                 </div>
             </header>
 
-            {/* ── Desktop nav links (hidden on mobile) ─────────── */}
-            <nav className="nb-desktop-links" aria-label="Main navigation">
+            <nav className="nb-desktop-links">
                 <Link to="/" className={isActive('/') ? 'active' : ''}>Home</Link>
                 <Link to="/teams" className={isActive('/teams') ? 'active' : ''}>Teams</Link>
                 <Link to="/playersall" className={isActive('/playersall') ? 'active' : ''}>Players</Link>
@@ -162,32 +163,23 @@ const Navbar = () => {
                 <Link to="/matches" className={isActive('/matches') ? 'active' : ''}>Fixtures</Link>
                 <Link to="/team-of-the-week" className={isActive('/team-of-the-week') ? 'active' : ''}>Week team</Link>
                 <Link to="/booking-history" className={isActive('/booking-history') ? 'active' : ''}>Booking History</Link>
-
+                <Link to="/ask-ai" className={isActive('/ask-ai') ? 'active' : ''}>Ask Help</Link>
+                <Link to="/privacy-policy" className={isActive('/privacy-policy') ? 'active' : ''}>Privacy Policy</Link>
             </nav>
 
-            {/* ── Teams strip ───────────────────────────────────── */}
             {teams.length > 0 && (
-                <div className="nb-teams-strip" role="list" aria-label="Browse teams">
+                <div className="nb-teams-strip">
                     {teams.map((team) => (
                         <Link
                             key={team.id}
                             to={`/teams/${team.id}`}
-                            role="listitem"
                             className={`nb-team-chip ${activeTeam === team.id ? 'active' : ''}`}
                             onClick={() => setActiveTeam(team.id)}
-                            aria-label={team.name}
                         >
                             {team.logo ? (
-                                <img
-                                    src={team.logo}
-                                    alt=""
-                                    className="nb-team-logo-img"
-                                    aria-hidden="true"
-                                />
+                                <img src={team.logo} alt="" className="nb-team-logo-img" />
                             ) : (
-                                <div className="nb-team-logo-fallback" aria-hidden="true">
-                                    {team.name.slice(0, 3).toUpperCase()}
-                                </div>
+                                <div className="nb-team-logo-fallback">{team.name.slice(0, 2)}</div>
                             )}
                             <span className="nb-team-name">{team.name}</span>
                         </Link>
@@ -195,8 +187,7 @@ const Navbar = () => {
                 </div>
             )}
 
-            {/* ── Mobile bottom nav ─────────────────────────────── */}
-            <nav className="nb-bottomnav" aria-label="Mobile navigation">
+            <nav className="nb-bottomnav">
                 {NAV_ITEMS.map((item) => {
                     const active = isActive(item.to);
                     return (
@@ -204,11 +195,8 @@ const Navbar = () => {
                             key={item.to}
                             to={item.to}
                             className={`nb-nav-item ${active ? 'active' : ''}`}
-                            aria-current={active ? 'page' : undefined}
-                            aria-label={item.label}
                         >
-                            {active && <span className="nb-active-dot" aria-hidden="true" />}
-                            <span className="nb-nav-icon" aria-hidden="true">{item.icon}</span>
+                            <span className="nb-nav-icon">{item.icon}</span>
                             <span className="nb-nav-label">{item.label}</span>
                         </Link>
                     );

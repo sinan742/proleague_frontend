@@ -22,43 +22,54 @@ const Team = () => {
         fetchTeams();
     }, []);
 
-    if (loading) return <div className="loader"><FootballLoader/></div>;
+    if (loading) return <div className="tm-loader-wrap"><FootballLoader/></div>;
 
     return (
-        <div className="teams-page">
-            <header className="teams-header">
-                <h1>League <span>Teams</span></h1>
-                <p>Explore the clubs competing in the ProLeague season.</p>
+        <div className="tm-page-container">
+            <header className="tm-main-header">
+                <div className="tm-header-content">
+                    <h1>League <span>Teams</span></h1>
+                    <p>Experience the passion of ProLeague's elite football clubs.</p>
+                </div>
             </header>
 
-            <div className="teams-grid">
+            <div className="tm-grid-layout">
                 {teams.map((team) => (
-                    <div key={team.id} className="team-card">
-                        {/* Top Color Strip using your backend primary_color */}
+                    <div key={team.id} className="tm-card-item">
+                        {/* Top Accent Strip - Defaults to Dark Green, no blue */}
                         <div 
-                            className="team-color-strip" 
-                            style={{ backgroundColor: team.primary_color || '#007bff' }}
+                            className="tm-top-accent" 
+                            style={{ backgroundColor: team.primary_color || '#1B5E20' }}
                         ></div>
                         
-                        <div className="team-card-content">
-                            <img src={team.logo} alt={team.name} className="team-logo-main" />
+                        <div className="tm-card-body">
+                            <div className="tm-logo-container">
+                                <img src={team.logo} alt={team.name} className="tm-club-logo" />
+                            </div>
                             
-                            <h2 className="team-name">{team.name}</h2>
-                            <p className="team-location">📍 {team.location || 'League City'}</p>
+                            <h2 className="tm-club-name">{team.name}</h2>
+                            <p className="tm-club-loc">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1118 0z" />
+                                    <circle cx="12" cy="10" r="3" />
+                                </svg>
+                                {team.location || 'Stadium Grounds'}
+                            </p>
 
-                            <div className="team-info-mini">
-                                <div className="info-item">
-                                    <span className="label">Coach</span>
-                                    <span className="value">{team.coach_name}</span>
+                            <div className="tm-stats-box">
+                                <div className="tm-stat-item">
+                                    <span className="tm-stat-label">Manager</span>
+                                    <span className="tm-stat-value">{team.coach_name}</span>
                                 </div>
-                                <div className="info-item">
-                                    <span className="label">Stadium</span>
-                                    <span className="value">{team.stadium}</span>
+                                <div className="tm-divider"></div>
+                                <div className="tm-stat-item">
+                                    <span className="tm-stat-label">Home Ground</span>
+                                    <span className="tm-stat-value">{team.stadium}</span>
                                 </div>
                             </div>
 
-                            <Link to={`/teams/${team.id}/`} className="view-squad-btn">
-                                View Full Squad
+                            <Link to={`/teams/${team.id}/`} className="tm-squad-link">
+                                View Club Squad
                             </Link>
                         </div>
                     </div>

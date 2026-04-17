@@ -8,6 +8,7 @@ const TeamDetails = () => {
     const { id } = useParams();
     const [data, setData] = useState({ team: null, upcoming: [], finished: [] });
     const [loading, setLoading] = useState(true);
+    const [activeTab, setActiveTab] = useState('details'); // Tabs: details, matches, squad
 
     useEffect(() => {
         const fetchTeamData = async () => {
@@ -29,12 +30,8 @@ const TeamDetails = () => {
 
     const { team, upcoming, finished } = data;
 
-    if (loading) return <div className="barca-loader"><FootballLoader/></div>;
-    if (!team) return <div className="barca-error"><FootballLoader/></div>;
-
-    const getPlayersByPos = (posCode) => {
-        return team.players ? team.players.filter(p => p.position === posCode) : [];
-    };
+    if (loading) return <div className="uptd-loader-wrap"><FootballLoader/></div>;
+    if (!team) return <div className="uptd-error">Team not found.</div>;
 
     const positionGroups = [
         { title: 'Goalkeepers', code: 'GK' },
@@ -43,134 +40,120 @@ const TeamDetails = () => {
         { title: 'Forwards', code: 'FW' }
     ];
 
+    // CSS Variables for Club Colors
+    const clubStyle = {
+        '--club-primary': team.color_1 || '#1B5E20',
+        '--club-secondary': team.color_2 || '#4CAF50',
+        '--club-accent': team.color_3 || '#FFD700'
+    };
+
     return (
-        <div className="barca-team-container">
-            {/* HERO BANNER */}
-            <header className="barca-hero" style={{ '--accent': team.primary_color || '#a50044' }}>
-                <div className="hero-overlay"></div>
-                <div className="hero-content">
-                    <img src={team.logo} alt={team.name} className="barca-logo-lg" />
-                    <div className="hero-info">
-                        <span className="league-tag">Official Club Profile</span>
+        <div className="uptd-container" style={clubStyle}>
+            {/* 1. HERO HEADER */}
+            <header className="uptd-hero">
+                <div className="uptd-hero-content">
+                    <img src={team.logo} alt={team.name} className="uptd-main-logo" />
+                    <div className="uptd-hero-info">
                         <h1>{team.name}</h1>
-                        <p className="hero-meta">
-                            Manager: <strong>{team.coach_name}</strong> | 
-                            Stadium: <strong>{team.stadium}</strong>
-                        </p>
+                        <p>{team.stadium} • {team.coach_name}</p>
                     </div>
                 </div>
             </header>
 
-            <div className="barca-main-content">
-                <div className="squad-wrapper">
-                    
-                    {/* UPCOMING MATCHES */}
-                    <section className="match-section">
-                        <div className="position-title-bar">
-                            <h2>Upcoming <span>Fixtures</span></h2>
-                            <div className="title-line"></div>
+            {/* 2. NAVIGATION TABS */}
+            <nav className="uptd-tab-bar">
+                <button 
+                    className={activeTab === 'details' ? 'active' : ''} 
+                    onClick={() => setActiveTab('details')}
+                >Club Details</button>
+                <button 
+                    className={activeTab === 'matches' ? 'active' : ''} 
+                    onClick={() => setActiveTab('matches')}
+                >Upcoming Matches</button>
+                <button 
+                    className={activeTab === 'squad' ? 'active' : ''} 
+                    onClick={() => setActiveTab('squad')}
+                >Full Squad</button>
+            </nav>
+
+            {/* 3. DYNAMIC CONTENT SECTION */}
+            <main className="uptd-main-content">
+                
+                {/* --- DETAILS TAB --- */}
+                {activeTab === 'details' && (
+                    <div className="uptd-details-tab animated-in">
+                        <div className="uptd-about-card">
+                            <h3>About the Club</h3>
+                            <p>{team.about || "Club history and details will be updated soon."}</p>
                         </div>
-                        <div className="team-matches-list">
-                            {upcoming.length > 0 ? (
-                                upcoming.map(m => (
-                                    <div key={m.id} className="match-row-compact fixture">
-                                        <div className="compact-team home">
-                                            <span>{m.home_team_name}</span>
-                                            <img src={m.home_team_logo} alt="" />
-                                        </div>
-                                        <div className="compact-time-box">
-                                            <span className="match-time-tag">VS</span>
-                                            <small>{new Date(m.match_date).toLocaleDateString()}</small>
-                                        </div>
-                                        <div className="compact-team away">
-                                            <img src={m.away_team_logo} alt="" />
-                                            <span>{m.away_team_name}</span>
-                                        </div>
+                        <div className="uptd-stadium-card">
+                            <div className="stadium-overlay"></div>
+                            <h3>Home Grounds</h3>
+                            <h2>{team.stadium}</h2>
+                            <span className="uptd-loc-tag">📍 {team.location}</span>
+                        </div>
+                    </div>
+                )}
+
+                {/* --- MATCHES TAB --- */}
+                {activeTab === 'matches' && (
+                    <div className="uptd-matches-tab animated-in">
+                        <h2 className="uptd-sub-title">Match <span>Schedule</span></h2>
+                        <div className="uptd-match-list">
+                            {upcoming.length > 0 ? upcoming.map(m => (
+                                <div key={m.id} className="uptd-match-item">
+                                    <div className="uptd-m-side">
+                                        <img src={m.home_team_logo} alt="" />
+                                        <span>{m.home_team_name}</span>
                                     </div>
-                                ))
-                            ) : <p className="no-data">No upcoming matches scheduled.</p>}
-                        </div>
-                    </section>
-
-                    {/* RECENT RESULTS */}
-                    <section className="match-section">
-                        <div className="position-title-bar">
-                            <h2>Recent <span>Results</span></h2>
-                            <div className="title-line"></div>
-                        </div>
-                        <div className="team-matches-list">
-                            {finished.length > 0 ? (
-                                finished.map(m => (
-                                    <Link to={`/matches/${m.id}`} key={m.id} className="match-row-compact result">
-                                        <div className="compact-team home">
-                                            <span>{m.home_team_name}</span>
-                                            <img src={m.home_team_logo} alt="" />
-                                        </div>
-                                        <div className="compact-score-box">
-                                            <span className="compact-score">{m.home_score} - {m.away_score}</span>
-                                        </div>
-                                        <div className="compact-team away">
-                                            <img src={m.away_team_logo} alt="" />
-                                            <span>{m.away_team_name}</span>
-                                        </div>
-                                    </Link>
-                                ))
-                            ) : <p className="no-data">No recent results found.</p>}
-                        </div>
-                    </section>
-
-                    {/* SQUAD SECTIONS */}
-                    {positionGroups.map((pos) => {
-                        const players = getPlayersByPos(pos.code);
-                        if (players.length === 0) return null;
-                        return (
-                            <section key={pos.code} className="position-section">
-                                <div className="position-title">
-                                    <h2>{pos.title}</h2>
-                                    <div className="title-line"></div>
+                                    <div className="uptd-m-center">
+                                        <span className="uptd-vs">VS</span>
+                                        <p>{new Date(m.match_date).toLocaleDateString()}</p>
+                                    </div>
+                                    <div className="uptd-m-side">
+                                        <img src={m.away_team_logo} alt="" />
+                                        <span>{m.away_team_name}</span>
+                                    </div>
                                 </div>
-                                <div className="barca-player-grid">
-                                    {players.map(player => (
-                                        <Link to={`/players/${player.id}`} key={player.id} className="barca-player-card">
-                                            <div className="card-tp">
-                                                <span className="jersey-bg-num">{player.number}</span>
-                                                <img src={player.photo} alt={player.name} className="player-img" />
-                                            </div>
-                                            <div className="card-bt">
-                                                <div className="p-identity-wrap">
-                                                    <span className="p-num-accent">#{player.number}</span>
-                                                    <h3 className="p-name-main">{player.name}</h3>
-                                                    <span className="p-pos-sub">{player.position}</span>
-                                                </div>
-                                                <div className="p-stats-hover">
-                                                    <div className="stat-line">
-                                                        <span>{player.position === 'GK' ? 'Saves' : 'Goals'}</span>
-                                                        <span>{player.position === 'GK' ? player.saves : player.goals}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="card-bottom-line"></div>
-                                        </Link>
-                                    ))}
-                                </div>
-                            </section>
-                        );
-                    })}
-                </div>
+                            )) : <p className="uptd-empty">No upcoming fixtures scheduled.</p>}
+                        </div>
+                    </div>
+                )}
 
-                {/* SIDEBAR */}
-                <aside className="barca-sidebar">
-                    <div className="sidebar-card">
-                        <h3>About the Club</h3>
-                        <p>{team.about}</p>
+                {/* --- SQUAD TAB --- */}
+                {activeTab === 'squad' && (
+                    <div className="uptd-squad-tab animated-in">
+                        {positionGroups.map(group => {
+                            const players = team.players?.filter(p => p.position === group.code) || [];
+                            if (players.length === 0) return null;
+                            return (
+                                <div key={group.code} className="uptd-pos-group">
+                                    <h3 className="uptd-pos-title">{group.title}</h3>
+                                    <div className="uptd-player-grid">
+                                        {players.map(p => (
+                                            <Link 
+                                                to={`/players/${p.id}`} 
+                                                key={p.id} 
+                                                className="uptd-p-card"
+                                                style={{ '--p-color': team.color_1, '--s-color': team.color_2 }}
+                                            >
+                                                <div className="uptd-p-top">
+                                                    <span className="uptd-p-number">{p.number}</span>
+                                                    <img src={p.photo} alt={p.name} />
+                                                </div>
+                                                <div className="uptd-p-bottom">
+                                                    <h4>{p.name}</h4>
+                                                    <span className="uptd-p-role">{p.position}</span>
+                                                </div>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
-                    <div className="sidebar-card stadium-highlight">
-                        <h3>Home Stadium</h3>
-                        <h4>{team.stadium}</h4>
-                        <div className="stadium-mini-tag">Home Ground</div>
-                    </div>
-                </aside>
-            </div>
+                )}
+            </main>
         </div>
     );
 };

@@ -53,6 +53,16 @@ const AdminNavbar = () => {
                         <span className="an-icon">⚽</span> Match Management
                     </NavLink>
                 </li>
+                 <li>
+                    <NavLink to="/admin-voucher-management" className={({ isActive }) => isActive ? "an-link active" : "an-link"}>
+                        <span className="an-icon">⚽</span> Vouchers Management
+                    </NavLink>
+                </li>
+                 <li>
+                    <NavLink to="/admin-booking-management" className={({ isActive }) => isActive ? "an-link active" : "an-link"}>
+                        <span className="an-icon">⚽</span> Ticket Management
+                    </NavLink>
+                </li>
             </ul>
 
             <div className="an-bottom-section">

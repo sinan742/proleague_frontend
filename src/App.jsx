@@ -30,6 +30,9 @@ import ScratchReward from './pages/ScratchReward';
 import MatchBooking from './pages/MatchBooking';
 import BookingHistory from './pages/BookingHistory';
 import ChatAssistant from './pages/ChatAssistant';
+import AdminVoucherManagement from './admin/AdminVoucherManagement';
+import AdminBookingManagement from './admin/AdminBookingManagement';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 // Assume you'll create these next:
 // import Login from './Login';
 // import Dashboard from './Dashboard';
@@ -88,6 +91,7 @@ function App() {
           <Route path="/book-ticket/:matchId" element={<MatchBooking />} />
           <Route path='/booking-history' element={<BookingHistory/>}/>
           <Route path='ask-ai/' element={<ChatAssistant/>}/>
+          <Route path='privacy-policy/' element={<PrivacyPolicy/>}/>
 
 
 
@@ -96,11 +100,15 @@ function App() {
 
 
 
+          <Route path="/admin-booking-management" element={<AdminBookingManagement />} />
           <Route path="/admin-teams-management" element={<AdminManageTeams/>} />
           <Route path="/admin-matches-management" element={<AdminMatchList/>} />
           <Route path="/admin/match/:id" element={<AdminMatchControl />} />
           <Route path="/admin-players-management" element={<AdminPlayerManagement />} />
           <Route path="/admin-match-shedule" element={<AdminMatchSchedule />} />
+          <Route path="/admin-voucher-management" element={<AdminVoucherManagement />} />
+          
+
 
 
 

@@ -1,125 +1,201 @@
-.teams-page {
-    padding: 40px 5%;
-    background-color: #0d1117;
+/* Unique Scope: tm- (Team Management User Side) */
+.tm-page-container {
+    background-color: #F8F5F0; /* Cream */
     min-height: 100vh;
-    color: white;
-}
-
-.teams-header {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-.teams-header h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-}
-
-.teams-header h1 span {
-    color: #58a6ff;
-}
-
-.teams-header p {
-    color: #8b949e;
-    margin-top: 10px;
-}
-
-/* Grid Layout */
-.teams-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
-}
-
-/* Card Styling */
-.team-card {
-    background: #161b22;
-    border: 1px solid #30363d;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-    position: relative;
-}
-
-.team-card:hover {
-    transform: translateY(-5px);
-    border-color: #58a6ff;
-}
-
-.team-color-strip {
-    height: 6px;
+    padding-bottom: 120px; /* Space for Mobile Nav */
     width: 100%;
 }
 
-.team-card-content {
-    padding: 30px 20px;
+/* Header Section */
+.tm-main-header {
+    background: linear-gradient(135deg, #1B5E20 0%, #0a2e0c 100%);
+    color: #ffffff;
+    padding: 100px 20px;
+    text-align: center;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+    margin-bottom: 50px;
+}
+
+.tm-header-content h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+}
+
+.tm-header-content h1 span {
+    color: #FFD700; /* Gold */
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.tm-header-content p {
+    color: rgba(248, 245, 240, 0.8);
+    font-size: 1.2rem;
+    margin-top: 12px;
+}
+
+/* Grid Layout */
+.tm-grid-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 35px;
+    padding: 0 25px;
+}
+
+/* Team Card Unique Styling */
+.tm-card-item {
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+.tm-card-item:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 25px 50px rgba(27, 94, 32, 0.15);
+}
+
+/* Top Accent Strip */
+.tm-top-accent {
+    height: 10px;
+    width: 100%;
+    transition: height 0.3s ease;
+}
+
+.tm-card-item:hover .tm-top-accent {
+    height: 14px;
+}
+
+.tm-card-body {
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 }
 
-.team-logo-main {
-    width: 100px;
-    height: 100px;
+/* Club Logo */
+.tm-logo-container {
+    background: #f8fafc;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+    border: 1px solid #edf2f7;
+    transition: transform 0.5s ease;
+}
+
+.tm-club-logo {
+    width: 70px;
+    height: 70px;
     object-fit: contain;
-    margin-bottom: 20px;
 }
 
-.team-name {
-    font-size: 1.4rem;
-    margin-bottom: 5px;
+.tm-card-item:hover .tm-logo-container {
+    transform: rotateY(180deg);
 }
 
-.team-location {
-    font-size: 0.85rem;
-    color: #8b949e;
-    margin-bottom: 20px;
+.tm-club-name {
+    font-size: 1.8rem;
+    color: #1B5E20;
+    font-weight: 900;
+    margin: 0 0 10px 0;
+    letter-spacing: -0.5px;
 }
 
-/* Mini Info Section */
-.team-info-mini {
+.tm-club-loc {
+    color: #64748b;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 25px;
+}
+
+/* Stats Box */
+.tm-stats-box {
+    width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 15px 0;
-    border-top: 1px solid #30363d;
-    border-bottom: 1px solid #30363d;
-    margin-bottom: 20px;
+    border-top: 1px solid #f1f5f9;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 30px;
 }
 
-.info-item {
-    display: flex;
-    flex-direction: column;
-    width: 48%;
+.tm-stat-item {
+    flex: 1;
 }
 
-.info-item .label {
-    font-size: 0.65rem;
-    color: #8b949e;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.info-item .value {
-    font-size: 0.85rem;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Button */
-.view-squad-btn {
+.tm-stat-label {
     display: block;
-    background-color: transparent;
-    border: 1px solid #58a6ff;
-    color: #58a6ff;
-    padding: 10px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: 0.2s;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    font-weight: 800;
+    margin-bottom: 4px;
 }
 
-.view-squad-btn:hover {
-    background-color: #58a6ff;
-    color: white;
+.tm-stat-value {
+    display: block;
+    font-size: 0.95rem;
+    color: #1B5E20;
+    font-weight: 700;
+}
+
+.tm-divider {
+    width: 1px;
+    height: 30px;
+    background: #e2e8f0;
+}
+
+/* Link Button */
+.tm-squad-link {
+    width: 100%;
+    padding: 14px;
+    background: #1B5E20;
+    color: #FFD700;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.tm-squad-link:hover {
+    background: #FFD700;
+    color: #1B5E20;
+    box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2);
+}
+
+.tm-loader-wrap {
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #F8F5F0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tm-header-content h1 { font-size: 2.5rem; }
+    .tm-grid-layout { 
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+        gap: 20px; 
+        padding: 0 15px; 
+    }
 }
