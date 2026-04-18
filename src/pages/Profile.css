@@ -1,178 +1,157 @@
-/* Unique Scoped Styles for ProLeague Profile */
-.lp-body-wrapper {
+:root {
+    --lp-green: #1B5E20;
+    --lp-gold: #FFD700;
+    --lp-black: #111111;
+    --lp-white: #ffffff;
+    --lp-red: #ef4444;
+}
+
+.lp-page-container {
     min-height: 100vh;
+    background: #f8f5f0;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #0f0f1e; /* Dark sports theme */
-    padding: 40px 20px;
+    padding: 20px;
     font-family: 'Inter', sans-serif;
 }
 
-.lp-profile-card {
-    max-width: 500px !important;
+.lp-main-card {
+    background: var(--lp-white);
     width: 100%;
-    background: #1a1a2e;
-    border: 1px solid #2d3748;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    max-width: 440px;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
 }
 
-.lp-title {
+.lp-top-hero {
+    background: linear-gradient(135deg, var(--lp-green) 0%, #0a2e0c 100%);
+    padding: 40px 20px;
+    text-align: center;
     color: white;
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 1.8rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 2px;
 }
 
-.lp-title span {
-    color: #007bff; /* Action Blue */
+.lp-pfp-container {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 12px;
 }
 
-/* Stats Summary Box */
-.lp-stats-container {
-    display: flex;
-    justify-content: space-between;
-    background: #16213e;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 30px;
-    border: 1px solid #0f3460;
-}
-
-.lp-stat-box {
-    text-align: center;
-    flex: 1;
-}
-
-.lp-stat-label {
-    font-size: 0.7rem;
-    color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    display: block;
-    margin-bottom: 8px;
-}
-
-.lp-points-val {
-    color: #ffd700; /* Gold */
-    font-size: 1.6rem;
-    font-weight: 900;
-    margin: 0;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-}
-
-.lp-role-val {
-    color: #007bff;
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin: 0;
-    text-transform: capitalize;
-}
-
-/* Profile Image Section */
-.lp-image-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.lp-avatar-preview {
-    width: 125px;
-    height: 125px;
+.lp-pfp-img {
+    width: 100%; height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #007bff;
-    background: #0f172a;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 3px solid var(--lp-gold);
+}
+
+.lp-pfp-edit {
+    position: absolute; bottom: 0; right: 0;
+    background: var(--lp-gold);
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 12px;
+}
+
+.lp-display-name { margin: 0; font-size: 1.3rem; font-weight: 800; }
+.lp-tag-gold { font-size: 0.65rem; background: var(--lp-gold); color: var(--lp-green); padding: 4px 14px; border-radius: 20px; font-weight: 900; margin-top: 8px; display: inline-block; }
+
+.lp-stats-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 25px; border-bottom: 1.5px solid #f5f5f5;
+}
+
+.lp-stat-item strong { color: var(--lp-green); font-size: 1.1rem; font-weight: 900; }
+.lp-stat-item small { display: block; color: #94a3b8; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.5px; }
+
+.lp-edit-btn {
+    background: #f1f5f9; border: none; padding: 6px 14px; border-radius: 8px;
+    font-weight: 800; color: #475569; cursor: pointer; font-size: 0.75rem;
+}
+
+/* MENU LIST */
+.lp-action-menu { padding: 10px 0; }
+.lp-menu-link {
+    width: 100%; display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 25px; background: transparent; border: none;
+    font-weight: 600; color: #334155; cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.lp-menu-link:hover { background: #fcfcfc; }
+.lp-icon { margin-right: 12px; font-size: 1.1rem; }
+
+/* ── PHOTO STYLE TOGGLE SWITCH ── */
+.lp-toggle-item { cursor: default !important; }
+.lp-toggle-item:hover { background: none; }
+
+.lp-switch-photo {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 24px;
+}
+
+.lp-switch-photo input { opacity: 0; width: 0; height: 0; }
+
+.lp-slider-photo {
+    position: absolute;
     cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #f1f1f1; /* Light Grey like photo */
+    border: 1.5px solid #e2e8f0;
+    transition: .4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 34px;
 }
 
-.lp-avatar-preview:hover {
-    transform: scale(1.05) rotate(2deg);
-    border-color: #ffd700;
-    box-shadow: 0 0 20px rgba(0, 123, 255, 0.4);
+.lp-slider-photo:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 2px;
+    bottom: 1.5px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: .4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
 }
 
-/* Form Styling */
-.lp-input-field-group {
-    margin-bottom: 22px;
+/* Checked state - Turns Solid Black like photo */
+input:checked + .lp-slider-photo {
+    background-color: var(--lp-black);
+    border-color: var(--lp-black);
 }
 
-.lp-input-field-group label {
-    display: block;
-    color: #cbd5e0;
-    margin-bottom: 8px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    text-transform: uppercase;
+input:checked + .lp-slider-photo:before {
+    transform: translateX(22px);
+    background-color: white;
 }
 
-.lp-input-field-group input {
-    width: 100%;
-    padding: 14px 15px;
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    color: white;
-    font-size: 1rem;
-    transition: 0.3s;
+/* Logout & Form */
+.lp-logout-btn { color: var(--lp-red) !important; margin-top: 10px; border-top: 1px solid #f9f9f9; }
+
+.lp-edit-form { padding: 25px; }
+.lp-field { margin-bottom: 18px; }
+.lp-field label { display: block; font-size: 0.7rem; font-weight: 800; color: #64748b; margin-bottom: 5px; }
+.lp-field input {
+    width: 100%; padding: 12px; border: 2.5px solid #f1f5f9;
+    border-radius: 12px; outline: none; font-weight: 600;
 }
 
-.lp-input-field-group input:focus {
-    outline: none;
-    border-color: #007bff;
-    background: #1e293b;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+.lp-error-txt { color: var(--lp-red); font-size: 0.65rem; font-weight: 800; display: block; margin-top: 4px; }
+.lp-save-button {
+    width: 100%; padding: 14px; background: var(--lp-green);
+    color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer;
 }
 
-/* Action Button */
-.lp-submit-btn {
-    width: 100%;
-    padding: 16px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-top: 10px;
+/* Responsive */
+@media (max-width: 600px) {
+    .lp-page-container { padding: 0; }
+    .lp-main-card { border-radius: 0; min-height: 100vh; }
 }
 
-.lp-submit-btn:hover {
-    background: #0056b3;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
-}
-
-.lp-submit-btn:disabled {
-    background: #1e293b;
-    color: #4a5568;
-    cursor: not-allowed;
-    animation: lp-pulse 2s infinite;
-}
-
-@keyframes lp-pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.6; }
-    100% { opacity: 1; }
-}
-
-.lp-loading-screen {
-    color: #007bff;
-    text-align: center;
-    padding-top: 20vh;
-    font-size: 1.5rem;
-    font-weight: 800;
-    background-color: #0f0f1e;
-    min-height: 100vh;
-}
+.slide-in { animation: slideIn 0.3s ease-out; }
+@keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

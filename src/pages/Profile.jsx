@@ -1,42 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import './Profile.css';
 
 const Profile = () => {
+    const navigate = useNavigate();
     const [userData, setUserData] = useState(null);
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        password: '',
-    });
+    const [isEditing, setIsEditing] = useState(false);
+    const [notifEnabled, setNotifEnabled] = useState(true);
+    const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+    const [errors, setErrors] = useState({});
     const [imageFile, setImageFile] = useState(null);
     const [preview, setPreview] = useState(null);
     const [loading, setLoading] = useState(false);
     const [fetching, setFetching] = useState(true);
 
+    const strictEmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
+
     useEffect(() => {
         api.get('profile/')
             .then(res => {
                 setUserData(res.data);
-                setFormData({ 
-                    username: res.data.username, 
-                    email: res.data.email, 
-                    password: '' 
-                });
+                setFormData({ username: res.data.username, email: res.data.email, password: '' });
                 setPreview(res.data.profile_image);
                 setFetching(false);
             })
-            .catch(() => {
-                toast.error("Access Denied. Please log in.");
-                setFetching(false);
-            });
+            .catch(() => setFetching(false));
     }, []);
+
+    const validate = () => {
+        let newErrors = {};
+        if (!strictEmailRegex.test(formData.email)) newErrors.email = "Invalid league email.";
+        if (formData.password && !passwordRegex.test(formData.password)) newErrors.password = "Security criteria not met.";
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const handleUpdate = async (e) => {
         e.preventDefault();
+        if (!validate()) return;
         setLoading(true);
-
         const data = new FormData();
         data.append('username', formData.username);
         data.append('email', formData.email);
@@ -44,96 +49,120 @@ const Profile = () => {
         if (imageFile) data.append('profile_image', imageFile);
 
         try {
-            const res = await api.put('profile/', data, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
-            toast.success("Profile Synced with League!");
+            const res = await api.put('profile/', data, { headers: { 'Content-Type': 'multipart/form-data' } });
+            setUserData(res.data);
             setPreview(res.data.profile_image);
-            setFormData(prev => ({ ...prev, password: '' }));
+            setIsEditing(false);
+            toast.success("Profile Updated!");
+        } catch (err) { toast.error("Update failed."); } 
+        finally { setLoading(false); }
+    };
+
+    const handleLogout = async () => {
+        try {
+            // Using the logout API endpoint
+            await api.post('logout/');
+            localStorage.clear();
+            navigate('/login');
         } catch (err) {
-            toast.error("Failed to update profile.");
-        } finally {
-            setLoading(false);
+            localStorage.clear();
+            navigate('/login');
         }
     };
 
-    if (fetching) return <div className="lp-loading-screen">SYNCING LEAGUE DATA...</div>;
+    if (fetching) return <div className="lp-loading-wrap">SYNCING...</div>;
 
     return (
-        <div className="lp-body-wrapper">
-            <div className="lp-profile-card">
-                <h2 className="lp-title"> <span>Profile</span></h2>
-
-                <div className="lp-stats-container">
-                    <div className="lp-stat-box">
-                        <span className="lp-stat-label">League Role</span>
-                        <p className="lp-role-val">{userData?.role || 'Player'}</p>
+        <div className="lp-page-container">
+            <div className="lp-main-card">
+                {/* Profile Hero */}
+                <div className="lp-top-hero">
+                    <div className="lp-pfp-container">
+                        <img src={preview || '/default-avatar.png'} alt="User" className="lp-pfp-img" />
+                        {isEditing && (
+                            <label className="lp-pfp-edit">
+                                📷 <input type="file" hidden onChange={(e) => {
+                                    const file = e.target.files[0];
+                                    if (file) { setImageFile(file); setPreview(URL.createObjectURL(file)); }
+                                }} />
+                            </label>
+                        )}
                     </div>
-                    <div className="lp-stat-box">
-                        <span className="lp-stat-label">Current Points</span>
-                        <p className="lp-points-val">{userData?.points || 0} PTS</p>
-                    </div>
+                    <h2 className="lp-display-name">{userData?.username}</h2>
+                    <span className="lp-tag-gold">{userData?.role || 'Elite Athlete'}</span>
                 </div>
 
-                <form onSubmit={handleUpdate}>
-                    <div className="lp-image-group">
-                        <label htmlFor="lp-avatar-upload">
-                            <img 
-                                src={preview || '/default-avatar.png'} 
-                                alt="Athlete" 
-                                className="lp-avatar-preview" 
-                            />
-                        </label>
-                        <input 
-                            id="lp-avatar-upload"
-                            type="file" 
-                            accept="image/*" 
-                            style={{ display: 'none' }}
-                            onChange={(e) => {
-                                const file = e.target.files[0];
-                                if (file) {
-                                    setImageFile(file);
-                                    setPreview(URL.createObjectURL(file));
-                                }
-                            }} 
-                        />
-                        <p style={{ color: '#94a3b8', fontSize: '0.7rem', marginTop: '10px' }}>
-                            Tap image to change avatar
-                        </p>
+                {/* Score Stats */}
+                <div className="lp-stats-row">
+                    <div className="lp-stat-item">
+                        <small>BALANCE</small>
+                        <strong>{userData?.points || 0} PTS</strong>
                     </div>
-
-                    <div className="lp-input-field-group">
-                        <label>Username</label>
-                        <input 
-                            type="text" 
-                            value={formData.username} 
-                            onChange={e => setFormData({...formData, username: e.target.value})} 
-                        />
-                    </div>
-
-                    <div className="lp-input-field-group">
-                        <label>Registered Email</label>
-                        <input 
-                            type="email" 
-                            value={formData.email} 
-                            onChange={e => setFormData({...formData, email: e.target.value})} 
-                        />
-                    </div>
-
-                    <div className="lp-input-field-group">
-                        <label>Security (New Password)</label>
-                        <input 
-                            type="password" 
-                            placeholder="Keep empty to leave unchanged"
-                            value={formData.password} 
-                            onChange={e => setFormData({...formData, password: e.target.value})} 
-                        />
-                    </div>
-
-                    <button type="submit" className="lp-submit-btn" disabled={loading}>
-                        {loading ? "Updating..." : "Update Profile"}
+                    <button className="lp-edit-btn" onClick={() => setIsEditing(!isEditing)}>
+                        {isEditing ? "CANCEL" : "EDIT PROFILE"}
                     </button>
-                </form>
+                </div>
+
+                {isEditing ? (
+                    <form className="lp-edit-form slide-in" onSubmit={handleUpdate}>
+                        <div className="lp-field">
+                            <label>Username</label>
+                            <input type="text" value={formData.username} onChange={e => setFormData({ ...formData, username: e.target.value })} />
+                        </div>
+                        <div className="lp-field">
+                            <label>Email</label>
+                            <input type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                            {errors.email && <span className="lp-error-txt">{errors.email}</span>}
+                        </div>
+                        <div className="lp-field">
+                            <label>Update Password</label>
+                            <input type="password" placeholder="Leave empty if no change" value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })} />
+                            {errors.password && <span className="lp-error-txt">{errors.password}</span>}
+                        </div>
+                        <button type="submit" className="lp-save-button" disabled={loading}>
+                            {loading ? "SAVING..." : "SAVE PROFILE"}
+                        </button>
+                    </form>
+                ) : (
+                    <div className="lp-action-menu slide-in">
+                        {/* PHOTO STYLE TOGGLE */}
+                        <div className="lp-menu-link lp-toggle-item">
+                            <div className="lp-link-left">
+                                <span className="lp-icon">🔔</span> Notification Settings
+                            </div>
+                            <label className="lp-switch-photo">
+                                <input 
+                                    type="checkbox" 
+                                    checked={notifEnabled} 
+                                    onChange={() => setNotifEnabled(!notifEnabled)} 
+                                />
+                                <span className="lp-slider-photo"></span>
+                            </label>
+                        </div>
+
+                        <button className="lp-menu-link" onClick={() => navigate('/booking-history')}>
+                            <div className="lp-link-left"><span className="lp-icon">🎟️</span> Booking History</div>
+                        </button>
+                        
+                        <button className="lp-menu-link" onClick={() => navigate('/reward-history')}>
+                            <div className="lp-link-left"><span className="lp-icon">🎁</span> Reward History</div>
+                        </button>
+
+                        <button className="lp-menu-link" onClick={() => navigate('/ask-ai')}>
+                            <div className="lp-link-left"><span className="lp-icon">💬</span>Ask Help</div>
+                        </button>
+                        <button className="lp-menu-link" onClick={() => navigate('/privacy-policy')}>
+                            <div className="lp-link-left"><span className="lp-icon">🔒</span>Privacy Policy</div>
+                        </button>
+                        <button className="lp-menu-link" onClick={() => navigate('/contact')}>
+                            <div className="lp-link-left"><span className="lp-icon">📞</span> Contact Us</div>
+                        </button>
+
+                        <button className="lp-menu-link lp-logout-btn" onClick={handleLogout}>
+                            <div className="lp-link-left"><span className="lp-icon">🚪</span> Sign Out</div>
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );
