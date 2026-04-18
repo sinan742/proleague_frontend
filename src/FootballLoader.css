@@ -1,92 +1,117 @@
-/* Full Screen Overlay */
+:root {
+    --lp-pitch: #1B5E20;
+    --lp-black: #1a1a1a;
+    --lp-white: #ffffff;
+    --lp-gold: #FFD700;
+    --lp-cream: #F8F5F0;
+}
+
 .lp-global-loader-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(15, 15, 30, 0.95); /* Semi-transparent dark theme */
+    width: 100%;
+    height: 100%;
+    background: rgba(248, 245, 240, 0.98); 
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* Stay on top of everything */
-    backdrop-filter: blur(5px); /* Modern blur effect */
+    z-index: 10000;
 }
 
 .lp-loader-content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 30px;
 }
 
 .lp-football-loader {
+    width: 80px;
+    height: 120px;
     position: relative;
-    width: 60px;
-    height: 60px;
+    display: flex;
+    justify-content: center;
 }
 
+/* The Ball: Black & White with Outer Glow */
 .lp-football {
-    width: 50px;
-    height: 50px;
-    background: #ffffff;
+    width: 55px;
+    height: 55px;
+    background: var(--lp-white);
     border-radius: 50%;
     position: relative;
-    border: 2px solid #000;
+    border: 2px solid var(--lp-black);
     overflow: hidden;
-    animation: lp-bounce 0.6s infinite alternate cubic-bezier(0.5, 0.05, 1, 0.5), 
-               lp-spin 1.2s infinite linear;
-    box-shadow: inset -5px -5px 12px rgba(0,0,0,0.2);
+    /* Outer Glow Effect */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1), inset -4px -4px 8px rgba(0, 0, 0, 0.15);
+    /* Smooth Bouncing and Spinning */
+    animation: 
+        lp-smooth-bounce 0.6s infinite alternate cubic-bezier(0.45, 0.05, 0.55, 0.95),
+        lp-smooth-spin 1.5s infinite linear;
 }
 
+/* Black Hexagon Patterns */
 .lp-hex {
     position: absolute;
     width: 18px;
     height: 18px;
-    background: #000;
+    background: var(--lp-black);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
 }
 
-/* Hexagon patterns */
-.lp-hex:nth-child(1) { top: 8px; left: 15px; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
-.lp-hex:nth-child(2) { bottom: -4px; left: -4px; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
-.lp-hex:nth-child(3) { bottom: -4px; right: -4px; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+/* Positioning Hexagons for a realistic ball look */
+.lp-hex:nth-child(1) { top: 5px; left: 16px; }
+.lp-hex:nth-child(2) { top: 30px; left: 0px; }
+.lp-hex:nth-child(3) { top: 30px; left: 32px; }
 
+/* Dynamic Shadow */
 .lp-shadow {
-    width: 40px;
-    height: 8px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
     position: absolute;
-    bottom: -25px;
-    left: 5px;
-    animation: lp-shadow-pulse 0.6s infinite alternate cubic-bezier(0.5, 0.05, 1, 0.5);
+    bottom: 0;
+    width: 45px;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+    filter: blur(3px);
+    animation: lp-shadow-pulse 0.6s infinite alternate cubic-bezier(0.45, 0.05, 0.55, 0.95);
 }
 
+/* Loading Text with Gold Highlight */
 .lp-loading-text {
-    margin-top: 50px;
-    color: #58a6ff;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--lp-pitch);
     text-transform: uppercase;
-    letter-spacing: 3px;
-    font-size: 0.9rem;
-    font-weight: 800;
-    animation: lp-text-fade 1.5s infinite;
+    letter-spacing: 4px;
+    margin: 0;
+    animation: lp-text-glow 2s infinite ease-in-out;
 }
 
-@keyframes lp-bounce {
-    from { transform: translateY(0); }
-    to { transform: translateY(-40px); }
+/* Keyframes */
+@keyframes lp-smooth-bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(70px); }
 }
 
-@keyframes lp-spin {
+@keyframes lp-smooth-spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
 
 @keyframes lp-shadow-pulse {
-    from { transform: scale(1.2); opacity: 0.4; }
-    to { transform: scale(0.5); opacity: 0.1; }
+    0% { transform: scale(1.5); opacity: 0.1; }
+    100% { transform: scale(0.6); opacity: 0.4; }
 }
 
-@keyframes lp-text-fade {
-    0%, 100% { opacity: 0.6; color: #58a6ff; }
-    50% { opacity: 1; color: #ffd700; }
+@keyframes lp-text-glow {
+    0%, 100% { opacity: 0.5; color: var(--lp-pitch); }
+    50% { opacity: 1; color: var(--lp-black); text-shadow: 0 0 8px rgba(27, 94, 32, 0.2); }
+}
+
+/* Mobile Tweak */
+@media (max-width: 768px) {
+    .lp-football { width: 48px; height: 48px; }
+    .lp-loading-text { font-size: 1rem; letter-spacing: 3px; }
 }

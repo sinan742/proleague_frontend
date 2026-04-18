@@ -4,40 +4,301 @@ import api from '../api';
 import './MatchDetails.css';
 import FootballLoader from '../FootballLoader';
 
+/* ─── Event icon map ──────────────────────────────── */
+
+const EVENT_ICONS = {
+    'Goal':         '⚽',
+    'Yellow Card':  '🟨',
+    'Red Card':     '🟥',
+    'Substitution': '🔄',
+    'Penalty':      '🎯',
+    'Own Goal':     '🥅',
+};
+const getIcon = (type) => EVENT_ICONS[type] ?? '📋';
+
+/* ─── TeamLogo ────────────────────────────────────── */
+
+const TeamLogo = ({ src, name, size = 52 }) => {
+    const [err, setErr] = React.useState(false);
+    if (!src || err) {
+        return (
+            <div
+                className="mdp2-team-logo mdp2-team-logo--fb"
+                style={{ width: size, height: size, fontSize: Math.round(size * 0.27) }}
+                aria-hidden="true"
+            >
+                {name?.slice(0, 2).toUpperCase() ?? '??'}
+            </div>
+        );
+    }
+    return (
+        <img
+            src={src}
+            alt={name}
+            className="mdp2-team-logo"
+            style={{ width: size, height: size }}
+            onError={() => setErr(true)}
+        />
+    );
+};
+
+/* ─── StatBar ─────────────────────────────────────── */
+
+const StatBar = ({ label, home = 0, away = 0, unit = '', delay = 0 }) => {
+    const h   = Number(home) || 0;
+    const a   = Number(away) || 0;
+    const tot = (h + a) || 1;
+    const hp  = Math.round((h / tot) * 100);
+    return (
+        <div className="mdp2-stat-row" style={{ animationDelay: `${delay}s` }}>
+            <div className="mdp2-stat-labels">
+                <span className="mdp2-stat-hv">{h}{unit}</span>
+                <span className="mdp2-stat-lbl">{label}</span>
+                <span className="mdp2-stat-av">{a}{unit}</span>
+            </div>
+            <div className="mdp2-stat-track" role="meter" aria-label={`${label}: home ${h}${unit}, away ${a}${unit}`}>
+                <div className="mdp2-stat-hfill" style={{ width: `${hp}%` }} />
+                <div className="mdp2-stat-afill" style={{ width: `${100 - hp}%` }} />
+            </div>
+        </div>
+    );
+};
+
+/* ─── SplitTimeline ───────────────────────────────── */
+
+const SplitTimeline = ({ events = [] }) => {
+    if (!events.length) {
+        return <p className="mdp2-empty">Match action will appear here once the game begins.</p>;
+    }
+    return (
+        <div className="mdp2-tl-wrap" role="list">
+            {events.map((ev, i) => {
+                const isHome = ev.team_side === 'home';
+                const icon   = getIcon(ev.event_type);
+                return (
+                    <div
+                        key={i}
+                        className="mdp2-tl-row"
+                        role="listitem"
+                        style={{ animationDelay: `${i * 0.05}s` }}
+                    >
+                        {/* Home column */}
+                        <div className={`mdp2-tl-side mdp2-tl-side--home ${!isHome ? 'mdp2-tl-side--empty' : ''}`}>
+                            {isHome && (
+                                <div className="mdp2-tl-card mdp2-tl-card--home">
+                                    <span className="mdp2-tl-icon mdp2-tl-icon--home">{icon}</span>
+                                    <div className="mdp2-tl-body">
+                                        <p className="mdp2-tl-pname">{ev.player_name}</p>
+                                        <p className="mdp2-tl-etype">{ev.event_type}</p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Centre minute bubble */}
+                        <div className="mdp2-tl-min">
+                            <span className="mdp2-tl-min-badge">{ev.minute}'</span>
+                        </div>
+
+                        {/* Away column */}
+                        <div className={`mdp2-tl-side mdp2-tl-side--away ${isHome ? 'mdp2-tl-side--empty' : ''}`}>
+                            {!isHome && (
+                                <div className="mdp2-tl-card mdp2-tl-card--away">
+                                    <span className="mdp2-tl-icon mdp2-tl-icon--away">{icon}</span>
+                                    <div className="mdp2-tl-body">
+                                        <p className="mdp2-tl-pname">{ev.player_name}</p>
+                                        <p className="mdp2-tl-etype">{ev.event_type}</p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+    );
+};
+
+/* ─── ScoreEventsStrip ────────────────────────────── */
+
+const ScoreEventsStrip = ({ events = [] }) => {
+    const goalTypes  = new Set(['Goal', 'Penalty', 'Own Goal']);
+    const goals      = events.filter(e => goalTypes.has(e.event_type));
+    const homeGoals  = goals.filter(e => e.team_side === 'home');
+    const awayGoals  = goals.filter(e => e.team_side === 'away');
+
+    return (
+        <div className="mdp2-score-events" aria-label="Goal scorers">
+            <div className="mdp2-score-evt-col mdp2-score-evt-col--home">
+                {homeGoals.length > 0
+                    ? homeGoals.map((e, i) => (
+                        <span key={i} className="mdp2-score-evt-item">
+                            <em>{e.minute}'</em> {e.player_name} ⚽
+                        </span>
+                    ))
+                    : <span className="mdp2-score-evt-none">–</span>
+                }
+            </div>
+            <div className="mdp2-score-evt-spacer" aria-hidden="true" />
+            <div className="mdp2-score-evt-col mdp2-score-evt-col--away">
+                {awayGoals.length > 0
+                    ? awayGoals.map((e, i) => (
+                        <span key={i} className="mdp2-score-evt-item">
+                            <em>{e.minute}'</em> {e.player_name} ⚽
+                        </span>
+                    ))
+                    : <span className="mdp2-score-evt-none">–</span>
+                }
+            </div>
+        </div>
+    );
+};
+
+/* ─── PerformanceTable ────────────────────────────── */
+
+const PerformanceTable = ({ performances = [], homeTeamName, awayTeamName, homeTeamLogo, awayTeamLogo }) => {
+    const [side, setSide] = useState('home');
+    const filtered = performances.filter(p =>
+        side === 'home' ? p.team_name === homeTeamName : p.team_name === awayTeamName
+    );
+
+    const ratingCls = (r) => {
+        const n = Number(r) || 0;
+        if (n >= 8)   return 'mdp2-perf-rating--hi';
+        if (n >= 6.5) return 'mdp2-perf-rating--mid';
+        return 'mdp2-perf-rating--lo';
+    };
+
+    return (
+        <>
+            {/* Home / Away toggle buttons */}
+            <div className="mdp2-perf-btns" role="group" aria-label="Select team">
+                {[
+                    { key: 'home', name: homeTeamName, logo: homeTeamLogo },
+                    { key: 'away', name: awayTeamName, logo: awayTeamLogo },
+                ].map(t => (
+                    <button
+                        key={t.key}
+                        className={`mdp2-perf-btn ${side === t.key ? 'mdp2-perf-btn--on' : ''}`}
+                        onClick={() => setSide(t.key)}
+                        aria-pressed={side === t.key}
+                    >
+                        <TeamLogo src={t.logo} name={t.name} size={22} />
+                        <span>{t.name}</span>
+                    </button>
+                ))}
+            </div>
+
+            {/* Table */}
+            <div className="mdp2-perf-table-wrap">
+                <table className="mdp2-perf-table">
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th title="Goals">G</th>
+                            <th title="Assists">A</th>
+                            <th title="Yellow Cards">YC</th>
+                            <th title="Red Cards">RC</th>
+                            <th title="Rating">Rtg</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filtered.length > 0 ? filtered.map(p => (
+                            <tr key={p.id ?? p.player_name} className="mdp2-perf-row">
+                                <td>
+                                    <div className="mdp2-perf-player">
+                                        {p.player_photo
+                                            ? <img
+                                                src={p.player_photo}
+                                                alt={p.player_name}
+                                                className="mdp2-perf-photo"
+                                                onError={e => {
+                                                    e.target.style.display = 'none';
+                                                    e.target.nextSibling?.style && (e.target.nextSibling.style.display = 'flex');
+                                                }}
+                                              />
+                                            : null
+                                        }
+                                        <div
+                                            className="mdp2-perf-photo-fb"
+                                            style={{ display: p.player_photo ? 'none' : 'flex' }}
+                                        >
+                                            {p.player_name?.slice(0, 2).toUpperCase()}
+                                        </div>
+                                        <div>
+                                            <p className="mdp2-perf-pname">{p.player_name}</p>
+                                            <p className="mdp2-perf-pos">{p.position ?? ''}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{p.goals > 0
+                                    ? <span className="mdp2-perf-badge mdp2-perf-badge--goal">{p.goals}</span>
+                                    : <span className="mdp2-perf-zero">0</span>}
+                                </td>
+                                <td>{p.assists > 0
+                                    ? <span className="mdp2-perf-badge mdp2-perf-badge--assist">{p.assists}</span>
+                                    : <span className="mdp2-perf-zero">0</span>}
+                                </td>
+                                <td>{p.yellow_cards > 0
+                                    ? <span className="mdp2-perf-badge mdp2-perf-badge--yc">🟨 {p.yellow_cards}</span>
+                                    : <span className="mdp2-perf-zero">0</span>}
+                                </td>
+                                <td>{p.red_cards > 0
+                                    ? <span className="mdp2-perf-badge mdp2-perf-badge--rc">🟥 {p.red_cards}</span>
+                                    : <span className="mdp2-perf-zero">0</span>}
+                                </td>
+                                <td>
+                                    <span className={`mdp2-perf-rating ${ratingCls(p.rating)}`}>
+                                        {p.rating ? Number(p.rating).toFixed(1) : '—'}
+                                    </span>
+                                </td>
+                            </tr>
+                        )) : (
+                            <tr>
+                                <td colSpan={6} className="mdp2-empty">No performance data yet.</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+        </>
+    );
+};
+
+/* ─── Main ────────────────────────────────────────── */
+
 const MatchDetails = () => {
-    const { id } = useParams();
-    const [match, setMatch] = useState(null);
-    const socket = useRef(null);
+    const { id }                    = useParams();
+    const [match, setMatch]         = useState(null);
+    const [activeTab, setActiveTab] = useState('events');
+    const socket                    = useRef(null);
 
     useEffect(() => {
-        // 1. Initial Data Fetch
-        api.get(`matches/${id}/stats/`).then(res => {
-            setMatch(res.data);
-        });
-
-        // 2. WebSocket Setup for Live Updates
-        const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-        socket.current = new WebSocket(`${protocol}://127.0.0.1:8000/ws/match/${id}/`);
+        api.get(`matches/${id}/stats/`).then(res => setMatch(res.data));
+        // this is the websocket url
+        const protocol    = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        socket.current    = new WebSocket(`${protocol}://127.0.0.1:8000/ws/match/${id}/`);
 
         socket.current.onmessage = (e) => {
             const data = JSON.parse(e.data);
-            
             setMatch(prev => {
-                // If the message contains a player name, create a new event object
+                if (!prev) return prev;
                 const newEvent = data.player ? {
                     player_name: data.player,
-                    event_type: data.type,
-                    minute: data.minute,
-                    team_side: data.side || (data.home_score > prev.home_score ? 'home' : 'away')
+                    event_type:  data.type,
+                    minute:      data.minute,
+                    team_side:   data.side ?? (
+                        (data.home_score ?? prev.home_score) > prev.home_score ? 'home' : 'away'
+                    ),
                 } : null;
-
                 return {
                     ...prev,
-                    home_score: data.home_score !== undefined ? data.home_score : prev.home_score,
-                    away_score: data.away_score !== undefined ? data.away_score : prev.away_score,
-                    current_minute: data.minute !== undefined ? data.minute : prev.current_minute,
-                    // Prepend the new event to the timeline if it exists
-                    events: newEvent ? [newEvent, ...(prev.events || [])] : prev.events
+                    home_score:     data.home_score     ?? prev.home_score,
+                    away_score:     data.away_score     ?? prev.away_score,
+                    current_minute: data.minute         ?? prev.current_minute,
+                    events: newEvent
+                        ? [newEvent, ...(prev.events ?? [])]
+                        : prev.events,
                 };
             });
         };
@@ -45,130 +306,141 @@ const MatchDetails = () => {
         return () => socket.current?.close();
     }, [id]);
 
-    if (!match) return <div className="barca-loader"><FootballLoader/></div>;
+    if (!match) {
+        return (
+            <div className="mdp2-loader-wrap" role="status">
+                <FootballLoader />
+            </div>
+        );
+    }
 
-    const homeStats = match.statistics?.find(s => s.team_name === match.home_team_name) || {};
-    const awayStats = match.statistics?.find(s => s.team_name === match.away_team_name) || {};
+    const homeStats = match.statistics?.find(s => s.team_name === match.home_team_name) ?? {};
+    const awayStats = match.statistics?.find(s => s.team_name === match.away_team_name) ?? {};
+    const isLive    = match.status === 'live';
+
+    const TABS = [
+        { key: 'events',      label: 'Match Timeline' },
+        { key: 'stats',       label: 'Team Stats'     },
+        { key: 'performance', label: 'Performances'   },
+    ];
 
     return (
-        <div className="match-detail-page">
-            <section className="match-hero-bg">
-                <div className="hero-content">
-                    <div className="hero-team">
-                        <img src={match.home_team_logo} alt="Home" />
-                        <h2>{match.home_team_name}</h2>
+        <div className="mdp2-page">
+
+            {/* ── Hero ─────────────────────────────────── */}
+            <section className="mdp2-hero" aria-label="Match scoreboard">
+                <div className="mdp2-hero-grid" aria-hidden="true" />
+                <div className="mdp2-hero-glow"  aria-hidden="true" />
+
+                <div className="mdp2-scoreboard">
+                    <div className="mdp2-team-col">
+                        <TeamLogo src={match.home_team_logo} name={match.home_team_name} size={56} />
+                        <span className="mdp2-team-name">{match.home_team_name}</span>
                     </div>
 
-                    <div className="hero-score-area">
-                        <div className="big-score">
-                            {match.home_score} <span>-</span> {match.away_score}
+                    <div className="mdp2-score-block">
+                        <div className="mdp2-score-nums" aria-label={`${match.home_score} – ${match.away_score}`}>
+                            <span className="mdp2-score-n">{match.home_score ?? 0}</span>
+                            <span className="mdp2-score-dash" aria-hidden="true">–</span>
+                            <span className="mdp2-score-n">{match.away_score ?? 0}</span>
                         </div>
-                        <div className="match-meta">
-                            <span className={`status-pill ${match.status}`}>
-                                {match.status === 'live' ? `● LIVE` : match.status.toUpperCase()} 
-                                <span className="live-min"> {match.current_minute}'</span>
-                            </span>
+                        <div
+                            className={`mdp2-status-pill ${isLive ? 'mdp2-status-pill--live' : 'mdp2-status-pill--done'}`}
+                            role="status"
+                        >
+                            {isLive ? (
+                                <>
+                                    <span className="mdp2-live-dot" aria-hidden="true" />
+                                    LIVE {match.current_minute}'
+                                </>
+                            ) : (
+                                match.status?.replace(/_/g, ' ').toUpperCase()
+                            )}
                         </div>
                     </div>
 
-                    <div className="hero-team">
-                        <img src={match.away_team_logo} alt="Away" />
-                        <h2>{match.away_team_name}</h2>
+                    <div className="mdp2-team-col">
+                        <TeamLogo src={match.away_team_logo} name={match.away_team_name} size={56} />
+                        <span className="mdp2-team-name">{match.away_team_name}</span>
                     </div>
+                </div>
+
+                {/* Goal scorers strip */}
+                <ScoreEventsStrip events={match.events ?? []} />
+
+                <div className="mdp2-venue-strip">
+                    <span className="mdp2-venue-txt">
+                        {match.venue ?? 'Main Stadium'}
+                        {match.match_date && (
+                            <> · {new Date(match.match_date).toLocaleDateString('en-GB', {
+                                weekday: 'short', day: '2-digit', month: 'short', year: 'numeric',
+                            })}</>
+                        )}
+                    </span>
                 </div>
             </section>
 
-            <div className="match-content-grid">
-                {/* LEFT: TIMELINE */}
-                <div className="match-timeline">
-                    <div className="section-head">
-                        <h3>Match <span>Timeline</span></h3>
-                    </div>
-                    <div className="timeline-container">
-                        {match.events && match.events.length > 0 ? (
-                            match.events.map((ev, i) => (
-                                <div key={i} className={`timeline-card ${ev.team_side}`}>
-                                    <span className="ev-min">{ev.minute}'</span>
-                                    <span className="ev-icon">{ev.event_type === 'Goal' ? '⚽' : '🟨'}</span>
-                                    <div className="ev-details">
-                                        <strong>{ev.player_name}</strong>
-                                        <small>{ev.event_type}</small>
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <p className="no-data">Waiting for match action...</p>
-                        )}
-                    </div>
-                </div>
+            {/* ── Tabs ─────────────────────────────────── */}
+            <nav className="mdp2-tabs" role="tablist" aria-label="Match sections">
+                {TABS.map(t => (
+                    <button
+                        key={t.key}
+                        className={`mdp2-tab ${activeTab === t.key ? 'mdp2-tab--on' : ''}`}
+                        onClick={() => setActiveTab(t.key)}
+                        aria-selected={activeTab === t.key}
+                        role="tab"
+                    >
+                        {t.label}
+                    </button>
+                ))}
+            </nav>
 
-                {/* MIDDLE: STATS */}
-                <div className="match-stats-center">
-                    <div className="section-head text-center">
-                        <h3>Match <span>Stats</span></h3>
-                    </div>
-                    <div className="stats-container">
-                        <StatComparison label="Possession" home={homeStats.possession} away={awayStats.possession} unit="%" />
-                        <StatComparison label="Shots" home={homeStats.shots} away={awayStats.shots} />
-                        <StatComparison label="On Target" home={homeStats.shots_on_target} away={awayStats.shots_on_target} />
-                        <StatComparison label="Passes" home={homeStats.passes} away={awayStats.passes} />
-                    </div>
+            {/* ── Content ──────────────────────────────── */}
+            <main className="mdp2-content" role="tabpanel">
 
-                    <div className="performance-section">
-                        <div className="section-head">
-                            <h3>Player <span>Performances</span></h3>
+                {activeTab === 'events' && (
+                    <div className="mdp2-anim">
+                        <h3 className="mdp2-sec-title">Match <em>Timeline</em></h3>
+                        <div className="mdp2-tl-header" aria-hidden="true">
+                            <span className="mdp2-tl-hdr-home">{match.home_team_name}</span>
+                            <span />
+                            <span className="mdp2-tl-hdr-away">{match.away_team_name}</span>
                         </div>
-                        <div className="performance-list">
-                            {match.performances?.map(p => (
-                                <div className="perf-card" key={p.id}>
-                                    <img src={p.player_photo} alt={p.player_name} className="mini-p-img" />
-                                    <div className="p-info">
-                                        <span className="p-name">{p.player_name}</span>
-                                        <span className="p-stats">
-                                            {p.goals > 0 && `⚽ ${p.goals} `}
-                                            {p.assists > 0 && `🅰️ ${p.assists} `}
-                                        </span>
-                                    </div>
-                                    <div className="p-cards">
-                                        {p.yellow_cards > 0 && <div className="card-y"></div>}
-                                        {p.red_cards > 0 && <div className="card-r"></div>}
-                                    </div>
-                                </div>
-                            ))}
+                        <SplitTimeline events={match.events ?? []} />
+                    </div>
+                )}
+
+                {activeTab === 'stats' && (
+                    <div className="mdp2-anim">
+                        <h3 className="mdp2-sec-title">Team <em>Stats</em></h3>
+                        <div className="mdp2-stats-team-row">
+                            <span className="mdp2-stats-hn">{match.home_team_name}</span>
+                            <span className="mdp2-stats-an">{match.away_team_name}</span>
+                        </div>
+                        <div className="mdp2-stats-list">
+                            <StatBar label="Possession"      home={homeStats.possession}      away={awayStats.possession}      unit="%" delay={0.05} />
+                            <StatBar label="Total Shots"     home={homeStats.shots}           away={awayStats.shots}           delay={0.10} />
+                            <StatBar label="Shots on Target" home={homeStats.shots_on_target} away={awayStats.shots_on_target} delay={0.15} />
+                            <StatBar label="Total Passes"    home={homeStats.passes}          away={awayStats.passes}          delay={0.20} />
+                            <StatBar label="Corners"         home={homeStats.corners}         away={awayStats.corners}         delay={0.25} />
+                            <StatBar label="Fouls"           home={homeStats.fouls}           away={awayStats.fouls}           delay={0.30} />
+                            <StatBar label="Yellow Cards"    home={homeStats.yellow_cards}    away={awayStats.yellow_cards}    delay={0.35} />
                         </div>
                     </div>
-                </div>
+                )}
 
-                <aside className="match-sidebar">
-                    <div className="venue-card">
-                        <h4>Stadium</h4>
-                        <p>{match.stadium}</p>
+                {activeTab === 'performance' && (
+                    <div className="mdp2-anim">
+                        <h3 className="mdp2-sec-title">Player <em>Performances</em></h3>
+                        <PerformanceTable
+                            performances={match.performances ?? []}
+                            homeTeamLogo={match.home_team_logo}
+                            awayTeamLogo={match.away_team_logo}
+                        />
                     </div>
-                    <div className="venue-card">
-                        <h4>Kick Off</h4>
-                        <p>{new Date(match.match_date).toLocaleDateString()}</p>
-                        <p>{match.match_time.split('T')[1]?.substring(0, 5) || ""}</p>
-                    </div>
-                </aside>
-            </div>
-        </div>
-    );
-};
+                )}
 
-const StatComparison = ({ label, home = 0, away = 0, unit = "" }) => {
-    const total = (Number(home) + Number(away)) || 1;
-    const homePercent = (Number(home) / total) * 100;
-    return (
-        <div className="stat-row">
-            <div className="stat-labels">
-                <span>{home}{unit}</span>
-                <span className="stat-name">{label}</span>
-                <span>{away}{unit}</span>
-            </div>
-            <div className="stat-bar-bg">
-                <div className="stat-bar-home" style={{ width: `${homePercent}%` }}></div>
-                <div className="stat-bar-away" style={{ width: `${100 - homePercent}%` }}></div>
-            </div>
+            </main>
         </div>
     );
 };

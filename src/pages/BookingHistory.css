@@ -1,251 +1,280 @@
-/* Container & Page Layout */
-.booking-history-page {
-    padding: 60px 20px;
-    max-width: 1000px;
-    margin: 0 auto;
-    color: #ffffff;
+:root {
+    --bhp-green: #1B5E20;
+    --bhp-gold: #FFD700;
+    --bhp-cream: #F8F5F0;
+    --bhp-white: #ffffff;
+    --bhp-red: #e11d48;
+}
+
+.bhp-page-container {
+    background-color: var(--bhp-cream);
     min-height: 100vh;
+    padding: 40px 20px 120px;
     font-family: 'Inter', sans-serif;
 }
 
-.title {
-    font-family: 'Oswald', sans-serif;
-    font-size: 2.8rem;
-    text-transform: uppercase;
+.bhp-header {
+    text-align: center;
     margin-bottom: 40px;
-    letter-spacing: 1px;
 }
 
-.title span {
-    color: #edbb00; /* Champions Gold */
+.bhp-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--bhp-green);
+    margin-bottom: 10px;
+    text-transform: uppercase;
 }
 
-/* Booking Grid - Vertical List Style */
-.booking-grid {
+.bhp-title span {
+    color: var(--bhp-gold);
+}
+
+.bhp-header p {
+    color: #64748b;
+    font-weight: 600;
+}
+
+/* --- TICKET GRID --- */
+.bhp-grid {
+    max-width: 800px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-/* Individual Row Item */
-.tkt-row {
-    background: #1c1f26;
-    padding: 25px;
-    border-radius: 12px;
+.bhp-ticket-card {
+    background: var(--bhp-white);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 16px;
+    overflow: hidden;
     cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0,0,0,0.02);
 }
 
-.tkt-row:hover {
-    transform: translateX(10px);
-    border-color: #edbb00;
-    background: #252a34;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+.bhp-ticket-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(27, 94, 32, 0.1);
 }
 
-.tkt-info h4 {
-    margin: 0 0 5px 0;
-    font-family: 'Oswald', sans-serif;
+.bhp-card-left {
+    background: var(--bhp-green);
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1.5rem;
-    letter-spacing: 0.5px;
 }
 
-.tkt-info p {
-    color: #8b949e;
-    margin: 0;
-    font-size: 0.95rem;
+.bhp-card-main {
+    flex: 1;
+    padding: 20px;
 }
 
-.view-link {
-    color: #edbb00;
+.bhp-card-main h4 {
+    margin: 0 0 8px;
+    color: var(--bhp-green);
     font-weight: 800;
-    border: 2px solid #edbb00;
-    padding: 10px 24px;
-    border-radius: 8px;
+    font-size: 1.1rem;
+}
+
+.bhp-card-details {
+    display: flex;
+    gap: 20px;
     font-size: 0.85rem;
-    text-transform: uppercase;
+    color: #64748b;
+}
+
+.bhp-card-right {
+    padding: 0 25px;
+    display: flex;
+    align-items: center;
+    border-left: 2px dashed #e2e8f0;
+    background: #fcfcfc;
+}
+
+.bhp-qr-preview {
+    font-weight: 900;
+    color: #cbd5e1;
     letter-spacing: 1px;
+    font-size: 0.75rem;
+}
+
+/* --- MODAL --- */
+.bhp-modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(8px);
+    padding: 20px;
+}
+
+.bhp-modal-content {
+    background: transparent;
+    max-width: 450px;
+    width: 100%;
+    animation: bhpSlideUp 0.4s ease-out;
+}
+
+/* --- REAL TICKET DESIGN --- */
+.bhp-ticket-design {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    color: #334155;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+.bhp-t-header {
+    background: var(--bhp-green);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    border-bottom: 5px solid var(--bhp-gold);
+}
+
+.bhp-t-brand {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    font-weight: 800;
+    opacity: 0.7;
+    margin-bottom: 10px;
+}
+
+.bhp-t-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+.bhp-t-tag {
+    font-size: 0.65rem;
+    margin-top: 8px;
+    font-weight: 700;
+    background: rgba(255,255,255,0.1);
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.bhp-t-body {
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.bhp-t-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 30px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 20px;
+}
+
+.bhp-t-item label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: #94a3b8;
+    margin-bottom: 5px;
+}
+
+.bhp-t-item p {
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: var(--bhp-green);
+    margin: 0;
+}
+
+.bhp-t-qr-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bhp-qr-wrapper {
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #f1f5f9;
+    border-radius: 12px;
+}
+
+.bhp-qr-wrapper img {
+    width: 150px;
+    height: 150px;
+}
+
+.bhp-qr-hint {
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-top: 15px;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.bhp-t-footer {
+    padding: 15px;
+    background: #f8fafc;
+    text-align: center;
+    font-size: 0.65rem;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+/* --- ACTIONS --- */
+.bhp-modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.bhp-btn-dl {
+    flex: 2;
+    background: var(--bhp-gold);
+    color: var(--bhp-green);
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 800;
+    cursor: pointer;
     transition: 0.3s;
 }
 
-.tkt-row:hover .view-link {
-    background: #edbb00;
-    color: #181733;
+.bhp-btn-close {
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
 }
 
-/* MODAL OVERLAY */
-.modal-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95); /* Darker backdrop */
+.bhp-btn-dl:hover { background: #fff; transform: translateY(-2px); }
+
+/* --- LOADER & RESPONSIVE --- */
+.bhp-loader-wrap {
+    height: 80vh;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
-    backdrop-filter: blur(10px);
 }
 
-.modal-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    animation: ticketSlideIn 0.4s ease-out;
-}
-
-@keyframes ticketSlideIn {
-    from { transform: translateY(100px); opacity: 0; }
+@keyframes bhpSlideUp {
+    from { transform: translateY(50px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
 
-/* THE PHYSICAL TICKET DESIGN */
-.ticket-design {
-    background: #ffffff; /* Must stay white for QR scanning */
-    color: #181733;
-    width: 350px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
-}
-
-.top-banner {
-    background: #a50044; /* Official Barca Red */
-    color: #ffffff;
-    padding: 30px 20px;
-    text-align: center;
-    position: relative;
-}
-
-.top-banner h3 {
-    font-family: 'Oswald', sans-serif;
-    margin: 0;
-    font-size: 1.8rem;
-    text-transform: uppercase;
-    line-height: 1.2;
-}
-
-.top-banner p {
-    font-size: 0.75rem;
-    margin-top: 8px;
-    letter-spacing: 3px;
-    opacity: 0.9;
-    font-weight: bold;
-}
-
-.mid-section {
-    padding: 35px 25px;
-    text-align: center;
-}
-
-/* Stats (Stand & Seat Info) */
-.stats {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 30px;
-    border-bottom: 2px dashed #e0e0e0; /* Perforation effect */
-    padding-bottom: 25px;
-}
-
-.stat span {
-    font-size: 0.7rem;
-    color: #999;
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 800;
-    text-transform: uppercase;
-}
-
-.stat p {
-    font-weight: 900;
-    font-size: 1.2rem;
-    margin: 0;
-    color: #181733;
-}
-
-/* QR Code Image Box */
-.qr-image-box {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 16px;
-    display: inline-block;
-    border: 1px solid #eee;
-}
-
-.qr-image-box img {
-    width: 160px;
-    height: 160px;
-    display: block;
-    margin: 0 auto 12px;
-}
-
-.qr-image-box p {
-    font-size: 0.8rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    margin: 0;
-    color: #181733;
-}
-
-/* MODAL ACTION BUTTONS */
-.actions {
-    margin-top: 30px;
-    display: flex;
-    gap: 15px;
-    width: 350px;
-}
-
-.dl-btn {
-    flex: 2;
-    background: #edbb00;
-    color: #181733;
-    border: none;
-    padding: 18px;
-    border-radius: 14px;
-    font-weight: bold;
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 4px 15px rgba(237, 187, 0, 0.3);
-}
-
-.dl-btn:hover {
-    background: #ffffff;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
-}
-
-.close-btn {
-    flex: 1;
-    background: #2a2a2a;
-    color: #ffffff;
-    border: 1px solid #444;
-    padding: 18px;
-    border-radius: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.close-btn:hover {
-    background: #444;
-}
-
-/* Loader Styling */
-.loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.8rem;
-    color: #edbb00;
-    letter-spacing: 2px;
+@media (max-width: 600px) {
+    .bhp-title { font-size: 1.8rem; }
+    .bhp-card-right { display: none; }
+    .bhp-t-header h2 { font-size: 1.2rem; }
 }

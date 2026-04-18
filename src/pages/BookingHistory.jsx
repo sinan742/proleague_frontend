@@ -24,69 +24,110 @@ const BookingHistory = () => {
         if (!ticketRef.current) return;
         try {
             const canvas = await html2canvas(ticketRef.current, {
-                scale: 2,
-                useCORS: true, // Important for the QR image
-                backgroundColor: "#ffffff"
+                scale: 3,
+                useCORS: true,
+                backgroundColor: "#ffffff",
+                logging: false
             });
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF('p', 'mm', 'a4');
-            pdf.addImage(imgData, 'PNG', 10, 10, 190, 0);
-            pdf.save(`Ticket-${selectedTicket.id}.pdf`);
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth() - 20;
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            
+            pdf.addImage(imgData, 'PNG', 10, 10, pdfWidth, pdfHeight);
+            pdf.save(`ProLeague-Ticket-${selectedTicket.id}.pdf`);
         } catch (error) {
-            alert("Error generating PDF");
+            console.error("PDF Error:", error);
+            alert("Error generating PDF. Please try again.");
         }
     };
 
-    if (loading) return <div className="loader"><FootballLoader/></div>;
+    if (loading) return <div className="bhp-loader-wrap"><FootballLoader message="Retrieving your passes..." /></div>;
 
     return (
-        <div className="booking-history-page">
-            <h2 className="title">My <span>Stadium Entry</span> Passes</h2>
+        <div className="bhp-page-container">
+            <header className="bhp-header">
+                <h2 className="bhp-title">My <span>Stadium</span> Passes</h2>
+                <p>Digital tickets for your upcoming ProLeague matches</p>
+            </header>
 
-            <div className="booking-grid">
-                {bookings.map(b => (
-                    <div key={b.id} className="tkt-row" onClick={() => setSelectedTicket(b)}>
-                        <div className="tkt-info">
-                            <h4>{b.match_name}</h4>
-                            <p>{b.stand} | Seat {b.seat_number}</p>
+            <div className="bhp-grid">
+                {bookings.length > 0 ? bookings.map(b => (
+                    <div key={b.id} className="bhp-ticket-card" onClick={() => setSelectedTicket(b)}>
+                        <div className="bhp-card-left">
+                            <div className="bhp-stub-icon">🎟️</div>
                         </div>
-                        <div className="view-link">VIEW QR</div>
+                        <div className="bhp-card-main">
+                            <h4>{b.match_name}</h4>
+                            <div className="bhp-card-details">
+                                <span><strong>Stand:</strong> {b.stand}</span>
+                                <span><strong>Seat:</strong> {b.seat_number}</span>
+                            </div>
+                        </div>
+                        <div className="bhp-card-right">
+                            <span className="bhp-qr-preview">QR</span>
+                        </div>
                     </div>
-                ))}
+                )) : (
+                    <div className="bhp-no-data">
+                        <p>No tickets found. Ready for your first match?</p>
+                    </div>
+                )}
             </div>
 
             {selectedTicket && (
-                <div className="modal-bg" onClick={() => setSelectedTicket(null)}>
-                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                <div className="bhp-modal-overlay" onClick={() => setSelectedTicket(null)}>
+                    <div className="bhp-modal-content" onClick={e => e.stopPropagation()}>
                         
-                        {/* THE TICKET - THE PART TO BE DOWNLOADED */}
-                        <div className="ticket-design" ref={ticketRef}>
-                            <div className="top-banner">
-                                <h3>{selectedTicket.match_name}</h3>
-                                <p>OFFICIAL ENTRY PASS</p>
+                        {/* --- THE TICKET DESIGN --- */}
+                        <div className="bhp-ticket-design" ref={ticketRef}>
+                            <div className="bhp-t-header">
+                                <div className="bhp-t-brand">PROLEAGUE 2026</div>
+                                <h2>{selectedTicket.match_name}</h2>
+                                <p className="bhp-t-tag">OFFICIAL MATCH ENTRY PASS</p>
                             </div>
                             
-                            <div className="mid-section">
-                                <div className="stats">
-                                    <div className="stat"><span>STAND</span><p>{selectedTicket.stand}</p></div>
-                                    <div className="stat"><span>SEAT</span><p>{selectedTicket.seat_number}</p></div>
+                            <div className="bhp-t-body">
+                                <div className="bhp-t-info-grid">
+                                    <div className="bhp-t-item">
+                                        <label>STAND</label>
+                                        <p>{selectedTicket.stand}</p>
+                                    </div>
+                                    <div className="bhp-t-item">
+                                        <label>SEAT</label>
+                                        <p>{selectedTicket.seat_number}</p>
+                                    </div>
+                                    <div className="bhp-t-item">
+                                        <label>TICKET ID</label>
+                                        <p>#{selectedTicket.id}</p>
+                                    </div>
                                 </div>
 
-                                {/* PURE IMAGE QR CODE (NO LIBRARY NEEDED) */}
-                                <div className="qr-image-box">
-                                    <img 
-                                        src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TICKET-${selectedTicket.id}`} 
-                                        alt="QR Code" 
-                                        crossOrigin="anonymous"
-                                    />
-                                    <p>SCAN AT GATE</p>
+                                <div className="bhp-t-qr-zone">
+                                    <div className="bhp-qr-wrapper">
+                                        <img 
+                                            src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PROLEAGUE-TKT-${selectedTicket.id}`} 
+                                            alt="QR Code" 
+                                            crossOrigin="anonymous"
+                                        />
+                                    </div>
+                                    <p className="bhp-qr-hint">Scan this code at the stadium gate</p>
                                 </div>
+                            </div>
+                            
+                            <div className="bhp-t-footer">
+                                <p>Please bring a valid ID along with this digital pass.</p>
                             </div>
                         </div>
 
-                        <div className="actions">
-                            <button className="dl-btn" onClick={handleDownload}>Download PDF</button>
-                            <button className="close-btn" onClick={() => setSelectedTicket(null)}>Close</button>
+                        <div className="bhp-modal-actions">
+                            <button className="bhp-btn-dl" onClick={handleDownload}>
+                                📥 Download PDF
+                            </button>
+                            <button className="bhp-btn-close" onClick={() => setSelectedTicket(null)}>
+                                Close
+                            </button>
                         </div>
                     </div>
                 </div>

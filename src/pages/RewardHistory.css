@@ -1,153 +1,130 @@
-/* Container & Main Layout */
-.reward-history-container {
-    padding: 30px;
-    max-width: 800px; /* Increased slightly for better layout */
-    margin: 0 auto;
-    background-color: #0b0e11; /* Ensure dark background */
-    min-height: 100vh;
+:root {
+    --rhp-pitch: #1B5E20;
+    --rhp-gold: #FFD700;
+    --rhp-cream: #F8F5F0;
+    --rhp-white: #ffffff;
+    --rhp-gray: #94a3b8;
 }
 
-/* Flex Header for Navigation */
-.history-header-flex {
+.rhp-container {
+    background-color: var(--rhp-cream);
+    min-height: 100vh;
+    padding: 40px 20px 120px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Header */
+.rhp-header-flex {
+    max-width: 900px;
+    margin: 0 auto 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
 }
 
-.history-header {
-    font-family: 'Oswald', sans-serif;
-    color: white;
-    font-size: 2.2rem;
-    margin: 0;
-}
+.rhp-main-title { font-size: 2rem; font-weight: 900; color: var(--rhp-pitch); }
+.rhp-main-title span { color: var(--rhp-gold); }
 
-.history-header span, .sub-header span { color: #edbb00; }
-
-/* Redeem Button Styling */
-.navigate-redeem-btn {
-    background: #edbb00;
-    color: #181733;
+.rhp-redeem-btn {
+    background: var(--rhp-pitch);
+    color: var(--rhp-gold);
     border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-family: 'Oswald', sans-serif;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 900;
     cursor: pointer;
-    transition: 0.3s;
-}
-
-.navigate-redeem-btn:hover {
-    background: #fff;
-    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 /* Sections */
-.history-section { margin-bottom: 50px; }
+.rhp-section { max-width: 900px; margin: 0 auto 40px; }
+.rhp-sub-title { font-size: 1.1rem; font-weight: 800; color: var(--rhp-pitch); margin-bottom: 20px; }
 
-.sub-header {
-    font-family: 'Oswald', sans-serif;
-    color: white;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 10px;
-}
-
-/* Prediction Cards (Your original styles fixed) */
-.history-cards-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.history-card {
-    background: #181733;
-    border-radius: 12px;
-    padding: 20px;
-    border-left: 5px solid #edbb00;
-    transition: transform 0.2s;
-}
-
-.history-card:hover { transform: scale(1.02); }
-
-.card-top {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
-
-.points-badge {
-    background: #00ff88;
-    color: #000;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-weight: 800;
-    font-family: 'Oswald', sans-serif;
-}
-
-.match-date { color: #8b949e; font-size: 0.9rem; }
-
-.card-footer {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    color: #8b949e;
-    border-top: 1px solid rgba(255,255,255,0.05);
-    padding-top: 10px;
-}
-
-/* VOUCHER COLLECTION STYLES (The Missing Part) */
-.voucher-history-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 15px;
-}
-
-.voucher-history-card {
-    background: #1c1f26;
+/* Points Cards */
+.rhp-point-card {
+    background: white;
     padding: 15px 20px;
     border-radius: 12px;
+    border-left: 5px solid var(--rhp-pitch);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    margin-bottom: 10px;
+}
+
+.rhp-card-header { display: flex; justify-content: space-between; align-items: center; }
+.rhp-badge { background: #f0fdf4; color: var(--rhp-pitch); padding: 4px 10px; border-radius: 50px; font-weight: 900; font-size: 0.8rem; }
+
+/* Voucher Card Layout */
+.rhp-voucher-grid { display: flex; flex-direction: column; gap: 15px; }
+
+.rhp-v-card {
+    background: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid rgba(237, 187, 0, 0.2);
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px dashed #e2e8f0;
+    transition: 0.3s ease;
 }
 
-.v-info strong {
-    display: block;
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    font-family: 'Oswald', sans-serif;
+/* REDEEMED (USED) STATE */
+.rhp-redeemed-card {
+    opacity: 0.6;
+    background: #f1f5f9;
+    border-style: solid; /* Changes from dashed to solid when used */
 }
 
-.v-info span { font-size: 0.75rem; color: #8b949e; }
-
-.v-code-area { text-align: right; }
-
-.v-code-area small {
-    display: block;
-    color: #8b949e;
-    font-size: 0.65rem;
-    margin-bottom: 3px;
+.rhp-used-label {
+    font-size: 0.75rem;
+    color: #ef4444;
+    font-weight: 800;
+    margin-left: 10px;
 }
 
-.v-code-area code {
-    background: rgba(0,0,0,0.3);
-    color: #edbb00;
-    padding: 4px 8px;
-    border: 1px dashed #edbb00;
-    border-radius: 4px;
-    font-weight: bold;
-    font-family: monospace;
+.rhp-v-left { flex: 1; }
+.rhp-v-type { font-weight: 900; font-size: 1.1rem; color: var(--rhp-pitch); text-transform: uppercase; }
+.rhp-v-date { font-size: 0.75rem; color: var(--rhp-gray); margin-top: 5px; }
+
+.rhp-v-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-left: 20px;
+    border-left: 2px dotted #f1f5f9;
 }
 
-.empty-msg {
-    color: #8b949e;
-    font-style: italic;
-    font-size: 0.9rem;
-    text-align: left;
+.rhp-code-box { text-align: right; }
+.rhp-code-box small { display: block; font-size: 0.6rem; font-weight: 800; color: var(--rhp-gray); }
+.rhp-code-box code { font-size: 1.3rem; font-weight: 950; color: var(--rhp-pitch); letter-spacing: 1px; }
+
+/* Buttons */
+.rhp-copy-btn {
+    background: var(--rhp-gold);
+    color: var(--rhp-pitch);
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    min-width: 75px;
+    transition: 0.2s;
 }
+
+.rhp-copy-btn span { font-size: 0.65rem; font-weight: 900; text-transform: uppercase; margin-top: 4px; }
+
+/* State when voucher is used */
+.rhp-btn-disabled {
+    background: #cbd5e1 !important;
+    color: #64748b !important;
+    cursor: not-allowed !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .rhp-v-card { flex-direction: column; gap: 15px; text-align: center; }
+    .rhp-v-right { border: none; border-top: 1px solid #eee; padding: 15px 0 0; width: 100%; justify-content: center; }
+}
+
+.rhp-loader-wrap { height: 80vh; display: flex; justify-content: center; align-items: center; }

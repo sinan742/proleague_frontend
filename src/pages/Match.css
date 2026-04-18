@@ -1,284 +1,174 @@
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Poppins:wght@400;600;800&display=swap');
-
-/* Main Container */
-.match-page-container {
-    background-color: #0d1117;
+.pl-match-page {
+    background-color: #f8fafc;
     min-height: 100vh;
-    padding: 60px 8%;
-    color: #ffffff;
-    font-family: 'Poppins', sans-serif;
+    padding-bottom: 120px;
+    font-family: 'Inter', sans-serif;
 }
 
 /* Header Section */
-.match-header {
+.pl-main-header {
+    background: #1B5E20;
+    padding: 50px 20px;
     text-align: center;
-    margin-bottom: 60px;
+    color: white;
+    margin-bottom: 40px;
 }
 
-.match-header h1 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 3.5rem;
-    text-transform: uppercase;
+.pl-main-header h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
     margin: 0;
-    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
-.match-header h1 span {
-    color: #edbb00; /* Gold Accent */
+.pl-main-header h1 span {
+    color: #FFD700;
 }
 
-.match-header p {
-    color: #8b949e;
-    font-size: 1.1rem;
-    margin-top: 10px;
+/* List Container */
+.pl-list-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 15px;
 }
 
-/* Grid Layout */
-.match-list-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 30px;
+/* Unique Row Style */
+.pl-match-row {
+    display: flex;
+    height: 140px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-/* Match Card */
-.match-card {
-    background: #181733; /* Barca Navy */
-    border-radius: 12px;
-    padding: 25px;
+/* Main Content Area */
+.pl-card-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
     text-decoration: none;
     color: white;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     position: relative;
-    overflow: hidden;
 }
 
-.match-card:hover {
-    transform: translateY(-8px);
-    border-color: #edbb00;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-}
-
-/* Top Date/Venue Bar */
-.match-date-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #8b949e;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 10px;
-}
-
-/* Main Row: Teams and Score */
-.match-main-row {
+/* Team Side Alignment Fix */
+.pl-team-side {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    gap: 15px;
+    width: 35%;
 }
 
-.team-entry {
-    width: 40%;
+.pl-home {
+    justify-content: flex-start; /* Fix for Home side */
+    text-align: left;
+}
+
+.pl-away {
+    justify-content: flex-end; /* Fix for Away side */
+    text-align: right;
+}
+
+.pl-club-logo {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+.pl-team-name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+}
+
+/* Center Content */
+.pl-center-info {
+    text-align: center;
+    flex: 1;
+}
+
+.pl-status-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 10px;
+    border-radius: 4px;
+}
+
+.pl-score-val {
+    font-size: 2.2rem;
+    font-weight: 900;
+    margin: 5px 0;
+}
+
+.pl-meta-info {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.pl-venue-text {
+    font-size: 0.65rem;
+    margin-top: 2px;
+}
+
+/* Action Side Panel (Red) */
+.pl-action-side {
+    width: 110px;
+    background: #e11d48; /* Premium Red */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 12px;
 }
 
-.team-entry img {
-    width: 65px;
-    height: 65px;
-    object-fit: contain;
-}
-
-.team-name {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.1rem;
-    text-align: center;
-    text-transform: uppercase;
-    color: #ffffff;
-}
-
-/* Score/VS Box */
-.score-box {
-    background: #0d1117;
-    padding: 10px 20px;
-    border-radius: 6px;
-    min-width: 90px;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.final-score {
-    font-family: 'Oswald', sans-serif;
-    font-size: 2.2rem;
-    color: #edbb00;
-    display: block;
-    line-height: 1;
-}
-
-.match-time {
-    font-weight: 800;
-    font-size: 1.1rem;
-    color: #a50044; /* Garnet */
-    letter-spacing: 2px;
-}
-
-/* Footer Section */
-.match-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.footer-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-/* Prediction Button */
-.predict-btn {
-    background: #f1e05a;
-    color: #000;
+.pl-side-btn {
+    flex: 1;
+    background: transparent;
     border: none;
-    padding: 8px 18px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.predict-btn:hover:not(.disabled) {
-    background: #ffffff;
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(241, 224, 90, 0.3);
-}
-
-.predict-btn.disabled {
-    background: #21262d;
-    color: #8b949e;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-/* Status Tags */
-.status-tag {
-    font-size: 0.65rem;
-    font-weight: 800;
-    padding: 5px 12px;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    color: #8b949e;
-    text-transform: uppercase;
-}
-
-.status-tag.scheduled {
-    color: #f1e05a;
-    background: rgba(241, 224, 90, 0.1);
-}
-.footer-right {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.action-btn {
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-family: 'Oswald', sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    border: none;
-    transition: 0.3s;
-    font-size: 0.85rem;
-}
-
-/* Predict Button - Gold Theme */
-.predict-btn {
-    background: #edbb00;
-    color: #181733;
-}
-
-.predict-btn:hover:not(.disabled) {
-    background: #fff;
-    transform: translateY(-2px);
-}
-
-/* Ticket Button - Blue/White Theme */
-.ticket-btn {
-    background: #1a73e8;
     color: white;
+    font-weight: 900;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
 }
 
-.ticket-btn:hover:not(.disabled) {
-    background: #4285f4;
-    transform: translateY(-2px);
+.pl-side-btn:hover:not(.pl-btn-lock) {
+    background: rgba(255, 255, 255, 0.1);
 }
 
-/* Disabled State */
-.action-btn.disabled {
-    background: #30363d;
-    color: #8b949e;
+.pl-side-divider {
+    height: 1px;
+    width: 60%;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 0 auto;
+}
+
+.pl-btn-lock {
+    opacity: 0.3;
     cursor: not-allowed;
-    opacity: 0.6;
 }
 
-.view-details {
-    color: #8b949e;
-    font-size: 0.8rem;
-    margin-left: 5px;
-}
-.status-tag.live {
-    color: #ff4500;
-    background: rgba(255, 69, 0, 0.1);
-    border: 1px solid #ff4500;
-    animation: pulse-live 1.5s infinite;
+/* RESPONSIVE DESIGN */
+@media (max-width: 850px) {
+    .pl-match-row { height: auto; flex-direction: column; }
+    .pl-card-body { padding: 25px 20px; flex-direction: column; gap: 20px; }
+    .pl-team-side { width: 100%; justify-content: center !important; text-align: center; flex-direction: column; }
+    .pl-action-side { width: 100%; flex-direction: row; height: 50px; }
+    .pl-side-divider { height: 100%; width: 1px; margin: 0; }
+    .pl-score-val { font-size: 1.8rem; }
 }
 
-/* Live Animation */
-@keyframes pulse-live {
-    0% { opacity: 1; }
-    50% { opacity: 0.6; }
-    100% { opacity: 1; }
-}
-
-/* Utility Text */
-.view-details {
-    color: #8b949e;
-    font-size: 0.8rem;
-    font-weight: 600;
-    transition: color 0.2s;
-}
-
-.match-card:hover .view-details {
-    color: #fff;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .match-page-container { padding: 40px 5%; }
-    .match-header h1 { font-size: 2.5rem; }
-    .match-list-grid { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 500px) {
-    .match-main-row { gap: 10px; }
-    .team-entry img { width: 50px; height: 50px; }
-    .team-name { font-size: 0.9rem; }
-    .final-score { font-size: 1.8rem; }
-    .predict-btn { padding: 6px 12px; font-size: 0.7rem; }
+.pl-loader-wrap {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
