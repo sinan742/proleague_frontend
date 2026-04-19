@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
     // Use localhost to match your browser's domain
-    baseURL: 'http://10.125.92.247:8000/api/', 
+    baseURL: 'http://localhost:8000/api/', 
     withCredentials: true, 
 });
 
@@ -17,7 +17,7 @@ api.interceptors.response.use(
             
             try {
                 // Use the 'api' instance or full localhost URL
-                await axios.post('http://10.125.92.247:8000/api/refresh/', {}, { withCredentials: true });
+                await axios.post('http://localhost:8000/api/refresh/', {}, { withCredentials: true });
                 
                 // If refresh succeeds, retry the original request
                 return api(originalRequest);

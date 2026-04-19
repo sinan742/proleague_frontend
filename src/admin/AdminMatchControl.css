@@ -1,57 +1,330 @@
-/* --- GLOBAL --- */
-.mc-layout { display: flex; background: #0d1117; min-height: 100vh; color: white; }
-.mc-main { flex: 1; margin-left: 260px; padding: 25px; }
-.mc-container { max-width: 1100px; margin: 0 auto; }
-
-/* --- SCOREBOARD --- */
-.mc-scoreboard-landscape {
-    display: grid; grid-template-columns: 1fr 280px 1fr; background: #161b22;
-    border: 1px solid #30363d; border-radius: 12px; padding: 35px; align-items: center; margin-bottom: 25px;
+/* ROOT LAYOUT - Adjusted for Sidebar */
+.amc-v99-layout {
+    background: #0d0f12;
+    min-height: 100vh;
+    color: #ffffff;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    display: flex;
 }
-.mc-team-side { display: flex; align-items: center; gap: 20px; }
-.mc-team-side.mc-away { flex-direction: row-reverse; text-align: right; }
-.mc-team-side img { width: 85px; height: 85px; object-fit: contain; }
-.mc-score-big { font-size: 4.5rem; font-weight: 900; color: #58a6ff; font-family: monospace; }
-.mc-clock-face { font-size: 3.5rem; font-weight: bold; text-align: center; }
 
-/* --- CARDS --- */
-.mc-control-grid-vertical { display: flex; flex-direction: column; gap: 20px; }
-.mc-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px; }
-.mc-card-title { font-size: 0.9rem; text-transform: uppercase; color: #8b949e; margin-bottom: 15px; border-bottom: 1px solid #30363d; padding-bottom: 8px; }
-.mc-card-title span { color: white; }
+.amc-v99-main {
+    flex: 1;
+    /* This margin-left pushes content away from your AdminNavbar */
+    margin-left: 260px; 
+    padding: 30px;
+    width: calc(100% - 260px);
+}
 
-/* --- EVENT LOG --- */
-.mc-event-form-inline { display: flex; gap: 12px; align-items: flex-end; }
-.mc-event-form-inline select { background: #0d1117; border: 1px solid #30363d; color: white; padding: 12px; border-radius: 6px; flex: 1; outline: none; }
-.mc-submit-btn { background: #238636; border: none; color: white; padding: 0 25px; border-radius: 6px; cursor: pointer; font-weight: 800; height: 45px; }
+.amc-v99-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
 
-/* --- STATS --- */
-.mc-possession-control { text-align: center; margin-bottom: 20px; }
-.mc-possession-slider { width: 100%; accent-color: #58a6ff; cursor: pointer; }
-.mc-stats-table-full { display: flex; flex-direction: column; gap: 12px; }
-.mc-stat-row-full { display: grid; grid-template-columns: 80px 1fr 80px; align-items: center; text-align: center; background: #0d1117; padding: 10px; border-radius: 8px; border: 1px solid #21262d; }
-.mc-stat-row-full button { background: #21262d; border: 1px solid #30363d; color: #58a6ff; padding: 8px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 1.1rem; }
-.mc-stat-row-full label { font-size: 0.75rem; color: #8b949e; text-transform: uppercase; font-weight: 800; }
+/* SCOREBOARD SECTION */
+.amc-v99-scoreboard-landscape {
+    background: linear-gradient(135deg, #1e222d 0%, #11141b 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 35px;
+    border-radius: 20px;
+    border: 1px solid #2d343f;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    margin-bottom: 30px;
+}
 
-/* --- PERFORMANCE TABLE & TABS --- */
-.mc-card-header-between { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-.mc-team-tabs { display: flex; background: #0d1117; padding: 4px; border-radius: 8px; border: 1px solid #30363d; }
-.mc-team-tabs button { background: none; border: none; color: #8b949e; padding: 6px 15px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 800; transition: 0.2s; }
-.mc-team-tabs button.active { background: #21262d; color: #58a6ff; }
+.amc-v99-team-side {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 38%;
+}
 
-.mc-table-container { max-height: 450px; overflow-y: auto; border: 1px solid #30363d; border-radius: 8px; }
-.mc-performance-table { width: 100%; border-collapse: collapse; }
-.mc-performance-table th { background: #161b22; position: sticky; top: 0; padding: 12px; color: #8b949e; text-align: left; font-size: 0.75rem; text-transform: uppercase; }
-.mc-performance-table td { padding: 10px 12px; border-bottom: 1px solid #21262d; font-size: 0.9rem; }
+.amc-v99-away {
+    flex-direction: row;
+    justify-content: flex-end;
+    text-align: right;
+}
 
-.mc-mini { background: #21262d; border: 1px solid #30363d; color: #58a6ff; width: 35px; height: 35px; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: monospace; transition: 0.2s; }
-.mc-mini:hover { border-color: #58a6ff; }
-.mc-mini.yc { color: #f1e05a; border-color: rgba(241, 224, 90, 0.3); }
-.mc-mini.rc { color: #f85149; border-color: rgba(248, 81, 73, 0.3); }
-.mc-mini.min { width: 45px; color: #8b949e; }
+.amc-v99-logo-img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+}
 
-/* --- CONTROL BUTTONS --- */
-.start-btn { background: #238636; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
-.pause-btn { background: #d29922; color: black; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
-.status-btn { background: #21262d; color: #8b949e; border: 1px solid #30363d; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
-.mc-init-btn { background: #58a6ff; color: #0d1117; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 900; cursor: pointer; font-size: 0.75rem; }
+.amc-v99-team-title {
+    font-size: 1.6rem;
+    margin: 0 0 5px 0;
+    font-weight: 800;
+    color: #f8fafc;
+}
+
+.amc-v99-score-big {
+    font-size: 4.2rem;
+    font-weight: 900;
+    color: #00ff88;
+    line-height: 1;
+    text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+}
+
+/* TIMER CENTER */
+.amc-v99-timer-center {
+    text-align: center;
+    flex: 1;
+}
+
+.amc-v99-clock-face {
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: #000;
+    display: inline-block;
+    padding: 8px 25px;
+    border-radius: 12px;
+    border: 2px solid #00ff88;
+    color: #00ff88;
+    margin-bottom: 12px;
+    font-family: 'Monaco', 'Courier New', monospace;
+}
+
+.amc-v99-timer-controls {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.amc-v99-start-btn, 
+.amc-v99-pause-btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: transform 0.2s;
+}
+
+.amc-v99-start-btn { background: #00ff88; color: #000; }
+.amc-v99-pause-btn { background: #ef4444; color: #fff; }
+
+.amc-v99-status-btn {
+    background: #334155;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.amc-v99-status-btn:hover { background: #475569; }
+
+.amc-v99-current-status {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* CONTROL CARDS */
+.amc-v99-control-grid-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.amc-v99-card {
+    background: #1a1f26;
+    border-radius: 16px;
+    padding: 25px;
+    border: 1px solid #2d343f;
+}
+
+.amc-v99-card-header {
+    font-size: 1.25rem;
+    margin: 0 0 20px 0;
+    color: #f1f5f9;
+    font-weight: 700;
+}
+
+.amc-v99-accent { color: #00ff88; }
+
+/* FORMS */
+.amc-v99-event-form-inline {
+    display: flex;
+    gap: 15px;
+}
+
+.amc-v99-select {
+    flex: 1;
+    background: #0f172a;
+    color: #fff;
+    border: 1px solid #334155;
+    padding: 12px;
+    border-radius: 8px;
+    outline: none;
+    font-weight: 500;
+}
+
+.amc-v99-submit-btn {
+    background: #00ff88;
+    color: #000;
+    border: none;
+    padding: 0 25px;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.amc-v99-submit-btn:hover {
+    background: #00e67a;
+    transform: translateY(-2px);
+}
+
+/* STATS MODULE */
+.amc-v99-possession-control {
+    margin-bottom: 30px;
+    background: #0f172a;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.amc-v99-label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 800;
+    text-align: center;
+    color: #94a3b8;
+}
+
+.amc-v99-possession-slider {
+    width: 100%;
+    accent-color: #00ff88;
+    height: 6px;
+    cursor: pointer;
+}
+
+.amc-v99-stats-table-full {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.amc-v99-stat-row-full {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #232931;
+    padding: 12px 25px;
+    border-radius: 12px;
+}
+
+.amc-v99-stat-inc-btn {
+    background: #334155;
+    color: #fff;
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.amc-v99-stat-inc-btn:active { background: #00ff88; color: #000; }
+
+.amc-v99-stat-label {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #64748b;
+    letter-spacing: 1px;
+}
+
+/* PLAYER TABLE */
+.amc-v99-card-header-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.amc-v99-team-tabs {
+    display: flex;
+    background: #0f172a;
+    padding: 4px;
+    border-radius: 10px;
+}
+
+.amc-v99-tab-btn {
+    padding: 8px 24px;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.amc-v99-tab-active { background: #00ff88; color: #000; }
+
+.amc-v99-performance-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.amc-v99-th {
+    text-align: left;
+    padding: 15px;
+    color: #475569;
+    border-bottom: 2px solid #2d343f;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.amc-v99-tr:hover { background: #232931; }
+
+.amc-v99-td {
+    padding: 14px 15px;
+    border-bottom: 1px solid #2d343f;
+}
+
+.amc-v99-pos-small { 
+    color: #00ff88; 
+    font-weight: 800;
+    background: rgba(0, 255, 136, 0.1);
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+.amc-v99-mini-btn {
+    background: #334155;
+    color: #fff;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.amc-v99-yc { border: 2px solid #fbbf24; }
+.amc-v99-rc { border: 2px solid #ef4444; }
+.amc-v99-min { width: 55px; }
+
+.amc-v99-init-btn {
+    background: #00ff88;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+/* RESPONSIVE SETTINGS */
+@media (max-width: 1024px) {
+    .amc-v99-main { margin-left: 0; width: 100%; }
+    .amc-v99-scoreboard-landscape { flex-direction: column; gap: 30px; }
+    .amc-v99-team-side { width: 100%; justify-content: center; }
+    .amc-v99-event-form-inline { flex-direction: column; }
+}

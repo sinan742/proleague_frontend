@@ -156,11 +156,9 @@ const ScoreEventsStrip = ({ events = [] }) => {
 
 /* ─── PerformanceTable ────────────────────────────── */
 
-const PerformanceTable = ({ performances = [], homeTeamName, awayTeamName, homeTeamLogo, awayTeamLogo }) => {
-    const [side, setSide] = useState('home');
-    const filtered = performances.filter(p =>
-        side === 'home' ? p.team_name === homeTeamName : p.team_name === awayTeamName
-    );
+const PerformanceTable = ({ performances = [] }) => {
+    // Buttons removed. Logic now sorts all players by rating descending.
+    const sortedPerformances = [...performances].sort((a, b) => (Number(b.rating) || 0) - (Number(a.rating) || 0));
 
     const ratingCls = (r) => {
         const n = Number(r) || 0;
@@ -170,98 +168,77 @@ const PerformanceTable = ({ performances = [], homeTeamName, awayTeamName, homeT
     };
 
     return (
-        <>
-            {/* Home / Away toggle buttons */}
-            <div className="mdp2-perf-btns" role="group" aria-label="Select team">
-                {[
-                    { key: 'home', name: homeTeamName, logo: homeTeamLogo },
-                    { key: 'away', name: awayTeamName, logo: awayTeamLogo },
-                ].map(t => (
-                    <button
-                        key={t.key}
-                        className={`mdp2-perf-btn ${side === t.key ? 'mdp2-perf-btn--on' : ''}`}
-                        onClick={() => setSide(t.key)}
-                        aria-pressed={side === t.key}
-                    >
-                        <TeamLogo src={t.logo} name={t.name} size={22} />
-                        <span>{t.name}</span>
-                    </button>
-                ))}
-            </div>
-
-            {/* Table */}
-            <div className="mdp2-perf-table-wrap">
-                <table className="mdp2-perf-table">
-                    <thead>
-                        <tr>
-                            <th>Player</th>
-                            <th title="Goals">G</th>
-                            <th title="Assists">A</th>
-                            <th title="Yellow Cards">YC</th>
-                            <th title="Red Cards">RC</th>
-                            <th title="Rating">Rtg</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filtered.length > 0 ? filtered.map(p => (
-                            <tr key={p.id ?? p.player_name} className="mdp2-perf-row">
-                                <td>
-                                    <div className="mdp2-perf-player">
-                                        {p.player_photo
-                                            ? <img
-                                                src={p.player_photo}
-                                                alt={p.player_name}
-                                                className="mdp2-perf-photo"
-                                                onError={e => {
-                                                    e.target.style.display = 'none';
-                                                    e.target.nextSibling?.style && (e.target.nextSibling.style.display = 'flex');
-                                                }}
-                                              />
-                                            : null
-                                        }
-                                        <div
-                                            className="mdp2-perf-photo-fb"
-                                            style={{ display: p.player_photo ? 'none' : 'flex' }}
-                                        >
-                                            {p.player_name?.slice(0, 2).toUpperCase()}
-                                        </div>
-                                        <div>
-                                            <p className="mdp2-perf-pname">{p.player_name}</p>
-                                            <p className="mdp2-perf-pos">{p.position ?? ''}</p>
-                                        </div>
+        <div className="mdp2-perf-table-wrap">
+            <table className="mdp2-perf-table">
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th title="Goals">G</th>
+                        <th title="Assists">A</th>
+                        <th title="Yellow Cards">YC</th>
+                        <th title="Red Cards">RC</th>
+                        <th title="Rating">Rtg</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {sortedPerformances.length > 0 ? sortedPerformances.map((p, i) => (
+                        <tr key={p.id ?? i} className="mdp2-perf-row">
+                            <td>
+                                <div className="mdp2-perf-player">
+                                    {p.player_photo
+                                        ? <img
+                                            src={p.player_photo}
+                                            alt={p.player_name}
+                                            className="mdp2-perf-photo"
+                                            onError={e => {
+                                                e.target.style.display = 'none';
+                                                e.target.nextSibling?.style && (e.target.nextSibling.style.display = 'flex');
+                                            }}
+                                          />
+                                        : null
+                                    }
+                                    <div
+                                        className="mdp2-perf-photo-fb"
+                                        style={{ display: p.player_photo ? 'none' : 'flex' }}
+                                    >
+                                        {p.player_name?.slice(0, 2).toUpperCase()}
                                     </div>
-                                </td>
-                                <td>{p.goals > 0
-                                    ? <span className="mdp2-perf-badge mdp2-perf-badge--goal">{p.goals}</span>
-                                    : <span className="mdp2-perf-zero">0</span>}
-                                </td>
-                                <td>{p.assists > 0
-                                    ? <span className="mdp2-perf-badge mdp2-perf-badge--assist">{p.assists}</span>
-                                    : <span className="mdp2-perf-zero">0</span>}
-                                </td>
-                                <td>{p.yellow_cards > 0
-                                    ? <span className="mdp2-perf-badge mdp2-perf-badge--yc">🟨 {p.yellow_cards}</span>
-                                    : <span className="mdp2-perf-zero">0</span>}
-                                </td>
-                                <td>{p.red_cards > 0
-                                    ? <span className="mdp2-perf-badge mdp2-perf-badge--rc">🟥 {p.red_cards}</span>
-                                    : <span className="mdp2-perf-zero">0</span>}
-                                </td>
-                                <td>
-                                    <span className={`mdp2-perf-rating ${ratingCls(p.rating)}`}>
-                                        {p.rating ? Number(p.rating).toFixed(1) : '—'}
-                                    </span>
-                                </td>
-                            </tr>
-                        )) : (
-                            <tr>
-                                <td colSpan={6} className="mdp2-empty">No performance data yet.</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
-        </>
+                                    <div>
+                                        <p className="mdp2-perf-pname">{p.player_name}</p>
+                                        <p className="mdp2-perf-pos">{p.position ?? ''}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{p.goals > 0
+                                ? <span className="mdp2-perf-badge mdp2-perf-badge--goal">{p.goals}</span>
+                                : <span className="mdp2-perf-zero">0</span>}
+                            </td>
+                            <td>{p.assists > 0
+                                ? <span className="mdp2-perf-badge mdp2-perf-badge--assist">{p.assists}</span>
+                                : <span className="mdp2-perf-zero">0</span>}
+                            </td>
+                            <td>{p.yellow_cards > 0
+                                ? <span className="mdp2-perf-badge mdp2-perf-badge--yc">🟨 {p.yellow_cards}</span>
+                                : <span className="mdp2-perf-zero">0</span>}
+                            </td>
+                            <td>{p.red_cards > 0
+                                ? <span className="mdp2-perf-badge mdp2-perf-badge--rc">🟥 {p.red_cards}</span>
+                                : <span className="mdp2-perf-zero">0</span>}
+                            </td>
+                            <td>
+                                <span className={`mdp2-perf-rating ${ratingCls(p.rating)}`}>
+                                    {p.rating ? Number(p.rating).toFixed(1) : '—'}
+                                </span>
+                            </td>
+                        </tr>
+                    )) : (
+                        <tr>
+                            <td colSpan={6} className="mdp2-empty">No performance data yet.</td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        </div>
     );
 };
 
@@ -270,12 +247,16 @@ const PerformanceTable = ({ performances = [], homeTeamName, awayTeamName, homeT
 const MatchDetails = () => {
     const { id }                    = useParams();
     const [match, setMatch]         = useState(null);
+    const [performances, setPerformances] = useState([]);
     const [activeTab, setActiveTab] = useState('events');
     const socket                    = useRef(null);
 
     useEffect(() => {
         api.get(`matches/${id}/stats/`).then(res => setMatch(res.data));
-        // this is the websocket url
+        
+        // Added fetch for performance data
+        api.get(`performances/add/?match=${id}`).then(res => setPerformances(res.data));
+
         const protocol    = window.location.protocol === 'https:' ? 'wss' : 'ws';
         socket.current    = new WebSocket(`${protocol}://127.0.0.1:8000/ws/match/${id}/`);
 
@@ -432,11 +413,7 @@ const MatchDetails = () => {
                 {activeTab === 'performance' && (
                     <div className="mdp2-anim">
                         <h3 className="mdp2-sec-title">Player <em>Performances</em></h3>
-                        <PerformanceTable
-                            performances={match.performances ?? []}
-                            homeTeamLogo={match.home_team_logo}
-                            awayTeamLogo={match.away_team_logo}
-                        />
+                        <PerformanceTable performances={performances} />
                     </div>
                 )}
 

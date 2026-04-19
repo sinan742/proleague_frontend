@@ -1,0 +1,106 @@
+:root {
+    --ss-bg: #1B5E20;
+    --ss-gold: #FFD700;
+}
+
+.ss-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: radial-gradient(circle at center, #2E7D32 0%, #1B5E20 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Always on top */
+    transition: opacity 0.6s ease, visibility 0.6s;
+}
+
+.ss-exit {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.ss-content {
+    text-align: center;
+    animation: ssPopIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ss-logo-wrap {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.ss-logo {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: white;
+    letter-spacing: -2px;
+    margin: 0;
+    font-style: italic;
+}
+
+.ss-logo span {
+    color: var(--ss-gold);
+}
+
+/* Shimmer effect over the text */
+.ss-shimmer {
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255,255,255,0.2), 
+        transparent
+    );
+    animation: ssShimmer 2s infinite;
+}
+
+.ss-loader-container {
+    margin-top: 20px;
+}
+
+.ss-football {
+    font-size: 2.5rem;
+    display: inline-block;
+    animation: ssRotate 1.5s linear infinite;
+}
+
+.ss-loading-text {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-top: 15px;
+}
+
+.ss-footer {
+    position: absolute;
+    bottom: 40px;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Animations */
+@keyframes ssPopIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes ssRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes ssShimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@media (max-width: 480px) {
+    .ss-logo { font-size: 2.5rem; }
+}
