@@ -297,7 +297,7 @@ const MatchDetails = () => {
 
     const homeStats = match.statistics?.find(s => s.team_name === match.home_team_name) ?? {};
     const awayStats = match.statistics?.find(s => s.team_name === match.away_team_name) ?? {};
-    const isLive    = match.status === 'live';
+    const isLive    = match.status ;
 
     const TABS = [
         { key: 'events',      label: 'Match Timeline' },

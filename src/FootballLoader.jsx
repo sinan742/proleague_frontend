@@ -4,6 +4,7 @@ import './FootballLoader.css';
 const FootballLoader = ({ message = "Loading..." }) => {
     return (
         <div className="lp-global-loader-overlay">
+            
             <div className="lp-loader-content">
                 <div className="lp-football-loader">
                     <div className="lp-football">

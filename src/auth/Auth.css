@@ -1,51 +1,62 @@
-/* Auth.css - ProLeague Premium Theme */
+/* Auth.css - ProLeague Premium Theme (Cream, Green, Gold) */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
+:root {
+    --mdp2-cream:        #F8F5F0;
+    --mdp2-cream-dark:   #EDE9E2;
+    --mdp2-dark-green:   #1B5E20;
+    --mdp2-mid-green:    #2E7D32;
+    --mdp2-light-green:  #4CAF50;
+    --mdp2-gold:         #FFD700;
+    --mdp2-gold-deep:    #C8A800;
+    --mdp2-ink:          #0F1A10;
+    --mdp2-muted:        #6B7C6D;
+    --mdp2-error:        #d32f2f;
+    --mdp2-card:         #FFFFFF;
+}
+
 .auth-body {
-    background: radial-gradient(circle at top right, #161b22, #0d1117);
+    /* Rich cream radial gradient */
+    background: radial-gradient(circle at top right, var(--mdp2-cream), var(--mdp2-cream-dark));
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Poppins', sans-serif;
     padding: 20px;
-}
-.error-text {
-    color: #f85149; /* Bright Red */
-    font-size: 0.75rem;
-    margin-top: 5px;
-    display: block; /* Ensure it is visible */
-    text-align: left;
+    margin: 0;
 }
 
 .auth-container {
-    background: #1c2128;
+    background: var(--mdp2-card);
     padding: 2.5rem;
-    border-radius: 16px; /* Slightly rounder for a modern look */
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    /* Soft shadow using green tint */
+    box-shadow: 0 20px 50px rgba(27, 94, 32, 0.12);
     width: 100%;
     max-width: 420px;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px); /* Modern glass effect */
+    border: 1px solid rgba(27, 94, 32, 0.08);
+    backdrop-filter: blur(10px);
 }
 
 .auth-container h2 {
-    color: #ffffff;
+    color: var(--mdp2-ink);
     margin-bottom: 0.2rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     font-size: 1.8rem;
 }
 
 .auth-container h2 span {
-    color: #58a6ff;
+    /* Gold Accent for the brand name part */
+    color: var(--mdp2-gold-deep);
     position: relative;
 }
 
 .auth-subtitle {
-    color: #8b949e;
+    color: var(--mdp2-muted);
     font-size: 0.9rem;
     margin-bottom: 2rem;
     display: block;
@@ -60,43 +71,48 @@
     display: flex;
     flex-direction: column;
     text-align: left;
-    margin-bottom: 1.2rem; /* Consistent spacing */
+    margin-bottom: 1.2rem;
     position: relative;
 }
 
 .auth-container input {
     padding: 14px 16px;
-    background: #0d1117;
-    border: 1px solid #30363d;
-    border-radius: 8px;
+    background: #ffffff;
+    border: 1.5px solid var(--mdp2-cream-dark);
+    border-radius: 10px;
     font-size: 1rem;
-    color: #f0f6fc;
+    color: var(--mdp2-ink);
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.auth-container input::placeholder {
+    color: #a0a0a0;
+}
+
 .auth-container input:hover {
-    border-color: #8b949e;
+    border-color: var(--mdp2-light-green);
 }
 
 .auth-container input:focus {
     outline: none;
-    border-color: #58a6ff;
-    background: #161b22;
-    box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.15);
+    border-color: var(--mdp2-mid-green);
+    background: #ffffff;
+    /* Soft gold glow on focus */
+    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.15);
 }
 
 /* ERROR STATES */
 .auth-container input.input-error {
-    border-color: #f85149;
-    background: rgba(248, 81, 73, 0.05);
+    border-color: var(--mdp2-error);
+    background: rgba(211, 47, 47, 0.02);
 }
 
 .auth-container input.input-error:focus {
-    box-shadow: 0 0 0 4px rgba(248, 81, 73, 0.15);
+    box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.1);
 }
 
 .error-text {
-    color: #ff7b72; /* Brighter red for readability on dark */
+    color: var(--mdp2-error);
     font-size: 0.75rem;
     margin-top: 6px;
     margin-left: 4px;
@@ -112,24 +128,26 @@
 }
 
 .auth-container button {
-    background: #238636;
+    /* Premium Green Button */
+    background: var(--mdp2-mid-green);
     color: #ffffff;
     padding: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    border: none;
+    border-radius: 10px;
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     margin-top: 10px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    box-shadow: 0 8px 15px rgba(46, 125, 50, 0.2);
 }
 
 .auth-container button:hover:not(:disabled) {
-    background-color: #2ea043;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(46, 160, 67, 0.3);
+    background-color: var(--mdp2-dark-green);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(27, 94, 32, 0.25);
 }
 
 .auth-container button:active:not(:disabled) {
@@ -137,18 +155,17 @@
 }
 
 .auth-container button:disabled {
-    background-color: #213527;
-    color: #484f58;
-    border-color: transparent;
-    cursor: wait; /* Indicates processing */
+    background-color: var(--mdp2-muted);
+    opacity: 0.7;
+    cursor: wait;
 }
 
 .auth-footer {
     margin-top: 2rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(48, 54, 61, 0.8);
+    border-top: 1px solid var(--mdp2-cream-dark);
     font-size: 0.9rem;
-    color: #8b949e;
+    color: var(--mdp2-muted);
 }
 
 .auth-footer p {
@@ -156,26 +173,30 @@
 }
 
 .auth-footer span {
-    color: #58a6ff;
+    /* Link styling in Green */
+    color: var(--mdp2-mid-green);
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 700;
     transition: color 0.2s;
 }
 
 .auth-footer span:hover {
-    color: #79c0ff;
+    color: var(--mdp2-dark-green);
     text-decoration: underline;
 }
 
 /* RESPONSIVE */
 @media (max-width: 480px) {
     .auth-container {
-        padding: 1.5rem;
+        padding: 2rem 1.5rem;
         box-shadow: none;
+        border-radius: 0;
         border: none;
         background: transparent;
     }
     .auth-body {
-        background: #0d1117; /* Solid on small screens */
+        background: var(--mdp2-cream);
+        align-items: flex-start;
+        padding-top: 10vh;
     }
 }

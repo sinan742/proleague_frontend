@@ -65,6 +65,7 @@ const PlayerDetail = () => {
             </section>
 
             {/* TECHNICAL STATS SECTION */}
+            <br /><br /><br />
             <section className="p-stats-section">
                 <div className="p-section-header">
                     <h2>Technical <span>Performance</span></h2>

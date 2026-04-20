@@ -3,6 +3,7 @@ import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import './Profile.css';
+import FootballLoader from '../FootballLoader';
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -70,7 +71,7 @@ const Profile = () => {
         }
     };
 
-    if (fetching) return <div className="lp-loading-wrap">SYNCING...</div>;
+    if (fetching) return <div className="lp-loading-wrap"><FootballLoader message='profile...'/></div>;
 
     return (
         <div className="lp-page-container">
