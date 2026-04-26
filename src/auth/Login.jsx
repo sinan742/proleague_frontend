@@ -50,10 +50,8 @@ const Login = () => {
 
                 if (status === 404) {
                     setErrors({ email: serverError });
-                    toast.error(serverError); // Toast for Email not found
                 } else if (status === 401) {
                     setErrors({ password: serverError });
-                    toast.error(serverError); // Toast for Incorrect Password
                 } else {
                     toast.error(serverError);
                 }

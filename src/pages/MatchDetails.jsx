@@ -332,7 +332,7 @@ const MatchDetails = () => {
                             {isLive ? (
                                 <>
                                     <span className="mdp2-live-dot" aria-hidden="true" />
-                                    LIVE {match.current_minute}'
+                                     {match.status}'
                                 </>
                             ) : (
                                 match.status?.replace(/_/g, ' ').toUpperCase()

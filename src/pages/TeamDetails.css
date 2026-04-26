@@ -1,9 +1,19 @@
+/* --- DESIGN SYSTEM & VARIABLES --- */
 :root {
     --cream: #F8F5F0;
+    --cream-dark: #EDE9E2;
     --dark-green: #1B5E20;
+    --mid-green: #2E7D32;
+    --light-green: #4CAF50;
+    --pale-green: #E8F5E9;
     --gold: #FFD700;
+    --gold-deep: #C8A800;
+    --gold-pale: #FFF8DC;
+    --ink: #0F1A10;
+    --muted: #6B7C6D;
     --white: #ffffff;
     --glass: rgba(255, 255, 255, 0.1);
+    --border-soft: rgba(27, 94, 32, 0.1);
 }
 
 .uptd-container {
@@ -11,6 +21,7 @@
     min-height: 100vh;
     padding-bottom: 100px;
     overflow-x: hidden;
+    color: var(--ink);
 }
 
 /* --- HERO SECTION --- */
@@ -37,11 +48,12 @@
 }
 
 .uptd-hero-info h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: -1px;
     margin: 0;
+    font-family: 'Inter', sans-serif;
 }
 
 /* --- TAB NAVIGATION --- */
@@ -59,26 +71,28 @@
 .uptd-tab-bar button {
     background: var(--white);
     border: none;
-    padding: 14px 28px;
+    padding: 14px 32px;
     border-radius: 50px;
     font-weight: 800;
     color: var(--dark-green);
     cursor: pointer;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(27, 94, 32, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .uptd-tab-bar button.active {
     background: var(--club-primary);
-    color: var(--club-accent, var(--gold));
+    color: var(--black);
     transform: scale(1.05);
 }
 
 /* --- MAIN CONTENT WRAPPER --- */
 .uptd-main-content {
     max-width: 1200px;
-    margin: 50px auto;
+    margin: 60px auto;
     padding: 0 20px;
 }
 
@@ -91,31 +105,32 @@
 
 .uptd-about-card, .uptd-stadium-card {
     background: var(--white);
-    padding: 35px;
-    border-radius: 24px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+    padding: 40px;
+    border-radius: 28px;
+    box-shadow: 0 10px 30px var(--border-soft);
+    border: 1px solid var(--cream-dark);
 }
 
 .uptd-stadium-card {
     background: var(--club-primary);
     color: white;
     text-align: center;
-    position: relative;
     overflow: hidden;
 }
 
 .uptd-stadium-card h2 {
-    color: var(--club-accent, var(--gold));
-    font-size: 2rem;
+    color: var(--gold);
+    font-size: 2.2rem;
     margin: 15px 0;
     font-weight: 900;
+    text-transform: uppercase;
 }
 
-/* --- MATCHES TAB (RESPONSIVE FIX) --- */
+/* --- MATCHES TAB (MATCH CENTER STYLING) --- */
 .uptd-match-list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 18px;
 }
 
 .uptd-match-item {
@@ -123,11 +138,26 @@
     justify-content: space-between;
     align-items: center;
     background: var(--white);
-    padding: 25px 40px;
-    border-radius: 20px;
+    padding: 20px 40px;
+    border-radius: 24px;
     border-left: 8px solid var(--club-primary);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-    transition: 0.3s;
+    box-shadow: 0 4px 20px rgba(27, 94, 32, 0.05);
+    transition: 0.3s ease;
+}
+
+.uptd-m-link-wrapper {
+    text-decoration: none;
+    color: inherit;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.uptd-m-link-wrapper:hover .uptd-m-center {
+    background: var(--pale-green);
+    border-radius: 16px;
+    transform: scale(1.05);
 }
 
 .uptd-m-side {
@@ -137,184 +167,171 @@
     font-weight: 800;
     font-size: 1.1rem;
     flex: 1;
+    color: var(--dark-green);
 }
 
-.uptd-m-side.home { justify-content: flex-end; text-align: right; }
-.uptd-m-side.away { justify-content: flex-start; text-align: left; }
-
-.uptd-m-side img { width: 50px; height: 50px; object-fit: contain; }
+.uptd-m-side img { width: 55px; height: 55px; object-fit: contain; }
 
 .uptd-m-center {
     text-align: center;
-    min-width: 140px;
-    padding: 0 20px;
+    min-width: 160px;
+    padding: 10px 20px;
+    transition: background 0.3s ease;
 }
+
+.uptd-m-score {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--dark-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.uptd-score-divider { color: var(--gold-deep); opacity: 0.6; }
 
 .uptd-vs {
     display: inline-block;
     background: var(--cream);
-    padding: 5px 15px;
+    padding: 6px 18px;
     border-radius: 50px;
     font-weight: 900;
-    color: #94a3b8;
-    margin-bottom: 5px;
+    color: var(--muted);
+    font-size: 0.8rem;
 }
 
-/* --- PLAYER CARDS (HOVER POP-UP EFFECT) --- */
+.uptd-live-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    color: #e63946;
+    font-weight: 800;
+    margin-top: 5px;
+}
+
+.live-dot {
+    width: 7px;
+    height: 7px;
+    background: #e63946;
+    border-radius: 50%;
+    animation: pulse-live 1.5s infinite;
+}
+
+/* --- PLAYER CARDS --- */
 .uptd-player-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 25px;
 }
 
 .uptd-p-card {
     background: var(--white);
-    border-radius: 24px;
+    border-radius: 28px;
     overflow: hidden;
     text-decoration: none;
     position: relative;
     transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid var(--cream-dark);
 }
 
 .uptd-p-top {
-    height: 220px;
-    background: linear-gradient(to bottom, var(--s-color, var(--club-secondary)), #f1f5f9);
+    height: 240px;
+    background: linear-gradient(to bottom, var(--s-color, #f1f5f9), var(--cream));
     display: flex;
     align-items: flex-end;
     justify-content: center;
     position: relative;
-    overflow: hidden;
 }
 
 .uptd-p-number {
     position: absolute;
     top: 5px;
     left: 15px;
-    font-size: 5rem;
+    font-size: 5.5rem;
     font-weight: 900;
-    color: rgba(255,255,255,0.25);
+    color: rgba(27, 94, 32, 0.08);
     line-height: 1;
 }
 
 .uptd-p-top img {
-    height: 90%;
+    height: 92%;
     object-fit: contain;
     z-index: 2;
     transition: transform 0.4s ease;
 }
 
-/* The Bottom Info Pop-up Logic */
 .uptd-p-bottom {
-    padding: 20px;
+    padding: 22px;
     text-align: center;
     background: var(--white);
-    transform: translateY(10px); /* Slightly lowered initially */
     transition: 0.4s ease;
 }
 
 .uptd-p-bottom h4 {
     margin: 0;
     color: var(--dark-green);
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 900;
 }
 
 .uptd-p-role {
     display: inline-block;
-    margin-top: 5px;
+    margin-top: 6px;
     font-size: 0.75rem;
-    color: var(--club-primary);
+    color: var(--mid-green);
     text-transform: uppercase;
     font-weight: 800;
+    letter-spacing: 1px;
 }
 
-/* Hover States */
 .uptd-p-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    transform: translateY(-12px);
+    box-shadow: 0 20px 40px rgba(27, 94, 32, 0.12);
 }
-
-.uptd-p-card:hover .uptd-p-top img {
-    transform: scale(1.1);
-}
-
 
 .uptd-p-card:hover .uptd-p-bottom {
-    transform: translateY(0);
     background: var(--club-primary);
 }
 
-.uptd-p-card:hover .uptd-p-bottom h4 {
-    color: var(--white);
-}
+.uptd-p-card:hover .uptd-p-bottom h4 { color: var(--white); }
+.uptd-p-card:hover .uptd-p-role { color: var(--gold); }
 
-.uptd-p-card:hover .uptd-p-role {
-    color: var(--club-accent, var(--gold));
-}
-
-/* --- RESPONSIVE MEDIA QUERIES --- */
-
-@media (max-width: 1024px) {
-    .uptd-details-tab { grid-template-columns: 1fr; }
-    .uptd-hero { padding: 60px 20px 100px; }
-}
-
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
     .uptd-match-item {
         flex-direction: column;
-        gap: 20px;
         padding: 25px;
-        text-align: center;
     }
-
-    .uptd-m-side {
-        width: 100%;
-        justify-content: center !important;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .uptd-m-center {
-        width: 100%;
-        border-top: 1px solid #f1f5f9;
-        border-bottom: 1px solid #f1f5f9;
-        padding: 15px 0;
-    }
-
-    .uptd-player-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-    }
-
-    .uptd-p-top { height: 180px; }
-    .uptd-p-number { font-size: 3.5rem; }
-    
-    .uptd-tab-bar button {
-        padding: 10px 20px;
-        font-size: 0.8rem;
-    }
+    .uptd-m-side { width: 100%; justify-content: center !important; flex-direction: column; }
+    .uptd-m-center { width: 100%; border-top: 1px solid var(--cream-dark); margin: 15px 0; padding: 15px 0; }
+    .uptd-player-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
 }
 
 @media (max-width: 480px) {
-    .uptd-player-grid {
-        grid-template-columns: 1fr; /* Full width cards on small phones */
-    }
-    .uptd-hero-info h1 { font-size: 1.8rem; }
-    .uptd-tab-bar { flex-direction: column; width: 100%; align-items: stretch; }
+    .uptd-player-grid { grid-template-columns: 1fr; }
+    .uptd-tab-bar { flex-direction: column; align-items: stretch; }
 }
 
 /* --- ANIMATIONS --- */
+@keyframes pulse-live {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.4; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .animated-in {
     animation: slideUpFade 0.5s ease forwards;
 }
 
 @keyframes slideUpFade {
     from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }

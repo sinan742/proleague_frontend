@@ -96,30 +96,58 @@ const TeamDetails = () => {
                 )}
 
                 {/* --- MATCHES TAB --- */}
-                {activeTab === 'matches' && (
-                    <div className="uptd-matches-tab animated-in">
-                        <h2 className="uptd-sub-title">Match <span>Schedule</span></h2>
-                        <div className="uptd-match-list">
-                            {upcoming.length > 0 ? upcoming.map(m => (
-                                <div key={m.id} className="uptd-match-item">
-                                    <div className="uptd-m-side">
-                                        <img src={m.home_team_logo} alt="" />
-                                        <span>{m.home_team_name}</span>
+               {activeTab === 'matches' && (
+    <div className="uptd-matches-tab animated-in">
+        <h2 className="uptd-sub-title">Match <span>Schedule</span></h2>
+        <div className="uptd-match-list">
+            {upcoming.length > 0 ? upcoming.map(m => {
+                const isPlayedOrLive = ['live', 'half_time', 'finished'].includes(m.status);
+
+                return (
+                    <div key={m.id} className="uptd-match-item">
+                        {/* Home Team */}
+                        <div className="uptd-m-side">
+                            <img src={m.home_team_logo} alt={m.home_team_name} />
+                            <span>{m.home_team_name}</span>
+                        </div>
+                        
+                        {/* Center Info with Link */}
+                        <Link to={`/matches/${m.id}`} className="uptd-m-link-wrapper">
+                            <div className="uptd-m-center">
+                                {isPlayedOrLive ? (
+                                    <div className="uptd-m-score">
+                                        <span>{m.home_score}</span>
+                                        <span className="uptd-score-divider">-</span>
+                                        <span>{m.away_score}</span>
                                     </div>
-                                    <div className="uptd-m-center">
-                                        <span className="uptd-vs">VS</span>
-                                        <p>{new Date(m.match_date).toLocaleDateString()}</p>
-                                    </div>
-                                    <div className="uptd-m-side">
-                                        <img src={m.away_team_logo} alt="" />
-                                        <span>{m.away_team_name}</span>
-                                    </div>
-                                </div>
-                            )) : <p className="uptd-empty">No upcoming fixtures scheduled.</p>}
+                                ) : (
+                                    <span className="uptd-vs">VS</span>
+                                )}
+                                <p className="uptd-m-date">
+                                    {new Date(m.match_date).toLocaleDateString('en-GB', {
+                                        day: '2-digit',
+                                        month: 'short'
+                                    })}
+                                </p>
+                                {m.status === 'live' && (
+                                    <span className="uptd-live-indicator">
+                                        <span className="live-dot"></span> LIVE
+                                    </span>
+                                )}
+                            </div>
+                        </Link>
+
+                        {/* Away Team */}
+                        <div className="uptd-m-side">
+                            <img src={m.away_team_logo} alt={m.away_team_name} />
+                            <span>{m.away_team_name}</span>
                         </div>
                     </div>
-                )}
-
+                );
+            }) : <p className="uptd-empty">No upcoming fixtures scheduled.</p>}
+        </div>
+    </div>
+)}
                 {/* --- SQUAD TAB --- */}
                 {activeTab === 'squad' && (
                     <div className="uptd-squad-tab animated-in">

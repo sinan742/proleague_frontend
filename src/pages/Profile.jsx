@@ -155,7 +155,7 @@ const Profile = () => {
                         <button className="lp-menu-link" onClick={() => navigate('/privacy-policy')}>
                             <div className="lp-link-left"><span className="lp-icon">🔒</span>Privacy Policy</div>
                         </button>
-                        <button className="lp-menu-link" onClick={() => navigate('/contact')}>
+                        <button className="lp-menu-link">
                             <div className="lp-link-left"><span className="lp-icon">📞</span> Contact Us</div>
                         </button>
 

@@ -1,270 +1,298 @@
-/* --- LAYOUT WRAPPER --- */
+/* ── Admin Manage Teams Global Responsive Styles ── */
+
+body {
+    background-color: #0f0f1e;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
 .mt-layout-wrapper {
     display: flex;
     min-height: 100vh;
-    background-color: #0f0f1e;
-    overflow-x: hidden;
 }
 
-/* Sidebar Offset: Adjust 260px to match your AdminNavbar width */
 .mt-main-content {
     flex: 1;
-    margin-left: 260px; 
-    padding: 40px;
+    padding: 30px;
+    margin-left: 260px; /* Sidebar default width */
     transition: all 0.3s ease;
+    width: 100%;
 }
 
 .mt-container {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
-    color: white;
 }
 
-/* --- HEADER SECTION --- */
+/* Header Styles */
 .mt-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #2d3748;
+    background: #1a1a2e;
+    padding: 20px 30px;
+    border-radius: 15px;
+    border: 1px solid #2d3748;
 }
 
 .mt-header h2 {
     font-size: 1.8rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    font-weight: 800;
+    margin: 0;
+    color: white;
 }
 
 .mt-header h2 span {
     color: #007bff;
 }
 
-/* --- TEAM GRID --- */
+/* Button Global Styles */
+.ad-btn-primary, .ad-btn-secondary {
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.ad-btn-primary { background: #007bff; color: white; }
+.ad-btn-secondary { background: #238636; color: white; }
+.ad-btn-primary:hover { background: #0056b3; transform: translateY(-2px); }
+
+/* Grid View (Teams List) */
 .mt-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 25px;
 }
 
 .mt-card {
     background: #1a1a2e;
-    border: 1px solid #2d3748;
-    border-radius: 15px;
+    border-radius: 20px;
     padding: 25px;
     text-align: center;
+    border: 1px solid #2d3748;
     cursor: pointer;
-    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+    color: white;
 }
 
 .mt-card:hover {
-    border-color: #007bff;
     transform: translateY(-8px);
-    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
+    border-color: #007bff;
+    box-shadow: 0 10px 25px rgba(0, 123, 255, 0.15);
+}
+
+.card-color-strip {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 6px;
 }
 
 .mt-card img {
-    width: 90px;
-    height: 90px;
+    width: 90px; height: 90px;
     object-fit: contain;
     margin-bottom: 15px;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    padding: 10px;
 }
 
-.mt-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-}
+.mt-card h3 { font-size: 1.3rem; margin: 12px 0 5px; color: #ffd700; }
+.mt-card p { color: #94a3b8; font-size: 0.85rem; margin: 0; }
 
-.mt-card p {
-    color: #94a3b8;
-    font-size: 0.8rem;
-}
-
-/* --- DETAIL VIEW & BANNER --- */
+/* Detail View (Team Profile) */
 .mt-back-btn {
-    background: transparent;
-    border: none;
-    color: #007bff;
-    font-weight: 700;
+    background: #1a1a2e;
+    border: 1px solid #2d3748;
+    color: #94a3b8;
+    padding: 10px 20px;
+    border-radius: 8px;
     cursor: pointer;
-    margin-bottom: 20px;
-    transition: 0.2s;
-}
-
-.mt-back-btn:hover {
-    color: white;
-    transform: translateX(-5px);
+    margin-bottom: 25px;
+    font-weight: 600;
 }
 
 .mt-team-banner {
+    background: linear-gradient(135deg, #1a1a2e 0%, #111122 100%);
+    padding: 40px;
+    border-radius: 25px;
     display: flex;
     align-items: center;
-    gap: 30px;
-    background: #16213e;
-    padding: 30px;
-    border-radius: 15px;
-    margin-bottom: 40px;
-    border-left: 4px solid #007bff;
-}
-
-.mt-team-banner img {
-    width: 110px;
-    height: 110px;
-    object-fit: contain;
-}
-
-.banner-text h1 {
-    font-size: 2rem;
-    margin-bottom: 8px;
-}
-
-.edit-team-small {
-    background: transparent;
-    border: 1px solid #4a5568;
-    color: #94a3b8;
-    font-size: 0.7rem;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.edit-team-small:hover {
-    border-color: #007bff;
+    gap: 35px;
+    margin-bottom: 35px;
+    border: 1px solid #2d3748;
     color: white;
 }
 
-/* --- SQUAD TABLE --- */
+.mt-team-banner img { width: 140px; height: 140px; object-fit: contain; }
+.banner-text h1 { font-size: 2.8rem; margin: 0; font-weight: 900; }
+.team-about-short { color: #94a3b8; margin: 10px 0; line-height: 1.6; max-width: 700px; }
+
+.color-preview-row { display: flex; gap: 10px; margin: 20px 0; }
+.color-preview-row span { width: 35px; height: 35px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.1); }
+
+.edit-team-small {
+    background: transparent;
+    color: #ffd700;
+    border: 1px solid #ffd700;
+    padding: 6px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+/* Squad Section & Table */
+.mt-players-section {
+    background: #1a1a2e;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid #2d3748;
+}
+
 .mt-section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    color: white;
 }
 
 .mt-table {
     width: 100%;
     border-collapse: collapse;
-    background: #1a1a2e;
-    border-radius: 12px;
-    overflow: hidden;
+    color: white;
 }
 
-.mt-table th {
-    background: #0f3460;
-    padding: 15px;
-    text-align: left;
-    color: #94a3b8;
-    font-size: 0.8rem;
-    text-transform: uppercase;
+.mt-table th { padding: 18px; border-bottom: 2px solid #2d3748; color: #94a3b8; text-transform: uppercase; font-size: 0.75rem; text-align: left; }
+.mt-table td { padding: 18px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+.mt-player-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #2d3748; }
+
+.mt-edit-btn, .mt-del-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    margin-right: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.75rem;
 }
 
-.mt-table td {
-    padding: 15px;
-    border-bottom: 1px solid #2d3748;
-    vertical-align: middle;
-}
+.mt-edit-btn { background: #007bff; color: white; }
+.mt-del-btn { background: #ef4444; color: white; }
 
-.mt-player-img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #007bff;
-}
-
-/* --- MODALS --- */
+/* Modal Styles */
 .mt-modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
     display: flex;
-    justify-content: center;
     align-items: center;
-    z-index: 9999; /* Ensure it stays above sidebar */
-    backdrop-filter: blur(5px);
+    justify-content: center;
+    z-index: 3000;
+    backdrop-filter: blur(8px);
+    padding: 20px;
 }
 
 .mt-modal {
     background: #1a1a2e;
-    width: 400px;
-    padding: 35px;
-    border-radius: 15px;
-    border: 1px solid #007bff;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-}
-
-.mt-modal h3 {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #ffd700;
-}
-
-.mt-modal form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.mt-modal input {
-    padding: 12px;
-    background: #0f172a;
-    border: 1px solid #334155;
+    padding: 40px;
+    border-radius: 28px;
+    width: 100%;
+    max-width: 550px;
+    border: 1px solid #2d3748;
     color: white;
-    border-radius: 8px;
-    font-size: 0.9rem;
 }
 
-.mt-modal input:focus {
+.mt-modal h3 { margin-top: 0; margin-bottom: 30px; color: #ffd700; font-size: 1.6rem; text-align: center; }
+
+.mt-modal input, .mt-modal textarea {
+    width: 100%;
+    background: #0f0f1e;
+    border: 1.5px solid #2d3748;
+    padding: 14px 18px;
+    border-radius: 12px;
+    color: white;
+    margin-bottom: 15px;
     outline: none;
-    border-color: #007bff;
+    font-size: 0.95rem;
 }
 
-.modal-btns {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
+.color-picker-group { margin: 20px 0; }
+.pickers { display: flex; gap: 20px; }
+.pickers input[type="color"] { width: 50px; height: 50px; border: none; background: none; cursor: pointer; }
 
-.mt-cancel-btn {
-    flex: 1;
-    background: transparent;
-    border: 1px solid #334155;
-    color: #94a3b8;
-    padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-}
+.modal-btns { display: flex; gap: 15px; margin-top: 30px; }
+.mt-cancel-btn { flex: 1; background: #334155; color: white; border-radius: 12px; }
+.mt-modal .ad-btn-primary { flex: 2; padding: 15px; }
 
-/* --- BUTTONS --- */
-.mt-edit-btn {
-    background: #ffd700;
-    color: black;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    margin-right: 8px;
-    font-weight: 700;
-    cursor: pointer;
+.mt-cancel-btn{
+    padding: 14px;
 }
+/* ── RESPONSIVE MEDIA QUERIES ── */
 
-.mt-del-btn {
-    background: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
     .mt-main-content {
-        margin-left: 0;
+        margin-left: 0; /* Full width for mobile/tablets */
         padding: 20px;
+        padding-top: 90px; /* Space for mobile nav if exists */
+    }
+}
+
+@media (max-width: 768px) {
+    .mt-header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .mt-team-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    .mt-team-banner img { width: 110px; height: 110px; }
+    .banner-text h1 { font-size: 1.8rem; }
+    
+    .mt-section-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* Table Mobile View (Horizontal Scroll) */
+    .mt-players-section {
+        overflow-x: auto;
+        padding: 15px;
+    }
+
+    .mt-table th, .mt-table td {
+        padding: 12px 10px;
+        font-size: 0.8rem;
+    }
+
+    .mt-table th:nth-child(1), .mt-table td:nth-child(1) {
+        display: none; /* Hide image on very small screens to save space */
+    }
+}
+
+@media (max-width: 480px) {
+    .mt-modal {
+        padding: 25px;
+    }
+    
+    .modal-btns {
+        flex-direction: column;
+    }
+    
+    .mt-grid {
+        grid-template-columns: 1fr;
     }
 }

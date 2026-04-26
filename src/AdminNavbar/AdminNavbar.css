@@ -1,199 +1,464 @@
-/* --- BASE SIDEBAR STYLES (Desktop) --- */
-.an-sidebar {
-    width: 260px;
-    height: 100vh;
-    background-color: #161b22;
-    border-right: 1px solid #30363d;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    transition: transform 0.3s ease;
+/* =============================================
+   PROLEAGUE ADMIN NAVBAR — RESPONSIVE CSS
+   Desktop: left sidebar
+   Tablet (≤900px): slide-down top drawer
+   Mobile (≤540px): fixed bottom tab bar
+   ============================================= */
+
+:root {
+  --an-bg: #0f172a;
+  --an-surface: #1e293b;
+  --an-border: #1e293b;
+  --an-accent: #6c63ff;
+  --an-accent-bg: rgba(108, 99, 255, 0.15);
+  --an-accent-text: #a5b4fc;
+  --an-text: #94a3b8;
+  --an-text-bright: #e2e8f0;
+  --an-danger: rgba(239, 68, 68, 0.1);
+  --an-danger-border: rgba(239, 68, 68, 0.3);
+  --an-danger-text: #fca5a5;
+  --an-sidebar-width: 240px;
+  --an-topbar-height: 60px;
+  --an-tab-bar-height: 64px;
+  --an-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* =============================================
+   DESKTOP SIDEBAR
+   ============================================= */
+
+.an-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--an-sidebar-width);
+  height: 100vh;
+  background: var(--an-bg);
+  border-right: 1px solid var(--an-border);
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+  overflow: hidden;
+  transition: transform var(--an-transition);
+}
+
+/* Logo / brand */
 .an-logo-section {
-    padding: 30px 20px;
-    text-align: center;
-    border-bottom: 1px solid #21262d;
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid var(--an-border);
+  flex-shrink: 0;
 }
 
 .an-logo {
-    color: #f0f6fc;
-    font-size: 1.5rem;
-    letter-spacing: 2px;
-    margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--an-text-bright);
+  letter-spacing: 0.04em;
+  line-height: 1;
 }
 
 .an-logo span {
-    color: #58a6ff;
+  color: var(--an-accent);
 }
 
 .an-badge {
-    background: rgba(88, 166, 255, 0.1);
-    color: #58a6ff;
-    font-size: 0.7rem;
-    padding: 3px 10px;
-    border-radius: 12px;
-    text-transform: uppercase;
-    font-weight: 700;
+  display: inline-block;
+  margin-top: 7px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(108, 99, 255, 0.18);
+  color: var(--an-accent-text);
+  border: 1px solid rgba(108, 99, 255, 0.3);
+  padding: 3px 10px;
+  border-radius: 20px;
 }
 
-/* --- NAV LIST --- */
+/* Nav list */
 .an-nav-list {
-    list-style: none;
-    padding: 20px 10px;
-    margin: 0;
-    flex: 1;
+  list-style: none;
+  padding: 12px 10px;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  scrollbar-width: none;
 }
 
-.an-nav-list li {
-    margin-bottom: 8px;
+.an-nav-list::-webkit-scrollbar {
+  display: none;
 }
 
 .an-link {
-    display: flex;
-    align-items: center;
-    padding: 12px 15px;
-    color: #8b949e;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.an-icon {
-    margin-right: 12px;
-    font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  text-decoration: none;
+  color: var(--an-text);
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background var(--an-transition), color var(--an-transition), border-color var(--an-transition);
+  border-left: 2px solid transparent;
+  position: relative;
 }
 
 .an-link:hover {
-    background-color: #21262d;
-    color: #f0f6fc;
+  background: rgba(108, 99, 255, 0.1);
+  color: var(--an-accent-text);
 }
 
 .an-link.active {
-    background-color: #238636;
-    color: white;
+  background: var(--an-accent-bg);
+  color: var(--an-accent-text);
+  border-left-color: var(--an-accent);
+  padding-left: 10px;
 }
 
-/* --- BOTTOM SECTION --- */
+/* Animated indicator dot for active link */
+.an-link.active::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--an-accent);
+  animation: an-pulse 2s ease-in-out infinite;
+}
+
+@keyframes an-pulse {
+  0%, 100% { opacity: 1;   transform: translateY(-50%) scale(1); }
+  50%       { opacity: 0.5; transform: translateY(-50%) scale(0.7); }
+}
+
+.an-icon {
+  font-size: 15px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Bottom section / logout */
 .an-bottom-section {
-    padding: 20px;
-    border-top: 1px solid #21262d;
+  padding: 10px 10px 16px;
+  border-top: 1px solid var(--an-border);
+  flex-shrink: 0;
 }
 
 .an-logout-btn {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px;
-    background: transparent;
-    border: 1px solid #f85149;
-    color: #f85149;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.2s;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  border: 1px solid var(--an-danger-border);
+  background: var(--an-danger);
+  color: var(--an-danger-text);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--an-transition), border-color var(--an-transition), transform 0.15s;
 }
 
 .an-logout-btn:hover {
-    background: #f85149;
-    color: white;
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.55);
+  transform: translateX(2px);
 }
 
-/* --- RESPONSIVE DESIGN (Mobile & Tablet) --- */
-
-@media (max-width: 1024px) {
-    /* Change Sidebar to a Top Navbar on mobile */
-    .an-sidebar {
-        width: 100%;
-        height: auto;
-        position: relative; /* Unfix it so content flows below */
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 20px;
-        border-right: none;
-        border-bottom: 1px solid #30363d;
-    }
-
-    .an-logo-section {
-        padding: 0;
-        border-bottom: none;
-        text-align: left;
-    }
-
-    .an-nav-list {
-        display: flex;
-        padding: 0;
-        flex-direction: row;
-        gap: 5px;
-        overflow-x: auto; /* Allow scrolling menu on small screens */
-        scrollbar-width: none; /* Hide scrollbar for Firefox */
-    }
-
-    .an-nav-list::-webkit-scrollbar {
-        display: none; /* Hide scrollbar for Chrome/Safari */
-    }
-
-    .an-link {
-        padding: 8px 12px;
-        white-space: nowrap;
-        font-size: 0.85rem;
-    }
-
-    .an-icon {
-        margin-right: 5px;
-    }
-
-    .an-bottom-section {
-        padding: 0;
-        border-top: none;
-    }
-
-    .an-logout-btn {
-        padding: 8px 12px;
-        font-size: 0.8rem;
-        border: 1px solid #f85149;
-    }
+.an-logout-btn:active {
+  transform: scale(0.98);
 }
 
-@media (max-width: 600px) {
-    .an-logo-section h2 {
-        font-size: 1.1rem;
-    }
-    
-    .an-badge {
-        display: none; /* Hide admin badge to save space */
-    }
+/* Main content offset on desktop */
+.an-page-content {
+  margin-left: var(--an-sidebar-width);
+  min-height: 100vh;
+  background: #0a0f1e;
+}
 
-    .an-nav-list {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: #161b22;
-        justify-content: space-around;
-        padding: 10px 0;
-        border-top: 1px solid #30363d;
-        z-index: 1100;
-    }
+/* =============================================
+   MOBILE HAMBURGER BUTTON
+   (hidden on desktop, shown on tablet/mobile)
+   ============================================= */
 
-    .an-link {
-        flex-direction: column;
-        gap: 4px;
-        font-size: 0.7rem;
-    }
+.an-menu-btn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: 1px solid var(--an-border);
+  border-radius: 8px;
+  padding: 8px 9px;
+  cursor: pointer;
+  transition: border-color var(--an-transition), background var(--an-transition);
+}
 
-    .an-icon {
-        margin-right: 0;
-    }
+.an-menu-btn:hover {
+  border-color: rgba(108, 99, 255, 0.5);
+  background: var(--an-accent-bg);
+}
 
-    /* Add padding to the bottom of the main content so the fixed menu doesn't cover it */
-    body {
-        padding-bottom: 70px;
-    }
+.an-menu-btn span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--an-text);
+  border-radius: 2px;
+  transition: transform var(--an-transition), opacity var(--an-transition), background var(--an-transition);
+}
+
+/* Animate hamburger → X when open */
+.an-menu-btn.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+  background: var(--an-accent-text);
+}
+.an-menu-btn.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.an-menu-btn.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+  background: var(--an-accent-text);
+}
+
+/* =============================================
+   TABLET — TOP BAR + SLIDE-DOWN DRAWER (≤900px)
+   ============================================= */
+
+@media (max-width: 900px) {
+  .an-sidebar {
+    width: 100%;
+    height: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--an-border);
+    overflow: visible;
+  }
+
+  /* Logo row at the top */
+  .an-logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    height: var(--an-topbar-height);
+    border-bottom: none;
+  }
+
+  /* Show the hamburger on tablet */
+  .an-menu-btn {
+    display: flex;
+  }
+
+  /* Drawer: nav list + bottom section collapse by default */
+  .an-nav-list,
+  .an-bottom-section {
+    display: none;
+    border-top: 1px solid var(--an-border);
+  }
+
+  /* When sidebar has .mobile-open, show the drawer */
+  .an-sidebar.mobile-open .an-nav-list,
+  .an-sidebar.mobile-open .an-bottom-section {
+    display: flex;
+  }
+
+  .an-sidebar.mobile-open .an-nav-list {
+    flex-direction: column;
+    padding: 8px 10px;
+    gap: 2px;
+    max-height: 60vh;
+    overflow-y: auto;
+    animation: an-drawer-in 0.25s ease both;
+  }
+
+  .an-sidebar.mobile-open .an-bottom-section {
+    animation: an-drawer-in 0.25s ease 0.05s both;
+  }
+
+  @keyframes an-drawer-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Page content shifts down by topbar height */
+  .an-page-content {
+    margin-left: 0;
+    padding-top: var(--an-topbar-height);
+  }
+
+  /* Slightly smaller text in drawer */
+  .an-link {
+    font-size: 13px;
+    padding: 9px 12px;
+  }
+
+  .an-logout-btn {
+    font-size: 13px;
+  }
+}
+
+/* =============================================
+   MOBILE — BOTTOM TAB BAR (≤540px)
+   ============================================= */
+
+@media (max-width: 540px) {
+  /* Hide the whole sidebar nav — bottom tab bar takes over */
+  .an-sidebar {
+    /* Keep topbar visible for logo, hide nav drawer triggers */
+    border-bottom: none;
+  }
+
+  .an-sidebar .an-nav-list,
+  .an-sidebar .an-bottom-section,
+  .an-menu-btn {
+    display: none !important;
+  }
+
+  /* Logo bar: slim & centered */
+  .an-logo-section {
+    justify-content: center;
+    height: 52px;
+    border-bottom: 1px solid var(--an-border);
+  }
+
+  /* Page content: top + bottom padding for bars */
+  .an-page-content {
+    margin-left: 0;
+    padding-top: 52px;
+    padding-bottom: var(--an-tab-bar-height);
+  }
+
+  /* Bottom tab bar */
+  .an-tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--an-tab-bar-height);
+    background: var(--an-bg);
+    border-top: 1px solid var(--an-border);
+    display: flex;
+    align-items: stretch;
+    z-index: 300;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .an-tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: none;
+    border: none;
+    color: var(--an-text);
+    font-size: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 4px 10px;
+    transition: color var(--an-transition);
+    position: relative;
+    text-decoration: none;
+  }
+
+  .an-tab-item:hover {
+    color: var(--an-accent-text);
+  }
+
+  .an-tab-item.active {
+    color: var(--an-accent-text);
+  }
+
+  /* Active indicator line at the top of each tab */
+  .an-tab-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: var(--an-accent);
+    border-radius: 0 0 2px 2px;
+    animation: an-tab-in 0.2s ease both;
+  }
+
+  @keyframes an-tab-in {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  .an-tab-icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .an-tab-label {
+    font-size: 10px;
+    letter-spacing: 0.02em;
+  }
+}
+
+/* =============================================
+   OVERLAY (tablet drawer backdrop)
+   ============================================= */
+
+.an-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 199;
+  backdrop-filter: blur(2px);
+  animation: an-fade-in 0.2s ease;
+}
+
+.an-overlay.visible {
+  display: block;
+}
+
+@keyframes an-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* =============================================
+   SCROLLBAR (sidebar list)
+   ============================================= */
+
+.an-nav-list::-webkit-scrollbar {
+  width: 4px;
+}
+.an-nav-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.an-nav-list::-webkit-scrollbar-thumb {
+  background: rgba(108, 99, 255, 0.3);
+  border-radius: 2px;
+}
+
+/* =============================================
+   UTILITY — hide tab bar on desktop/tablet
+   ============================================= */
+
+.an-tab-bar {
+  display: none;
+}
+
+@media (max-width: 540px) {
+  .an-tab-bar {
+    display: flex;
+  }
 }

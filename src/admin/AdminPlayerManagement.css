@@ -1,171 +1,181 @@
-/* --- LAYOUT WRAPPER --- */
+/* ── Admin Player Management: Ultimate Responsive Theme ── */
+
+:root {
+    --adm-bg: #0f0f1e;
+    --adm-card: #1a1a2e;
+    --adm-blue: #007bff;
+    --adm-gold: #ffd700;
+    --adm-red: #ef4444;
+    --adm-text-muted: #94a3b8;
+}
+
 .ml-layout {
     display: flex;
-    background-color: #0d1117;
     min-height: 100vh;
-    width: 100%;
+    background-color: var(--adm-bg);
 }
 
 .ml-content {
     flex: 1;
-    margin-left: 260px; /* Aligns with your Sidebar width */
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
+    padding: 30px;
+    margin-left: 260px; /* Sidebar space */
+    transition: margin 0.3s ease;
+    width: 100%;
 }
 
-/* --- HEADER & SEARCH --- */
+/* Header Section */
 .ml-header-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
-    border-bottom: 1px solid #30363d;
-    padding-bottom: 20px;
+    background: var(--adm-card);
+    padding: 20px 30px;
+    border-radius: 18px;
+    border: 1px solid #2d3748;
 }
 
-.ml-header-section h2 {
-    font-size: 1.8rem;
-    color: #f0f6fc;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.ml-header-section h2 span { color: #58a6ff; }
+.ml-header-section h2 { font-size: 1.6rem; font-weight: 800; margin: 0; color: white; }
+.ml-header-section h2 span { color: var(--adm-blue); }
 
 .ml-search-bar input {
-    background-color: #161b22;
-    border: 1px solid #30363d;
+    background: #0f0f1e;
+    border: 1px solid #2d3748;
     color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    width: 300px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    width: 320px;
     outline: none;
 }
 
-.ml-search-bar input:focus { border-color: #58a6ff; }
-
-/* --- TABLE STYLES --- */
+/* ── TABLE DESIGN (Desktop) ── */
 .ml-table-container {
-    background-color: #161b22;
-    border: 1px solid #30363d;
-    border-radius: 12px;
+    background: var(--adm-card);
+    border-radius: 20px;
+    border: 1px solid #2d3748;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .ml-table {
     width: 100%;
     border-collapse: collapse;
-    text-align: left;
 }
 
 .ml-table th {
-    background-color: #21262d;
-    padding: 15px;
-    color: #8b949e;
-    font-size: 0.8rem;
+    padding: 18px 20px;
+    color: var(--adm-text-muted);
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    text-align: left;
+    border-bottom: 2px solid #2d3748;
 }
 
 .ml-table td {
-    padding: 15px;
-    border-bottom: 1px solid #30363d;
-    color: #c9d1d9;
-    vertical-align: middle;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: white;
 }
 
 .ml-player-img {
-    width: 40px;
-    height: 40px;
+    width: 45px; height: 45px;
     border-radius: 50%;
     object-fit: cover;
-    border: 1px solid #30363d;
+    border: 2px solid #2d3748;
 }
-
-.ml-player-name { font-weight: 600; color: #f0f6fc; }
 
 .ml-jersey-pill {
-    background: #30363d;
-    color: #58a6ff;
+    background: rgba(255, 215, 0, 0.1);
+    color: var(--adm-gold);
     padding: 4px 10px;
     border-radius: 6px;
-    font-family: monospace;
-    font-weight: bold;
+    font-weight: 900;
 }
-
-/* --- ACTIONS --- */
-.ml-actions { display: flex; gap: 10px; }
 
 .ml-action-btn {
-    background: transparent;
-    border: 1px solid #30363d;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.ml-edit { color: #58a6ff; }
-.ml-edit:hover { background: #58a6ff; color: white; }
-
-.ml-delete { color: #f85149; }
-.ml-delete:hover { background: #f85149; color: white; }
-
-/* --- MODAL STYLES --- */
-.ml-modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.85);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    backdrop-filter: blur(5px);
-}
-
-.ml-modal-card {
-    background: #161b22;
-    padding: 30px;
-    border-radius: 16px;
-    border: 1px solid #30363d;
-    width: 100%;
-    max-width: 450px;
-    color: white;
-}
-
-.ml-modal-card h3 { margin-bottom: 20px; font-size: 1.5rem; }
-.ml-modal-card h3 span { color: #58a6ff; }
-
-.ml-form-group { display: flex; flex-direction: column; margin-bottom: 15px; }
-.ml-form-row { display: flex; gap: 15px; }
-.ml-form-group label { font-size: 0.8rem; color: #8b949e; margin-bottom: 6px; }
-
-.ml-form-group input, .ml-form-group select {
-    background: #0d1117;
-    border: 1px solid #30363d;
-    padding: 12px;
-    color: white;
+    padding: 8px 16px;
     border-radius: 8px;
+    border: none;
+    font-weight: 800;
+    font-size: 0.7rem;
+    cursor: pointer;
+    margin-right: 10px;
 }
 
-.ml-modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
+.ml-edit { background: var(--adm-blue); color: white; }
+.ml-delete { background: var(--adm-red); color: white; }
 
-.ml-cancel-btn { background: transparent; border: 1px solid #30363d; color: #8b949e; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
-.ml-save-btn { background: #238636; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-
-/* --- LOADER --- */
-.ml-loader-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #0d1117;
-}
+/* ── MOBILE RESPONSIVE LOGIC (Stacking Table) ── */
 
 @media (max-width: 1024px) {
-    .ml-content { margin-left: 0; padding: 20px; }
+    .ml-content { margin-left: 0; padding: 20px; padding-top: 80px; }
+}
+
+@media (max-width: 768px) {
+    .ml-header-section {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 25px;
+    }
+
+    .ml-search-bar input { width: 100%; }
+
+    /* Hide Table Headers */
+    .ml-table thead {
+        display: none;
+    }
+
+    /* Convert Table Rows to "Cards" */
+    .ml-table, .ml-table tbody, .ml-table tr, .ml-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .ml-table tr {
+        margin-bottom: 20px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid #2d3748;
+        border-radius: 15px;
+        padding: 15px;
+    }
+
+    .ml-table td {
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 5px;
+        text-align: right;
+    }
+
+    /* Add Labels before the data in Mobile View */
+    .ml-table td::before {
+        content: attr(data-label);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        color: var(--adm-text-muted);
+        float: left;
+    }
+
+    .ml-player-img { width: 60px; height: 60px; }
+    
+    .ml-actions {
+        justify-content: center !important;
+        border-top: 1px solid #2d3748 !important;
+        margin-top: 10px;
+        padding-top: 15px !important;
+    }
+}
+
+/* Modal Responsive */
+.ml-modal-card {
+    width: 95%;
+    max-width: 500px;
+    padding: 25px;
+}
+
+@media (max-width: 480px) {
+    .ml-form-row { grid-template-columns: 1fr; }
+    .ml-modal-footer { flex-direction: column; }
 }

@@ -92,7 +92,7 @@ const VerifyOTP = () => {
                                 letterSpacing: '8px', 
                                 fontSize: '1.8rem',
                                 fontWeight: 'bold',
-                                background: '#0d1117'
+                                background: 'rgb(245, 246, 250)'
                             }}
                         />
                         {errors.otp && <span className="error-text" style={{ textAlign: 'center' }}>{errors.otp}</span>}
